@@ -2,66 +2,55 @@ import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {TemporaryUserEntity, UserContext} from "../contexts/user.context";
 import {LoginFormData} from "../types/LoginFormData";
-import {ApiResponse} from 'types';
+import {useFetch} from "./useFetch";
+import {apiUrl} from "../config/api";
 
 export const useAuth = () => {
     const navigate = useNavigate();
     const {user, setUser} = useContext(UserContext);
+    const {apiError, data, fetchApi, apiLoading} = useFetch();
     const [error, setError] = useState<string | null>(null);
 
     const findUser = async () => {
-        try {
-            const res = await fetch('http://localhost:3001/check-user', {
-                method: "GET",
-                credentials: "include",
-            });
-
-            const data: ApiResponse<TemporaryUserEntity> = await res.json();
-            //@TODO remove temporary user entity and get the real one
-
-            if (data.isSuccess) {
-                setUser(data.payload);
-            } else if (data.error) {
-                setError(data.error);
-            } else {
-                setError('Wystąpił błąd podczas próby pobrania użytkownika.');
-            }
-        } catch (e) {
-            setError('Podczas próby wykonania zapytania wystąpił błąd.');
+        await fetchApi(
+            `${apiUrl}/auth/check-user`,
+            'GET',
+            'Wystąpił błąd podczas próby pobrania użytkownika.',
+        );
+        if (apiError) {
+            setError(apiError);
+        }
+        if (data) {
+            setUser(data as TemporaryUserEntity);
+            //@TODO: remove this type and give a real one
         }
     };
 
     const loginUser = async (formData: LoginFormData) => {
-        try {
-            const res = await fetch('http://localhost:3001/user', {
-                method: "POST",
-                credentials: "include",
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-            });
-
-            const data: ApiResponse<TemporaryUserEntity> = await res.json();
-
-            if (data.isSuccess) {
-                await findUser();
-                navigate('/dashboard', {replace: true});
-            } else if (data.error) {
-                setError(data.error);
-            } else {
-                setError('Wystąpił błąd podczas logowania.');
-            }
-        } catch (e) {
-            setError('Podczas próby wykonania zapytania wystąpił błąd.');
+        await fetchApi(
+            `${apiUrl}/auth/login`,
+            'POST',
+            'Wystąpił błąd podczas logowania.',
+            formData,
+            true,
+            'application/json',
+        );
+        if (apiError) {
+            setError(apiError);
+            return;
+        }
+        if (data) {
+            await findUser();
+            navigate('/dashboard', {replace: true});
         }
     };
 
     return {
-        user, setUser, error, setError, loginUser, findUser,
+        user, setUser, error, setError, loginUser, findUser, apiLoading,
     }
 };
 
+//@TODO: remove this if unnecessary
 
 // export const useAuth = () => {
 //     const navigate = useNavigate();
