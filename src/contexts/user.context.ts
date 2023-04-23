@@ -6,7 +6,7 @@ enum TemporaryUserRole {
     Hr,
 }
 
-interface TemporaryUserEntity {
+export interface TemporaryUserEntity {
     id: string;
     name: string;
     surname: string;
