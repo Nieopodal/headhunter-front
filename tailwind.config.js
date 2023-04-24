@@ -15,6 +15,7 @@ module.exports = {
           neutral: "#292A2B",
           "neutral-content": "#7E7E7E",
           "base-100": "#222224",
+          "base-200": "#1E1E1F",
 
           "--rounded-box": "0", // border radius rounded-box utility class, used in card and other large boxes
           "--rounded-btn": "0", // border radius rounded-btn utility class, used in buttons and similar element

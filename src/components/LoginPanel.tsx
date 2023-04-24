@@ -1,4 +1,4 @@
-import logo from "./assets/logo.png";
+import logo from "../assets/logo.png";
 import React from "react";
 
 export const LoginPanel = () => {
@@ -14,7 +14,7 @@ export const LoginPanel = () => {
                            className="h-10 bg-neutral input input placeholder:text-neutral-content"/>
                 </div>
                 <div className="flex justify-end">
-                    <a href="#" className="link link-hover font-medium text-sm tracking-wider">
+                    <a href="src#" className="link link-hover font-medium text-sm tracking-wider">
                         Zapomniałeś hasła?
                     </a></div>
                 <div className="items-center flex flex-row place-content-between align-middle mt-6">
