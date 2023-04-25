@@ -1,6 +1,13 @@
 import React from 'react';
-import {LoginPanel} from "./components/LoginPanel";
+import {Dashboard} from "./components/Dashboard";
 
-export const App = () => (
-    <LoginPanel />
-);
+
+export const App = () => {
+    const user = {name: "Joanna Testowa"} //temp user obj
+    return (
+    <>
+        <Dashboard userName={user.name}/>
+    </>
+)
+}
+

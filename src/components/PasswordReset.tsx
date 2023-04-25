@@ -3,9 +3,9 @@ import {GoBack} from "./common/GoBack";
 
 export const PasswordReset = () => {
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
-            <div className="w-11/12 sm:w-8/12 md:w-1/3 lg:w-1/4">
-                <div className="mb-14"><GoBack/></div>
+        <div className="flex flex-col items-center justify-start w-full mt-10">
+            <div className="">
+                <div className="mb-7"><GoBack/></div>
                 <div className="flex flex-col">
                     <div className="flex flex-col justify-start">
                         <h1 className="text-2xl font-bold">Zmiana hasła</h1></div>

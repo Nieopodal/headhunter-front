@@ -1,51 +1,40 @@
-import logo from "../assets/logo.png";
-import React, {useState} from "react";
+import React from "react";
+import {Menu} from "./Menu";
+import {AdminFileUpload} from "./AdminFileUpload";
+import {Header} from "./Header";
+import {TempModal} from "./common/TempModal";
+import {Routes, Route} from "react-router-dom";
+import {AdminAddHrForm} from "./AdminAddHrForm";
+import {PasswordReset} from "./PasswordReset";
 
-export const Dashboard = () => {
-    const [checked, setChecked] = useState(true);
-    const user = {name: "Joanna Testowa"} //temp user obj
-    return (
-        <div className="flex justify-center items-center bg-base-200 w-full h-[80px]">
-            <div className="flex place-content-between items-center w-[1430px] h-full">
+type Props = {
+    userName: string
+}
 
-                <a href="src#"><img className="w-24 p-3" src={logo} alt="logo"/></a>
-                <div tabIndex={0}
-                     className="relative cursor-pointer flex items-center gap-7 bg-base-200 dropdown dropdown-end px-3">
-                    <div className="flex items-center"><label className="btn-circle cursor-pointer avatar">
-                        <div className="w-20 rounded-full">
-                            <img src="https://randomuser.me/api/portraits/women/79.jpg"/>
-                        </div>
-                    </label>
-                        <span className="font-normal text-lg ml-3">
-                            {user.name}
-                        </span></div>
-                    <span>🞃</span>
-                    <ul tabIndex={0}
-                        className="absolute top-[50px] mt-3 menu dropdown-content bg-base-200 w-full font-normal text-lg">
-                        <li>
-                            <a>
-                                Konto
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Wyloguj
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+export const Dashboard = ({userName}: Props) => {
 
+    return (<>
+        <TempModal userName={userName}/>
+
+        <Header>
+            {userName}
+        </Header>
+
+        <div className="flex flex-row justify-center items-center w-full mt-2">
+            <div className="flex flex-row w-[1430px]">
+                <Menu/>
+                <Routes>
+                    <Route path='/add-st' element={<AdminFileUpload/>}/>
+                    <Route path='/add-hr' element={<AdminAddHrForm/>}/>
+                    <Route path='see-cv'/>
+                    <Route path='change-cv'/>
+                    <Route path='got-employed'/>
+                    <Route path='/pass-reset' element={<PasswordReset/>}/>
+                </Routes>
             </div>
-
-            {/*temp modal*/}
-            <input type="checkbox" id="my-modal-4" checked={checked} onClick={() => setChecked(prev => !prev)}
-                   className="modal-toggle"/>
-            <label htmlFor="my-modal-4" className="modal cursor-pointer">
-                <label className="modal-box relative bg-success/70 shadow-none" htmlFor="">
-                    <h3 className="text-lg font-bold">Logowanie udane!</h3>
-                    <p className="py-4">Dobrze Cię widzieć, {user.name}</p>
-                </label>
-            </label>
         </div>
-    )
+
+
+
+    </>)
 }
