@@ -1,108 +1,67 @@
 import {useContext, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {TemporaryUserEntity, UserContext} from "../contexts/user.context";
 import {LoginFormData} from "../types/LoginFormData";
-import {useFetch} from "./useFetch";
 import {apiUrl} from "../config/api";
+import {ApiResponse} from "types";
+import {useNavigate} from "react-router-dom";
 
 export const useAuth = () => {
     const navigate = useNavigate();
     const {user, setUser} = useContext(UserContext);
-    const {apiError, data, fetchApi, apiLoading} = useFetch();
     const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const findUser = async () => {
-        await fetchApi(
-            `${apiUrl}/auth/check-user`,
-            'GET',
-            'Wystąpił błąd podczas próby pobrania użytkownika.',
-        );
-        if (apiError) {
-            setError(apiError);
-        }
-        if (data) {
-            setUser(data as TemporaryUserEntity);
-            //@TODO: remove this type and give a real one
+        setLoading(true);
+        try {
+            const res = await fetch(`${apiUrl}/auth/refresh`, {
+                method: "POST",
+                credentials: "include",
+            });
+            const data: any = await res.json();
+            console.log(data)
+
+            if (data.isSuccess) {
+                setUser({
+                    ...user,
+                    access_token: data.access_token,
+                } as TemporaryUserEntity);
+            } else {
+                setError(data.error);
+            }
+
+        } catch {
+            setError('Wystąpił błąd podczas próby wykonania zapytania');
+        } finally {
+            setLoading(false)
         }
     };
 
     const loginUser = async (formData: LoginFormData) => {
-        await fetchApi(
-            `${apiUrl}/auth/login`,
-            'POST',
-            'Wystąpił błąd podczas logowania.',
-            formData,
-            true,
-            'application/json',
-        );
-        if (apiError) {
-            setError(apiError);
-            return;
-        }
-        if (data) {
-            await findUser();
-            navigate('/dashboard', {replace: true});
+        try {
+            const res = await fetch(`${apiUrl}/auth/login`, {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data: ApiResponse<TemporaryUserEntity> = await res.json();
+
+            if (data.isSuccess) {
+                setUser(data.payload);
+                navigate('/dashboard', {replace: true})
+            } else {
+                setError(data.error)
+            }
+        } catch {
+            setError('Wystąpił błąd podczas próby wykonania zapytania.');
         }
     };
 
     return {
-        user, setUser, error, setError, loginUser, findUser, apiLoading,
+        user, setUser, error, setError, loginUser, findUser, loading
     }
 };
-
-//@TODO: remove this if unnecessary
-
-// export const useAuth = () => {
-//     const navigate = useNavigate();
-//
-//     const {user, setUser} = useContext(UserContext);
-//     const [error, setError] = useState<string | null>(null);
-//
-//     const createUserContext = (user: TemporaryUserEntity) => {
-//         setUser(user);
-//         localStorage.setItem("user", JSON.stringify(user));
-//     };
-//
-//     const removeUserContext = () => {
-//         setUser(null);
-//         localStorage.removeItem("user");
-//     };
-//
-//     const getUserFromLocalStorage = () => {
-//         const userObject = localStorage.getItem("user");
-//         if (userObject) {
-//             setUser(JSON.parse(userObject));
-//             return true;
-//         } else return false;
-//     };
-//
-//     const loginUser = async (formData: LoginFormData) => {
-//         try {
-//             const res = await fetch('http://localhost:3001/user/', {
-//                 method: "POST",
-//                 credentials: "include",
-//                 body: JSON.stringify(formData),
-//                 headers: {
-//                     "Content-Type": "application/json"
-//                 },
-//             });
-//
-//             const data: ApiResponse<TemporaryUserEntity> = await res.json();
-//
-//             if (data.isSuccess) {
-//                 createUserContext(data.payload);
-//                 navigate('/dashboard', {replace: true});
-//             } else if (data.error) {
-//                 setError(data.error);
-//             } else {
-//                 setError('Wystąpił błąd podczas logowania.');
-//             }
-//         } catch (e) {
-//             setError('Podczas próby wykonania zapytania wystąpił błąd.');
-//         }
-//     };
-//
-//     return {
-//         user, setUser, error, setError, loginUser, getUserFromLocalStorage, removeUserContext,
-//     }
-// };

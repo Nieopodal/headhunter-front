@@ -8,9 +8,10 @@ enum TemporaryUserRole {
 
 export interface TemporaryUserEntity {
     id: string;
-    name: string;
-    surname: string;
+    firstName: string;
+    surName: string;
     email: string;
+    access_token: string;
     role: TemporaryUserRole;
 }
 
@@ -20,8 +21,6 @@ interface UserContextInterface {
     setUser: (payload: TemporaryUserEntity | null) => void;
     error: string | null;
 }
-
-// @TODO :delete temporary interfaces and get the real ones
 
 export const UserContext = createContext<UserContextInterface>({
     user: null,

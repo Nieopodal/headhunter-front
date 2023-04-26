@@ -10,7 +10,7 @@ export const useFetch = () => {
     async function fetchApi<T> (url: string, method: string = "GET", customErrMsg: string, body?: T, asJson?: boolean, contentType?: string) {
         try {
             setApiLoading(true);
-            const res = await fetchHandler(url, method, body, asJson, contentType,)
+            const res = await fetchHandler(url, method, body, asJson, contentType);
 
             const data: ApiResponse<unknown> = await res.json();
 
@@ -28,5 +28,5 @@ export const useFetch = () => {
         }
     }
 
-    return {data, apiError, apiLoading, fetchApi};
+    return {data, apiError, apiLoading};
 }
