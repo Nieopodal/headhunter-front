@@ -7,6 +7,7 @@ export const Header = (props: PropsWithChildren) => {
         <div className="flex justify-center items-center bg-base-200 w-full h-[80px]">
             <div className="flex place-content-between items-center w-[1430px] h-full">
                 <a href="#"><img className="w-24 p-3" src={logo} alt="logo"/></a>
+                //test
                 <div tabIndex={0}
                      className="relative cursor-pointer flex items-center gap-7 bg-base-200 dropdown dropdown-end px-3">
                     <div className="flex items-center"><label className="btn-circle cursor-pointer avatar">
