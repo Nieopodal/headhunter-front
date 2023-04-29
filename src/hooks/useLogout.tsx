@@ -23,7 +23,7 @@ export const useLogout = () => {
             const data: ApiResponse<null> =await res.json();
             if (data.isSuccess) {
                 setUser(null);
-                navigate('/login', {replace: true});
+                navigate('/', {replace: true});
             } else {
                 console.log(data.error);
             }

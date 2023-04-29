@@ -7,8 +7,7 @@ type Props = {
 
 export const TempModal = (props: Props) => {
     const [tempModal, setTempModal] = useState(true);
-    return (
-        <>
+    return <>
             <input type="checkbox" id="my-modal-4" onClick={() => setTempModal(false)}
                    className="modal-toggle"/>
             <label htmlFor="my-modal-4" className="modal cursor-pointer">
@@ -21,5 +20,4 @@ export const TempModal = (props: Props) => {
                 </label>
             </label>
         </>
-    )
-}
+};

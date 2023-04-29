@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Header} from "../Header/Header";
 import {UserSideMenu} from "../UserSideMenu/UserSideMenu";
+import {UserContext} from "../../contexts/user.context";
 
 interface Props {
     children: React.ReactNode;
 }
 
-export const DashboardContainer = ({children}: Props) => (
-    <>
-        {/*<TempModal userName={userName}/>*/}
+export const DashboardContainer = ({children}: Props) => {
+    const {user} = useContext(UserContext);
+
+    if (!user) return <>{children}</>;
+
+    else return <>
         <Header/>
         <div className="flex flex-row justify-center items-center w-full mt-2">
             <div className="flex flex-row w-[1430px]">
@@ -19,4 +23,4 @@ export const DashboardContainer = ({children}: Props) => (
             </div>
         </div>
     </>
-);
+};

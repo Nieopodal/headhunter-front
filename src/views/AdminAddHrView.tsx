@@ -1,11 +1,9 @@
 import React from 'react';
 import {GoBack} from "../components/common/GoBack";
-import {DashboardContainer} from "../components/common/DashboardContainer";
 
 export const AdminAddHrView = () => {
 
-    return <DashboardContainer>
-        <div className="flex flex-col items-center justify-start w-full mt-10">
+    return <div className="flex flex-col items-center justify-start w-full mt-10">
             <div className="">
                 <div className="mb-7"><GoBack/></div>
                 <div className="flex flex-col">
@@ -32,6 +30,4 @@ export const AdminAddHrView = () => {
                 </div>
             </div>
         </div>
-
-    </DashboardContainer>
 };

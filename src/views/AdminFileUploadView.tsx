@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Loader} from "../components/common/Loader";
 import {GoBack} from "../components/common/GoBack";
-import {DashboardContainer} from "../components/common/DashboardContainer";
 
 export const AdminFileUploadView = () => {
     const [file, setFile] = useState<File>();
@@ -49,8 +48,7 @@ export const AdminFileUploadView = () => {
         return <div className="flex flex-col items-center h-screen w-full"><Loader/></div>;
     }
 
-    return <DashboardContainer>
-        <div className="flex flex-col items-center justify-start w-full mt-10">
+    return <div className="flex flex-col items-center justify-start w-full mt-10">
             <div className="">
                 <div className="mb-7"><GoBack/></div>
                 <div className="flex flex-col">
@@ -69,5 +67,4 @@ export const AdminFileUploadView = () => {
                 </div>
             </div>
         </div>
-    </DashboardContainer>
 };
