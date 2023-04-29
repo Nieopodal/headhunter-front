@@ -20,7 +20,7 @@ export const App = () => {
             console.log(user);
             await findUser();
         })();
-    }, [user]);
+    }, []);
 
     return <UserContext.Provider value={{
         user,

@@ -2,63 +2,43 @@ import {useContext, useState} from "react";
 import {TemporaryUserEntity, UserContext} from "../contexts/user.context";
 import {LoginFormData} from "../types/LoginFormData";
 import {apiUrl} from "../config/api";
-import {ApiResponse} from "types";
 import {useNavigate} from "react-router-dom";
+import {useFetch} from "./useFetch";
 
 export const useAuth = () => {
     const navigate = useNavigate();
-    const {user, setUser} = useContext(UserContext);
+    const {fetchApi, data, apiError} = useFetch();
+     const {user, setUser} = useContext(UserContext);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
 
     const findUser = async () => {
+        // @TODO: this function should get new access token and actual user object!
         setLoading(true);
-        try {
-            const res = await fetch(`${apiUrl}/auth/refresh`, {
-                method: "POST",
-                credentials: "include",
-            });
-            const data: any = await res.json();
-            console.log(data)
-
-            if (data.isSuccess) {
-                setUser({
-                    ...user,
-                    access_token: data.access_token,
-                } as TemporaryUserEntity);
-            } else {
-                setError(data.error);
-            }
-
-        } catch {
-            setError('Wystąpił błąd podczas próby wykonania zapytania');
-        } finally {
-            setLoading(false)
+        await fetchApi(user, `${apiUrl}/auth/refresh`, "POST", "Wystąpił nieznany błąd.");
+        if (data) {
+            setUser({
+                ...user,
+                access_token: (data as TemporaryUserEntity).access_token,
+            } as TemporaryUserEntity);
+        } else {
+            setError(apiError);
         }
+        setLoading(false);
     };
 
     const loginUser = async (formData: LoginFormData) => {
-        try {
-            const res = await fetch(`${apiUrl}/auth/login`, {
-                method: "POST",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            });
 
-            const data: ApiResponse<TemporaryUserEntity> = await res.json();
-
-            if (data.isSuccess) {
-                setUser(data.payload);
-                navigate('/dashboard', {replace: true})
-            } else {
-                setError(data.error)
-            }
-        } catch {
-            setError('Wystąpił błąd podczas próby wykonania zapytania.');
+        setLoading(true);
+        await fetchApi(null, `${apiUrl}/auth/login`, "POST", "Wystąpił nieznany błąd.", formData, true, "application/json");
+        if (data) {
+            setUser(data as TemporaryUserEntity);
+            navigate('/dashboard', {replace: true});
+        } else {
+            setError(apiError);
         }
+        setLoading(false);
+
     };
 
     return {
