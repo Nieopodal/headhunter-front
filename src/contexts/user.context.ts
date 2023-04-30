@@ -1,18 +1,13 @@
 import {createContext} from "react";
-
-enum TemporaryUserRole {
-    Admin,
-    Student,
-    Hr,
-}
+import {UserRole} from "../types/UserRole";
 
 export interface TemporaryUserEntity {
     id: string;
     firstName: string;
-    surName: string;
+    lastName: string;
     email: string;
     access_token: string;
-    role: TemporaryUserRole;
+    role: UserRole;
 }
 
 interface UserContextInterface {
