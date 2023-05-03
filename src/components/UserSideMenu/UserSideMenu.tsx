@@ -5,6 +5,7 @@ import React, {useContext} from "react";
 import {SideMenu} from "../common/SideMenu";
 import {MenuOption} from "../common/MenuOption";
 import {UserContext} from "../../contexts/user.context";
+import {StudentSummary} from "../StudentSummary";
 
 export const UserSideMenu = () => {
     const {user} = useContext(UserContext);
@@ -24,7 +25,7 @@ export const UserSideMenu = () => {
 
         {user?.role === 'student' &&
             <>
-                <MenuOption text="Zobacz swoje CV" url="#">
+                <MenuOption text="Zobacz swoje CV" url="/dashboard">
                     <RiUserSearchLine className="h-6 w-6"/>
                 </MenuOption>
 
@@ -35,6 +36,8 @@ export const UserSideMenu = () => {
                 <MenuOption text=" Znalazłem/am pracę!" url="#">
                     <MdOutlineHandshake className="h-6 w-6"/>
                 </MenuOption>
+
+                <StudentSummary firstName="Jan" lastName="Kowalski" avatarUrl="" githubName="gitName" phone="+48 797 797 797" email="student@test.com" about="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."/>
             </>
         }
     </SideMenu>

@@ -7,6 +7,6 @@ interface Props {
 
 export const ExpectationCategory = ({title, body}: Props) => (
     <CategoryContainer title={title}>
-        {body}
+        <span className="font-bold">{body}</span>
     </CategoryContainer>
 );
