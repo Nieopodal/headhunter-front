@@ -9,6 +9,6 @@ export const DashboardView = () => {
 
     return <div>
         {user!.role === UserRole.Student && <StudentDashboardView/>}
-        {user!.role === UserRole.Hr" && <HrView/>}
+        {user!.role === UserRole.Hr && <HrView/>}
         </div>
 };
