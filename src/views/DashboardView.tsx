@@ -1,10 +1,11 @@
-// import {useContext} from "react";
-// import {UserContext} from "../contexts/user.context";
+import {useContext} from "react";
+import {UserContext} from "../contexts/user.context";
+import {HrView} from "./HrView/HrView";
 
 export const DashboardView = () => {
-    // const {user} = useContext(UserContext); to get user's role
+    const {user} = useContext(UserContext)
 
     return <div>
-            User interface based on role
+        {user!.role === "hr" ? <HrView/> : null}
         </div>
 };
