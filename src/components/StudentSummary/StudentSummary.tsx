@@ -1,4 +1,4 @@
-import {Avatar} from "./Header/Avatar";
+import {Avatar} from "../Header/Avatar";
 import {AiFillGithub} from "react-icons/ai";
 import {BsFillTelephoneFill} from "react-icons/bs";
 import {GrMail} from "react-icons/gr";
@@ -17,7 +17,7 @@ interface Props {
 export const StudentSummary = ({email, about, githubName, firstName, lastName, phone, avatarUrl}: Props) => (
     <div className="flex flex-col p-4 text-sm">
         <div className="flex flex-col items-center">
-            <Avatar customSize="40" imgUrl={avatarUrl}/>
+            <Avatar customSize="40" imgUrl={avatarUrl ?? ""}/>
             <div className="text-xl font-bold my-1">
                 {`${firstName} ${lastName}`}
             </div>
