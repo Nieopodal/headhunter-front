@@ -5,6 +5,7 @@ export interface TemporaryUserEntity {
     id: string;
     firstName: string;
     lastName: string;
+    fullName?: string;
     email: string;
     access_token: string;
     role: UserRole;
