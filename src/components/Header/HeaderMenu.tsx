@@ -12,7 +12,9 @@ export const HeaderMenu = () => {
         <div className="flex items-center">
             <Avatar/>
             <span className="font-normal text-lg ml-3">
-                {user!.role === "admin" ? `Administrator` : `${user?.firstName} ${user?.lastName}`}
+                {user!.role === "admin" ? `Administrator` : null}
+                {user!.role === "hr" ? `${user?.fullName}` : null}
+                {user!.role === "student" ? `${user?.firstName} ${user?.lastName}` : null}
             </span>
         </div>
         <span>🞃</span>
