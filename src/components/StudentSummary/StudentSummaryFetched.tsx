@@ -2,7 +2,7 @@ import {StudentSummary} from "./StudentSummary";
 import React, {useContext, useEffect} from "react";
 import {UserContext} from "../../contexts/user.context";
 import {useFetch} from "../../hooks/useFetch";
-import {StudentCv} from "../../views/StudentDashboardView";
+import {StudentCv} from "../../types/StudentCv";
 
 export const StudentSummaryFetched = () => {
     const {user} = useContext(UserContext);
