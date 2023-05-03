@@ -17,7 +17,7 @@ export const DashboardContainer = ({children}: Props) => {
         <div className="flex flex-row justify-center items-center w-full mt-2">
             <div className="flex flex-row w-[1430px]">
                 <UserSideMenu/>
-                <div className="w-full h-[100vh] mx-2">
+                <div className="w-full mx-2">
                     {children}
                 </div>
             </div>

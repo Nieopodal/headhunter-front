@@ -12,7 +12,7 @@ export const SideMenu = ({children, roleException}: Props) => {
 
     if (roleException && roleException === user?.role) return null;
 
-    return <ul className="menu menu-vertical bg-base-300 h-full min-w-fit p-2 text-base">
+    return <ul className="menu menu-vertical bg-base-300 h-full min-w-fit p-2 text-base" style={{background: "#292A2B"}}>
         {children}
     </ul>
 };
