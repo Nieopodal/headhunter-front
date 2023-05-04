@@ -6,6 +6,8 @@ import {SingleStudent} from "./SingleStudent";
 import {HrViewMode} from "../../types/HrViewMode"
 import {HrTab} from "./HrTab";
 import {HrPagination} from "./HrPagination";
+import {useModal} from "../../hooks/useModal";
+import {Modal} from "../../components/common/Modal";
 
 export const HrView = () => {
 
@@ -14,6 +16,7 @@ export const HrView = () => {
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
     const [maxStudentsPerPage, setMaxStudentsPerPage] = useState(5);
+    const { isOpen, toggle } = useModal();
 
 
     const setMaxPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -76,10 +79,12 @@ export const HrView = () => {
                                 <BiSearch className="fill-neutral-500 absolute left-[15px] scale-[110%]"/>
                             </div>
 
-                            <div
+                            <button
+                                onClick={toggle}
                                 className="cursor-pointer w-min-fit px-4 flex items-center justify-center text-neutral-500 bg-base-200 gap-1.5">
                                 <FaFilter className="fill-neutral-500 min-w-[15%] min-h-[15%]"/>Filtrowanie
-                            </div>
+                            </button>
+                            <Modal isOpen={isOpen} toggle={toggle}></Modal>
 
                         </div>
                         <div className="flex flex-col bg-base-200 gap-3">

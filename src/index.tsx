@@ -14,7 +14,6 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <HrView/>
-            <Modal isOpen={true} toggle={()=> console.log('boo')}></Modal>
         </BrowserRouter>
     </React.StrictMode>
 );
