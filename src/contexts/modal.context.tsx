@@ -1,5 +1,4 @@
 import React, {Dispatch, ReactElement, SetStateAction, useCallback, useState} from 'react'
-import {ReactComponent} from "*.svg";
 
 const ModalContext = React.createContext<{ unSetModal: () => void, setModal: Dispatch<SetStateAction<any>>}>({
     unSetModal: () => {},
