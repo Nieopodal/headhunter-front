@@ -6,6 +6,7 @@ import {BrowserRouter} from "react-router-dom";
 import {HrView} from "./views/HrView/HrView";
 import {Modal} from "./components/common/Modal";
 import {log} from "util";
+import {ModalProvider} from "./contexts/modal.context";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -13,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <HrView/>
+            <ModalProvider><HrView/></ModalProvider>
         </BrowserRouter>
     </React.StrictMode>
 );
