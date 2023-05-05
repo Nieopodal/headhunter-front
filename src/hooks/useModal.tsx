@@ -1,14 +1,11 @@
-import { useState } from "react";
+import React from "react";
+import {ModalContext} from "../contexts/modal.context";
 
 export const useModal = () => {
-    const [isOpen, setisOpen] = useState(false);
+    const context = React.useContext(ModalContext)
+    if (context === undefined) {
+        throw new Error('useModal must be used within a UserProvider')
+    }
 
-    const toggle = () => {
-        setisOpen(!isOpen);
-    };
-
-    return {
-        isOpen,
-        toggle
-    };
+    return context
 }

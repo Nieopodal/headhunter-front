@@ -6,7 +6,7 @@ import {SingleStudent} from "./SingleStudent";
 import {HrViewMode} from "../../types/HrViewMode"
 import {HrTab} from "./HrTab";
 import {HrPagination} from "./HrPagination";
-import { useModal } from '../../contexts/modal.context'
+import { useModal } from '../../hooks/useModal'
 
 
 export const HrView = () => {
