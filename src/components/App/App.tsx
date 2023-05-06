@@ -10,6 +10,7 @@ import {PasswordReset} from "../PasswordReset/PasswordReset";
 import {DashboardView} from "../../views/DashboardView";
 import {DashboardContainer} from "../common/DashboardContainer";
 import {UserRole} from "../../types/UserRole";
+import {StudentDashboardView} from "../../views/StudentDashboardView";
 
 export const App = () => {
     const {error, findUser, loading} = useAuth();
@@ -55,14 +56,14 @@ export const App = () => {
                     }
                 />
 
-                {/*<Route*/}
-                {/*    path='/change-cv'*/}
-                {/*    element={*/}
-                {/*        <PrivateRoute */}
-                {/*            outlet={< xxxx />} */}
-                {/*            accessFor={[UserRole.Student]}/>*/}
-                {/*    }*/}
-                {/*/>*/}
+                <Route
+                    path='/change-cv'
+                    element={
+                        <PrivateRoute
+                            outlet={<StudentDashboardView showAsForm/>}
+                            accessFor={[UserRole.Student]}/>
+                    }
+                />
 
                 {/*<Route path='/see-cv'/>  to chyba jako zwykły dashboard dla usera?*/}
                 {/*<Route path='/got-employed'/> to chyba nie musi być osobna ścieżka, tylko sam fetch na BE*/}
