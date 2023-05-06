@@ -5,6 +5,7 @@ import {ExpectationCategory} from "../CvSections/ExpectationCategory";
 import {OneLink} from "../CvSections/OneLink";
 import {StudentCv} from "../../types/StudentCv";
 import {monthDeclension, numberWithSpaces} from "../../helpers/formatting";
+import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 
 interface Props {
     studentData: StudentCv;
@@ -58,21 +59,21 @@ export const StudentCvInfo = ({studentData}: Props) => {
         <BodyOfSection color="#0B8BD4">
             <div className="block">
                 {/*@TODO: skończyć to!*/}
-                {Array.isArray(studentData.student_portfolio_urls) && studentData.student_portfolio_urls.map((el, i) => <OneLink url={el} key={i}/>)}
+                {studentData.student_portfolio_urls && arrayFromStringHandler(studentData.student_portfolio_urls).map((el, i) => <OneLink url={el} key={i}/>)}
             </div>
         </BodyOfSection>
 
         <TitleOfSection title="Projekt w zespole Scrumowym"/>
         <BodyOfSection color="#0B8BD4">
             <div className="block">
-                {Array.isArray(studentData.student_bonus_project_urls) && studentData.student_bonus_project_urls.map((el, i) => <OneLink url={el} key={i}/>)}
+                {studentData.student_project_urls && arrayFromStringHandler(studentData.student_project_urls).map((el, i) => <OneLink url={el} key={i}/>)}
             </div>
         </BodyOfSection>
 
         <TitleOfSection title="Projekt na zaliczenie"/>
         <BodyOfSection color="#0B8BD4">
             <div className="block">
-                {Array.isArray(studentData.student_bonus_project_urls) && studentData.student_bonus_project_urls.map((el, i) => <OneLink url={el} key={i}/>)}
+                {studentData.student_bonus_project_urls && arrayFromStringHandler(studentData.student_bonus_project_urls).map((el, i) => <OneLink url={el} key={i}/>)}
             </div>
         </BodyOfSection>
     </>
