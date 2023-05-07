@@ -13,7 +13,7 @@ type ModalProps = {
 const Modal = ({modal, unSetModal}: ModalProps) => {
     return (
         <div onClick={unSetModal} className="flex absolute z-20 top-0 left-0 w-full h-full bg-neutral-900/30 items-center justify-center ">
-            <div onClick={e => e.stopPropagation()} className="flex flex-col p-5 w-1/3 h-2/3 bg-neutral-900">
+            <div onClick={e => e.stopPropagation()} className="flex flex-col p-5 bg-neutral-900">
                 {modal}
             </div>
         </div>
