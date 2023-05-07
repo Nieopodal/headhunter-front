@@ -66,14 +66,14 @@ export const StudentCvInfo = ({studentData}: Props) => {
         <TitleOfSection title="Projekt w zespole Scrumowym"/>
         <BodyOfSection color="#0B8BD4">
             <div className="block">
-                {studentData.student_project_urls && arrayFromStringHandler(studentData.student_project_urls).map((el, i) => <OneLink url={el} key={i}/>)}
+                {studentData.student_bonus_project_urls && arrayFromStringHandler(studentData.student_bonus_project_urls).map((el, i) => <OneLink url={el} key={i}/>)}
             </div>
         </BodyOfSection>
 
         <TitleOfSection title="Projekt na zaliczenie"/>
         <BodyOfSection color="#0B8BD4">
             <div className="block">
-                {studentData.student_bonus_project_urls && arrayFromStringHandler(studentData.student_bonus_project_urls).map((el, i) => <OneLink url={el} key={i}/>)}
+                {studentData.student_project_urls && arrayFromStringHandler(studentData.student_project_urls).map((el, i) => <OneLink url={el} key={i}/>)}
             </div>
         </BodyOfSection>
     </>

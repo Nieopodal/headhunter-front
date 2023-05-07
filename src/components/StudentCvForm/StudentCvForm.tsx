@@ -57,6 +57,7 @@ interface Props {
 }
 
 export const StudentCvForm = ({studentData, newUser}: Props) => {
+    console.log(studentData)
     const {user, setRerender} = useContext(UserContext);
     const {fetchApi, data: dataFromApi, apiError} = useFetch();
 
