@@ -7,9 +7,14 @@ interface Props {
     placeholder?: string;
     additionalClasses?: string;
     disabled?: boolean;
+    required?: boolean;
+    min?: number;
+    max?: number;
+    minLength?: number;
+    maxLength?: number
 }
 
-export const Input = ({type, name, additionalClasses, placeholder, disabled}: Props) => {
+export const Input = ({type, name, additionalClasses, placeholder, disabled, required, min, max, minLength, maxLength}: Props) => {
     const {register} = useFormContext()
 
     return <input
@@ -17,6 +22,11 @@ export const Input = ({type, name, additionalClasses, placeholder, disabled}: Pr
         disabled={disabled}
         placeholder={placeholder}
         {...register(name)}
+        required={required}
+        min={min}
+        max={max}
+        minLength={minLength}
+        maxLength={maxLength}
         className={`${additionalClasses} h-10 bg-neutral input placeholder:text-neutral-content`}
     />
 };

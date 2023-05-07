@@ -20,8 +20,8 @@ export const StudentDashboardView = ({showAsForm}: Props) => {
 
     if (apiError) return <p>Wystąpił błąd: {apiError}</p>
 
-    if (data && !showAsForm) return <StudentCvInfo studentData={data as StudentCv}  />
-    if (data && showAsForm) return <StudentCvForm studentData={data as StudentCv}  />
+    if (data && !showAsForm) return <StudentCvInfo studentData={data as StudentCv} />
+    if (data && showAsForm) return <StudentCvForm studentData={data as StudentCv} />
 
      return <p>Ładowanie...</p>
 };

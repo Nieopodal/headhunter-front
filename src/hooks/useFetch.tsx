@@ -17,7 +17,7 @@ export const useFetch = () => {
             if (data.isSuccess) {
                 setData(data.payload as unknown);
             } else if (data.error) {
-                if (user && res.status === 403) {
+                if (user && (res.status === 403 || 401)) {
                     const refreshRes = await fetchHandler(user, `${apiUrl}/auth/refresh`, "POST");
                     //@TODO: this should be changed into separate and better functions
                     const refreshData: any = await refreshRes.json();

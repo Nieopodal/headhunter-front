@@ -8,6 +8,8 @@ import {CategoryContainer} from "../CvSections/CategoryContainer";
 import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
+import * as yup from 'yup';
+import {yupResolver} from "@hookform/resolvers/yup";
 
 export enum ExpectedTypeWork {
     office = 'Na miejscu',
@@ -61,7 +63,16 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
     const {user, setRerender} = useContext(UserContext);
     const {fetchApi, data: dataFromApi, apiError} = useFetch();
 
+    const validationSchema = yup.object({
+        expectedSalary: yup.number().integer().min(0).max(9999.99, 'Dostępne kwoty 0 - 9999.99'),
+        password: yup.string(),
+        confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
+            return this.parent.password === value
+        }),
+    });
+
     const methods = useForm<StudentFormData>({
+        resolver: yupResolver(validationSchema),
         defaultValues: {
             email: studentData.student_email,
             contactNumber: studentData.student_contact_number,
@@ -90,7 +101,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
         },
     });
 
-    const {handleSubmit, register} = methods;
+    const {handleSubmit, register, formState: {errors}} = methods;
 
     const formSubmitHandler = async (data: StudentFormData) => {
         const initFormData = {
@@ -146,11 +157,13 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Nick w Github">
-                    <Input type="text" name="githubUsername" additionalClasses="border-2 border-black"/>
+                    <Input type="text" name="githubUsername" additionalClasses="border-2 border-black" required
+                           maxLength={50}/>
                 </CategoryContainer>
 
                 <CategoryContainer title="Telefon">
-                    <Input type="tel" name="contactNumber" additionalClasses="border-2 border-black"/>
+                    <Input type="tel" name="contactNumber" additionalClasses="border-2 border-black" required
+                           maxLength={20}/>
                 </CategoryContainer>
             </BodyOfSection>
 
@@ -158,11 +171,16 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 <TitleOfSection title="Ustaw hasło"/>
                 <BodyOfSection additionalClasses="my-4">
                     <CategoryContainer title="Hasło">
-                        <Input type="password" name="password" additionalClasses="border-2 border-black"/>
+                        <Input type="password" name="password" additionalClasses="border-2 border-black" required
+                               minLength={7} maxLength={255}/>
                     </CategoryContainer>
                     <CategoryContainer title="Powtórz hasło">
-                        <Input type="password" name="confirmPassword" additionalClasses="border-2 border-black"/>
+                        <Input type="password" name="confirmPassword" additionalClasses="border-2 border-black" required
+                               minLength={7} maxLength={255}/>
                     </CategoryContainer>
+                    {errors.confirmPassword && <CategoryContainer title="Błąd:">
+                        <p className="flex flex-row text-red-500">{errors.confirmPassword?.message}</p>
+                    </CategoryContainer>}
                 </BodyOfSection>
             </>
             }
@@ -195,7 +213,8 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN]">
-                    <Input type="text" name="expectedSalary" additionalClasses="border-2 border-black"/>
+                    <Input type="number" name="expectedSalary" additionalClasses="border-2 border-black" min={0}
+                           max={9999999.99}/>
                 </CategoryContainer>
 
                 <CategoryContainer title="Zgoda na odbycie miesięcznych praktyk/stażu na początek" justifyCenter>
@@ -203,13 +222,15 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Komercyjne doświadczenie w programowaniu [miesiące]">
-                    <Input type="number" name="monthsOfCommercialExp" additionalClasses="border-2 border-black"/>
+                    <Input type="number" name="monthsOfCommercialExp" additionalClasses="border-2 border-black" min={0}
+                           max={9999} required/>
                 </CategoryContainer>
             </BodyOfSection>
 
             <TitleOfSection title="Biografia"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
+                                  maxLength={400}
                                   className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("bio")}
                                   defaultValue={studentData.student_bio}/>
             </BodyOfSection>
@@ -217,6 +238,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             <TitleOfSection title="Edukacja"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
+                                  maxLength={1000}
                                   className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("education")}
                                   defaultValue={studentData.student_education}/>
             </BodyOfSection>
@@ -224,6 +246,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             <TitleOfSection title="Kursy"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
+                                  maxLength={1000}
                                   className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("courses")}
                                   defaultValue={studentData.student_courses}/>
             </BodyOfSection>
@@ -231,6 +254,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             <TitleOfSection title="Doświadczenie zawodowe"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
+                                  maxLength={1000}
                                   className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("workExperience")}
                                   defaultValue={studentData.student_courses}/>
             </BodyOfSection>
@@ -238,34 +262,39 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             <TitleOfSection title="Portfolio"/>
             <BodyOfSection additionalClasses="my-4">
                 <CategoryContainer title="Link główny:">
-                    <Input type="url" name="portfolioUrl1" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="portfolioUrl1" additionalClasses="border-2 border-black" required
+                           maxLength={255}/>
                 </CategoryContainer>
 
                 <CategoryContainer title="Link dodatkowy:">
-                    <Input type="url" name="portfolioUrl2" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="portfolioUrl2" additionalClasses="border-2 border-black" maxLength={255}/>
                 </CategoryContainer>
             </BodyOfSection>
 
             <TitleOfSection title="Projekt w zespole Scrumowym"/>
             <BodyOfSection additionalClasses="my-4">
                 <CategoryContainer title="Link do repozytorium:">
-                    <Input type="url" name="bonusProjectUrl1" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="bonusProjectUrl1" additionalClasses="border-2 border-black" required
+                           maxLength={255}/>
                 </CategoryContainer>
                 <CategoryContainer title="Link do kodu własnego (commity):">
-                    <Input type="url" name="bonusProjectUrl2" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="bonusProjectUrl2" additionalClasses="border-2 border-black" required
+                           maxLength={255}/>
                 </CategoryContainer>
                 <CategoryContainer title="Link do code review:">
-                    <Input type="url" name="bonusProjectUrl3" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="bonusProjectUrl3" additionalClasses="border-2 border-black" required
+                           maxLength={255}/>
                 </CategoryContainer>
             </BodyOfSection>
 
             <TitleOfSection title="Projekt na zaliczenie"/>
             <BodyOfSection additionalClasses="my-4">
                 <CategoryContainer title="Link 1:">
-                    <Input type="url" name="projectUrl1" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="projectUrl1" additionalClasses="border-2 border-black" required
+                           maxLength={255}/>
                 </CategoryContainer>
                 <CategoryContainer title="Link dodatkowy:">
-                    <Input type="url" name="projectUrl2" additionalClasses="border-2 border-black"/>
+                    <Input type="url" name="projectUrl2" additionalClasses="border-2 border-black" maxLength={255}/>
                 </CategoryContainer>
             </BodyOfSection>
             <button
