@@ -4,7 +4,7 @@ import {TitleOfSection} from "../CvSections/TitleOfSection";
 import {BodyOfSection} from "../CvSections/BodyOfSection";
 import {CategoryContainer} from "../CvSections/CategoryContainer";
 import {Input} from "../common/Form/Input";
-import { ExpectedContractType, ExpectedTypeWork } from "types";
+import {ExpectedContractType, ExpectedTypeWork} from "types";
 import {StudentCv} from "../../types/StudentCv";
 
 interface Props {
@@ -30,12 +30,12 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 <Input type="text" name="lastName" disabled/>
             </CategoryContainer>
 
-            <CategoryContainer title="Nick w Github"  error={!!errors?.githubUsername}>
+            <CategoryContainer title="Nick w Github" error={!!errors?.githubUsername}>
                 <Input type="text" name="githubUsername" additionalClasses="border-2 border-black" required
                        maxLength={50}/>
             </CategoryContainer>
 
-            <CategoryContainer title="Telefon"  error={!!errors?.contactNumber}>
+            <CategoryContainer title="Telefon" error={!!errors?.contactNumber}>
                 <Input type="number" name="contactNumber" additionalClasses="border-2 border-black" required
                        maxLength={20} minLength={6}/>
             </CategoryContainer>
@@ -44,11 +44,11 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         {newUser && <>
             <TitleOfSection title="Ustaw hasło"/>
             <BodyOfSection additionalClasses="my-4">
-                <CategoryContainer title="Hasło"  error={!!errors?.password}>
+                <CategoryContainer title="Hasło" error={!!errors?.password}>
                     <Input type="password" name="password" additionalClasses="border-2 border-black" required
                            minLength={7} maxLength={255}/>
                 </CategoryContainer>
-                <CategoryContainer title="Powtórz hasło"  error={!!errors?.confirmPassword}>
+                <CategoryContainer title="Powtórz hasło" error={!!errors?.confirmPassword}>
                     <Input type="password" name="confirmPassword" additionalClasses="border-2 border-black" required
                            minLength={7} maxLength={255}/>
                 </CategoryContainer>
@@ -61,7 +61,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
 
         <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
         <BodyOfSection additionalClasses="my-4">
-            <CategoryContainer title="Preferowane miejsce pracy"  error={!!errors?.expectedTypeWork}>
+            <CategoryContainer title="Preferowane miejsce pracy" error={!!errors?.expectedTypeWork}>
                 <select {...register("expectedTypeWork")} defaultValue={studentData.student_expected_type_work}
                         className="h-10 bg-neutral input border-2 border-black" required>
                     <option value={ExpectedTypeWork.DM}>{ExpectedTypeWork.DM}</option>
@@ -72,11 +72,12 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 </select>
             </CategoryContainer>
 
-            <CategoryContainer title="Docelowe miasto, gdzie chce pracować kandydat"  error={!!errors?.targetWorkCity}>
-                <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black" required minLength={3} maxLength={60}/>
+            <CategoryContainer title="Docelowe miasto, gdzie chce pracować kandydat" error={!!errors?.targetWorkCity}>
+                <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black" required
+                       minLength={3} maxLength={60}/>
             </CategoryContainer>
 
-            <CategoryContainer title="Oczekiwany typ kontraktu"  error={!!errors?.expectedContractType}>
+            <CategoryContainer title="Oczekiwany typ kontraktu" error={!!errors?.expectedContractType}>
                 <select {...register("expectedContractType")}
                         defaultValue={studentData.student_expected_contract_type}
                         className="h-10 bg-neutral input max-w-fit px-0 border-2 border-black">
@@ -96,7 +97,8 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 <input type="checkbox" {...register("canTakeApprenticeship")} className="checkbox"/>
             </CategoryContainer>
 
-            <CategoryContainer title="Komercyjne doświadczenie w programowaniu [miesiące]"  error={!!errors?.monthsOfCommercialExp}>
+            <CategoryContainer title="Komercyjne doświadczenie w programowaniu [miesiące]"
+                               error={!!errors?.monthsOfCommercialExp}>
                 <Input type="number" name="monthsOfCommercialExp" additionalClasses="border-2 border-black" min={0}
                        max={9999} required/>
             </CategoryContainer>
@@ -136,19 +138,19 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
 
         <TitleOfSection title="Portfolio"/>
         <BodyOfSection additionalClasses="my-4">
-            <CategoryContainer title="Link główny:"  error={!!errors?.portfolioUrl1}>
+            <CategoryContainer title="Link główny:" error={!!errors?.portfolioUrl1}>
                 <Input type="url" name="portfolioUrl1" additionalClasses="border-2 border-black" required
                        maxLength={255}/>
             </CategoryContainer>
 
-            <CategoryContainer title="Link dodatkowy:"  error={!!errors?.portfolioUrl2}>
+            <CategoryContainer title="Link dodatkowy:" error={!!errors?.portfolioUrl2}>
                 <Input type="url" name="portfolioUrl2" additionalClasses="border-2 border-black" maxLength={255}/>
             </CategoryContainer>
         </BodyOfSection>
 
         <TitleOfSection title="Projekt w zespole Scrumowym"/>
         <BodyOfSection additionalClasses="my-4">
-            <CategoryContainer title="Link do repozytorium:"  error={!!errors?.scrumProjectUrl1}>
+            <CategoryContainer title="Link do repozytorium:" error={!!errors?.scrumProjectUrl1}>
                 <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black" required
                        maxLength={255}/>
             </CategoryContainer>

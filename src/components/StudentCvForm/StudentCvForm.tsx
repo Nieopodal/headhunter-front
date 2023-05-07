@@ -7,7 +7,7 @@ import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
 import {useNavigate} from "react-router-dom";
-import {ExpectedContractType, ExpectedTypeWork } from "types";
+import {ExpectedContractType, ExpectedTypeWork} from "types";
 import {StudentCvFormSections} from "./StudentCvFormSections";
 
 interface StudentFormData {
@@ -145,7 +145,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
 
             <StudentCvFormSections studentData={studentData} newUser={newUser}/>
 
-            {apiError && <p className="font-bold text-red-500">{apiError}</p>}
+            {apiError && <p className="font-bold text-red-500">Nieudana próba zapisania danych: {apiError}</p>}
             <button
                 className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none mb-10">Zapisz
             </button>
