@@ -1,10 +1,13 @@
 import {StudentCv} from "../../types/StudentCv";
 import {Input} from "../common/Form/Input";
-import React from "react";
+import React, {useContext} from "react";
 import {FormProvider, useForm} from "react-hook-form";
 import {TitleOfSection} from "../CvSections/TitleOfSection";
 import {BodyOfSection} from "../CvSections/BodyOfSection";
 import {CategoryContainer} from "../CvSections/CategoryContainer";
+import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
+import {useFetch} from "../../hooks/useFetch";
+import {UserContext} from "../../contexts/user.context";
 
 export enum ExpectedTypeWork {
     office = 'Na miejscu',
@@ -27,9 +30,13 @@ interface StudentFormData {
     firstName: string;
     lastName: string;
     githubUsername: string;
-    portfolioUrls: string[] | null;
-    projectUrls: string[]  | null;
-    bonusProjectUrls: string[]  | null;
+    portfolioUrl1: string | null;
+    portfolioUrl2: string | null;
+    projectUrl1: string | null;
+    projectUrl2: string | null;
+    bonusProjectUrl1: string | null;
+    bonusProjectUrl2: string | null;
+    bonusProjectUrl3: string | null;
     bio: string;
     expectedTypeWork: ExpectedTypeWork;
     targetWorkCity: string;
@@ -40,13 +47,18 @@ interface StudentFormData {
     education: string;
     workExperience: string;
     courses: string;
+    password?: string;
+    confirmPassword?: string;
 }
 
 interface Props {
     studentData: StudentCv;
+    newUser?: boolean;
 }
 
-export const StudentCvForm = ({studentData}: Props) => {
+export const StudentCvForm = ({studentData, newUser}: Props) => {
+    const {user, setRerender} = useContext(UserContext);
+    const {fetchApi, data: dataFromApi, apiError} = useFetch();
 
     const methods = useForm<StudentFormData>({
         defaultValues: {
@@ -55,8 +67,13 @@ export const StudentCvForm = ({studentData}: Props) => {
             firstName: studentData.student_first_name,
             lastName: studentData.student_last_name,
             githubUsername: studentData.student_github_username,
-            portfolioUrls: studentData.student_portfolio_urls,
-            projectUrls: studentData.student_project_urls,
+            portfolioUrl1: arrayFromStringHandler(studentData.student_portfolio_urls)[0],
+            portfolioUrl2: arrayFromStringHandler(studentData.student_portfolio_urls)[1],
+            projectUrl1: arrayFromStringHandler(studentData.student_project_urls)[0],
+            projectUrl2: arrayFromStringHandler(studentData.student_project_urls)[1],
+            bonusProjectUrl1: arrayFromStringHandler(studentData.student_bonus_project_urls)[0],
+            bonusProjectUrl2: arrayFromStringHandler(studentData.student_bonus_project_urls)[1],
+            bonusProjectUrl3: arrayFromStringHandler(studentData.student_bonus_project_urls)[2],
             bio: studentData.student_bio,
             expectedTypeWork: studentData.student_expected_type_work,
             targetWorkCity: studentData.student_target_work_city,
@@ -67,12 +84,49 @@ export const StudentCvForm = ({studentData}: Props) => {
             education: studentData.student_education,
             workExperience: studentData.student_work_experience,
             courses: studentData.student_courses,
+            password: "",
+            confirmPassword: "",
         },
     });
 
     const {handleSubmit, register} = methods;
 
-    return <form onSubmit={handleSubmit(data => console.log(data))}>
+    const formSubmitHandler = async (data: StudentFormData) => {
+        const initFormData = {
+            contactNumber: data.contactNumber,
+            githubUsername: data.githubUsername,
+            bio: data.bio,
+            expectedTypeWork: data.expectedTypeWork,
+            targetWorkCity: data.targetWorkCity,
+            expectedContractType: data.expectedContractType,
+            expectedSalary: data.expectedSalary,
+            canTakeApprenticeship: data.canTakeApprenticeship,
+            monthsOfCommercialExp: data.monthsOfCommercialExp,
+            education: data.education,
+            workExperience: data.workExperience,
+            courses: data.courses,
+            portfolioUrls: [data.portfolioUrl1, data.portfolioUrl2].filter(Boolean),
+            projectUrls: [data.projectUrl1, data.projectUrl2].filter(Boolean),
+            bonusProjectUrls: [data.bonusProjectUrl1, data.bonusProjectUrl2, data.bonusProjectUrl3].filter(Boolean),
+        };
+        let finalFormData;
+        if (newUser) {
+            finalFormData = {
+                ...initFormData,
+                password: data.password,
+            };
+        } else {
+            finalFormData = {
+                ...initFormData,
+            };
+        }
+
+        await fetchApi(user, `http://localhost:3000/student/update/${user?.id}`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json");
+
+        setRerender();
+    };
+
+    return <form onSubmit={handleSubmit(data => formSubmitHandler(data))}>
         <h2 className="mx-auto w-fit text-2xl font-bold my-6">Edycja danych</h2>
         <FormProvider {...methods}>
 
@@ -91,19 +145,32 @@ export const StudentCvForm = ({studentData}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Nick w Github">
-                    <Input type="text" name="githubUsername"/>
+                    <Input type="text" name="githubUsername" additionalClasses="border-2 border-black"/>
                 </CategoryContainer>
 
                 <CategoryContainer title="Telefon">
-                    <Input type="tel" name="contactNumber"/>
+                    <Input type="tel" name="contactNumber" additionalClasses="border-2 border-black"/>
                 </CategoryContainer>
             </BodyOfSection>
+
+            {newUser && <>
+                <TitleOfSection title="Ustaw hasło"/>
+                <BodyOfSection additionalClasses="my-4">
+                    <CategoryContainer title="Hasło">
+                        <Input type="password" name="password" additionalClasses="border-2 border-black"/>
+                    </CategoryContainer>
+                    <CategoryContainer title="Powtórz hasło">
+                        <Input type="password" name="confirmPassword" additionalClasses="border-2 border-black"/>
+                    </CategoryContainer>
+                </BodyOfSection>
+            </>
+            }
 
             <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
             <BodyOfSection additionalClasses="my-4">
                 <CategoryContainer title="Preferowane miejsce pracy">
                     <select {...register("expectedTypeWork")} value={studentData.student_expected_type_work}
-                            className="h-10 bg-neutral input">
+                            className="h-10 bg-neutral input border-2 border-black">
                         <option value={ExpectedTypeWork.DM}>{ExpectedTypeWork.DM}</option>
                         <option value={ExpectedTypeWork.office}>{ExpectedTypeWork.office}</option>
                         <option value={ExpectedTypeWork.hybrid}>{ExpectedTypeWork.hybrid}</option>
@@ -113,12 +180,12 @@ export const StudentCvForm = ({studentData}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Docelowe miasto, gdzie chce pracować kandydat">
-                    <Input type="text" name="targetWorkCity"/>
+                    <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black"/>
                 </CategoryContainer>
 
                 <CategoryContainer title="Oczekiwany typ kontraktu">
                     <select {...register("expectedContractType")} value={studentData.student_expected_contract_type}
-                            className="h-10 bg-neutral input max-w-fit px-0">
+                            className="h-10 bg-neutral input max-w-fit px-0 border-2 border-black">
                         <option value={ExpectedContractType.none}>{ExpectedContractType.none}</option>
                         <option value={ExpectedContractType.employ}>{ExpectedContractType.employ}</option>
                         <option value={ExpectedContractType.contract}>{ExpectedContractType.contract}</option>
@@ -127,7 +194,7 @@ export const StudentCvForm = ({studentData}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN]">
-                    <Input type="text" name="expectedSalary"/>
+                    <Input type="text" name="expectedSalary" additionalClasses="border-2 border-black"/>
                 </CategoryContainer>
 
                 <CategoryContainer title="Zgoda na odbycie miesięcznych praktyk/stażu na początek" justifyCenter>
@@ -135,46 +202,74 @@ export const StudentCvForm = ({studentData}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Komercyjne doświadczenie w programowaniu [miesiące]">
-                    <Input type="number" name="monthsOfCommercialExp"/>
+                    <Input type="number" name="monthsOfCommercialExp" additionalClasses="border-2 border-black"/>
                 </CategoryContainer>
             </BodyOfSection>
 
             <TitleOfSection title="Biografia"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base" {...register("bio")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("bio")}
                                   defaultValue={studentData.student_bio}/>
             </BodyOfSection>
 
             <TitleOfSection title="Edukacja"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base" {...register("education")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("education")}
                                   defaultValue={studentData.student_education}/>
             </BodyOfSection>
 
             <TitleOfSection title="Kursy"/>
             <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base" {...register("courses")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("courses")}
                                   defaultValue={studentData.student_courses}/>
             </BodyOfSection>
 
+            <TitleOfSection title="Doświadczenie zawodowe"/>
+            <BodyOfSection additionalClasses="my-4">
+                        <textarea rows={6}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("workExperience")}
+                                  defaultValue={studentData.student_courses}/>
+            </BodyOfSection>
 
+            <TitleOfSection title="Portfolio"/>
+            <BodyOfSection additionalClasses="my-4">
+                <CategoryContainer title="Link główny:">
+                    <Input type="url" name="portfolioUrl1" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
 
-                    {/*<label> portfolioUrls:*/}
-                    {/*    <Input type="text" name="githubUsername" placeholder="Github nickname" disabled/>*/}
-                    {/*</label>*/}
-                    {/*<label> portfolioUrls:*/}
-                    {/*    <Input type="text" name="githubUsername" placeholder="Github nickname" disabled/>*/}
-                    {/*</label>*/}
-                    {/*<label> portfolioUrls:*/}
-                    {/*    <Input type="text" name="githubUsername" placeholder="Github nickname" disabled/>*/}
-                    {/*</label>*/}
+                <CategoryContainer title="Link dodatkowy:">
+                    <Input type="url" name="portfolioUrl2" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
+            </BodyOfSection>
 
+            <TitleOfSection title="Projekt w zespole Scrumowym"/>
+            <BodyOfSection additionalClasses="my-4">
+                <CategoryContainer title="Link do repozytorium:">
+                    <Input type="url" name="bonusProjectUrl1" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
+                <CategoryContainer title="Link do kodu własnego (commity):">
+                    <Input type="url" name="bonusProjectUrl2" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
+                <CategoryContainer title="Link do code review:">
+                    <Input type="url" name="bonusProjectUrl3" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
+            </BodyOfSection>
 
-                    <button>Zapisz</button>
-
+            <TitleOfSection title="Projekt na zaliczenie"/>
+            <BodyOfSection additionalClasses="my-4">
+                <CategoryContainer title="Link 1:">
+                    <Input type="url" name="projectUrl1" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
+                <CategoryContainer title="Link dodatkowy:">
+                    <Input type="url" name="projectUrl2" additionalClasses="border-2 border-black"/>
+                </CategoryContainer>
+            </BodyOfSection>
+            <button
+                className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none mb-10">Zapisz
+            </button>
         </FormProvider>
     </form>
 };

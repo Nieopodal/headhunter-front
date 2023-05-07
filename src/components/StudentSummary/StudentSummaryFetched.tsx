@@ -5,13 +5,14 @@ import {useFetch} from "../../hooks/useFetch";
 import {StudentCv} from "../../types/StudentCv";
 
 export const StudentSummaryFetched = () => {
-    const {user} = useContext(UserContext);
+    const {user, rerender} = useContext(UserContext);
     const {fetchApi, data, apiError} = useFetch();
     useEffect(() => {
         (async () => {
             await fetchApi(user, `http://localhost:3000/student/cv/${user?.id}`, "GET", "Wystąpił błąd");
         })();
-    }, []);
+        console.log('refresh')
+    }, [rerender]);
 
     if (apiError) return <p>{apiError}</p>
 

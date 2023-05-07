@@ -15,10 +15,10 @@ import {StudentDashboardView} from "../../views/StudentDashboardView";
 export const App = () => {
     const {error, findUser, loading} = useAuth();
     const [user, setUser] = useState<TemporaryUserEntity | null>(null);
+    const [rerender, setRerender] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
-            console.log(user);
             await findUser();
         })();
     }, []);
@@ -28,6 +28,8 @@ export const App = () => {
         setUser,
         error,
         isLoading: loading,
+        rerender: rerender,
+        setRerender: () => setRerender(prev => !prev),
     }}>
         <DashboardContainer>
             {/*<TempModal userName={userName}/>*/}

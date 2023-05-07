@@ -5,11 +5,11 @@ interface Props {
     type: string;
     name: string;
     placeholder?: string;
-    customClasses?: string;
+    additionalClasses?: string;
     disabled?: boolean;
 }
 
-export const Input = ({type, name, customClasses, placeholder, disabled}: Props) => {
+export const Input = ({type, name, additionalClasses, placeholder, disabled}: Props) => {
     const {register} = useFormContext()
 
     return <input
@@ -17,6 +17,6 @@ export const Input = ({type, name, customClasses, placeholder, disabled}: Props)
         disabled={disabled}
         placeholder={placeholder}
         {...register(name)}
-        className={customClasses ?? "h-10 bg-neutral input placeholder:text-neutral-content"}
+        className={`${additionalClasses} h-10 bg-neutral input placeholder:text-neutral-content`}
     />
 };
