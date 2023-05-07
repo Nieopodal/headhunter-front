@@ -4,7 +4,7 @@ import {StarsSection} from "../CvSections/StarsSection";
 import {ExpectationCategory} from "../CvSections/ExpectationCategory";
 import {OneLink} from "../CvSections/OneLink";
 import {StudentCv} from "../../types/StudentCv";
-import {monthDeclension} from "../../helpers/formatting";
+import {monthDeclension, numberWithSpaces} from "../../helpers/formatting";
 import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 
 interface Props {
@@ -28,7 +28,7 @@ export const StudentCvInfo = ({studentData}: Props) => {
             <ExpectationCategory title="Preferowane miejsce pracy" body={studentData.student_expected_type_work}/>
             <ExpectationCategory title="Docelowe miasto, gdzie chce pracować kandydat" body={studentData.student_target_work_city}/>
             <ExpectationCategory title="Oczekiwany typ kontraktu" body={studentData.student_expected_contract_type}/>
-            <ExpectationCategory title="Oczekiwane wynagrodzenie miesięczne netto" body={`${studentData.student_expected_salary} zł`}/>
+            <ExpectationCategory title="Oczekiwane wynagrodzenie miesięczne netto" body={`${numberWithSpaces(studentData.student_expected_salary)} zł`}/>
             <ExpectationCategory title="Zgoda na odbycie miesięcznych praktyk/stażu na początek" body={studentData.student_can_take_apprenticeship === 1 ? "TAK" : "NIE"}/>
             <ExpectationCategory title="Komercyjne doświadczenie w programowaniu" body={`${studentData.student_months_of_commercial_exp} ${monthDeclension(studentData.student_months_of_commercial_exp)}`}/>
         </BodyOfSection>
