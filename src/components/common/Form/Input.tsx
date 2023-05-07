@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const Input = ({type, name, additionalClasses, placeholder, disabled, required, min, max, minLength, maxLength}: Props) => {
-    const {register} = useFormContext()
+    const {register} = useFormContext();
 
     return <input
         type={type}
