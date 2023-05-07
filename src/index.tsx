@@ -3,10 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import {App} from './components/App/App';
 import {BrowserRouter} from "react-router-dom";
-import {HrView} from "./views/HrView/HrView";
-import {Modal} from "./components/common/Modal";
-import {log} from "util";
-import {ModalProvider} from "./contexts/modal.context";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -14,8 +10,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <ModalProvider><HrView/></ModalProvider>
+            <App/>
         </BrowserRouter>
     </React.StrictMode>
 );
-
