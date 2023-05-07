@@ -10,6 +10,7 @@ import {PasswordReset} from "../PasswordReset/PasswordReset";
 import {DashboardView} from "../../views/DashboardView";
 import {DashboardContainer} from "../common/DashboardContainer";
 import {UserRole} from "../../types/UserRole";
+import {ModalProvider} from "../../contexts/modal.context";
 
 export const App = () => {
     const {error, findUser, loading} = useAuth();
@@ -17,7 +18,6 @@ export const App = () => {
 
     useEffect(() => {
         (async () => {
-            console.log(user);
             await findUser();
         })();
     }, []);
@@ -28,6 +28,7 @@ export const App = () => {
         error,
         isLoading: loading,
     }}>
+        <ModalProvider>
         <DashboardContainer>
             {/*<TempModal userName={userName}/>*/}
             <Routes>
@@ -69,6 +70,7 @@ export const App = () => {
 
             </Routes>
         </DashboardContainer>
+        </ModalProvider>
     </UserContext.Provider>
 };
 
