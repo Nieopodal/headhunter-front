@@ -188,7 +188,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
             <BodyOfSection additionalClasses="my-4">
                 <CategoryContainer title="Preferowane miejsce pracy">
-                    <select {...register("expectedTypeWork")} value={studentData.student_expected_type_work}
+                    <select {...register("expectedTypeWork")} defaultValue={studentData.student_expected_type_work}
                             className="h-10 bg-neutral input border-2 border-black">
                         <option value={ExpectedTypeWork.DM}>{ExpectedTypeWork.DM}</option>
                         <option value={ExpectedTypeWork.office}>{ExpectedTypeWork.office}</option>
@@ -203,7 +203,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 </CategoryContainer>
 
                 <CategoryContainer title="Oczekiwany typ kontraktu">
-                    <select {...register("expectedContractType")} value={studentData.student_expected_contract_type}
+                    <select {...register("expectedContractType")} defaultValue={studentData.student_expected_contract_type}
                             className="h-10 bg-neutral input max-w-fit px-0 border-2 border-black">
                         <option value={ExpectedContractType.none}>{ExpectedContractType.none}</option>
                         <option value={ExpectedContractType.employ}>{ExpectedContractType.employ}</option>
