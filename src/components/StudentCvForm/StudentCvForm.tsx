@@ -1,15 +1,16 @@
 import {StudentCv} from "../../types/StudentCv";
-import {Input} from "../common/Form/Input";
+import * as yup from 'yup';
 import React, {useContext} from "react";
+import {yupResolver} from "@hookform/resolvers/yup";
 import {FormProvider, useForm} from "react-hook-form";
+import {Input} from "../common/Form/Input";
 import {TitleOfSection} from "../CvSections/TitleOfSection";
 import {BodyOfSection} from "../CvSections/BodyOfSection";
 import {CategoryContainer} from "../CvSections/CategoryContainer";
 import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
-import * as yup from 'yup';
-import {yupResolver} from "@hookform/resolvers/yup";
+import {useNavigate} from "react-router-dom";
 
 export enum ExpectedTypeWork {
     office = 'Na miejscu',
@@ -36,9 +37,9 @@ interface StudentFormData {
     portfolioUrl2: string | null;
     projectUrl1: string | null;
     projectUrl2: string | null;
-    bonusProjectUrl1: string | null;
-    bonusProjectUrl2: string | null;
-    bonusProjectUrl3: string | null;
+    scrumProjectUrl1: string | null;
+    scrumProjectUrl2: string | null;
+    scrumProjectUrl3: string | null;
     bio: string;
     expectedTypeWork: ExpectedTypeWork;
     targetWorkCity: string;
@@ -59,12 +60,30 @@ interface Props {
 }
 
 export const StudentCvForm = ({studentData, newUser}: Props) => {
-    console.log(studentData)
+
     const {user, setRerender} = useContext(UserContext);
-    const {fetchApi, data: dataFromApi, apiError} = useFetch();
+    const {fetchApi, apiError} = useFetch();
+    const navigate = useNavigate();
 
     const validationSchema = yup.object({
-        expectedSalary: yup.number().integer().min(0).max(9999.99, 'Dostępne kwoty 0 - 9999.99'),
+
+        contactNumber: yup.number().integer().min(111111).max(9999999999999999999).required(),
+        githubUsername: yup.string().min(3).max(255).required(),
+        portfolioUrl1: yup.string().min(10).max(255).required(),
+        portfolioUrl2: yup.string().max(255).notRequired(),
+        projectUrl1: yup.string().min(10).max(255).required(),
+        projectUrl2: yup.string().max(255).notRequired(),
+        scrumProjectUrl1: yup.string().min(10).max(255).required(),
+        scrumProjectUrl2: yup.string().min(10).max(255).required(),
+        scrumProjectUrl3: yup.string().min(10).max(255).required(),
+        expectedTypeWork: yup.string().required(),
+        targetWorkCity: yup.string().min(2).max(60).required(),
+        expectedContractType: yup.string().required(),
+        monthsOfCommercialExp: yup.number().min(0).max(9999).required(),
+        education: yup.string().max(1000),
+        workExperience: yup.string().max(1000),
+        courses: yup.string().max(1000),
+        expectedSalary: yup.number().integer().min(0).max(9999.99, 'Dostępne kwoty: 0 - 9999.99'),
         password: yup.string(),
         confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
             return this.parent.password === value
@@ -83,9 +102,9 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             portfolioUrl2: arrayFromStringHandler(studentData.student_portfolio_urls)[1],
             projectUrl1: arrayFromStringHandler(studentData.student_project_urls)[0],
             projectUrl2: arrayFromStringHandler(studentData.student_project_urls)[1],
-            bonusProjectUrl1: arrayFromStringHandler(studentData.student_bonus_project_urls)[0],
-            bonusProjectUrl2: arrayFromStringHandler(studentData.student_bonus_project_urls)[1],
-            bonusProjectUrl3: arrayFromStringHandler(studentData.student_bonus_project_urls)[2],
+            scrumProjectUrl1: arrayFromStringHandler(studentData.student_scrum_project_urls)[0],
+            scrumProjectUrl2: arrayFromStringHandler(studentData.student_scrum_project_urls)[1],
+            scrumProjectUrl3: arrayFromStringHandler(studentData.student_scrum_project_urls)[2],
             bio: studentData.student_bio,
             expectedTypeWork: studentData.student_expected_type_work,
             targetWorkCity: studentData.student_target_work_city,
@@ -119,7 +138,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
             courses: data.courses,
             portfolioUrls: [data.portfolioUrl1, data.portfolioUrl2].filter(Boolean),
             projectUrls: [data.projectUrl1, data.projectUrl2].filter(Boolean),
-            bonusProjectUrls: [data.bonusProjectUrl1, data.bonusProjectUrl2, data.bonusProjectUrl3].filter(Boolean),
+            scrumProjectUrls: [data.scrumProjectUrl1, data.scrumProjectUrl2, data.scrumProjectUrl3].filter(Boolean),
         };
         let finalFormData;
         if (newUser) {
@@ -132,9 +151,8 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 ...initFormData,
             };
         }
-
-        await fetchApi(user, `http://localhost:3000/student/update/${user?.id}`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json");
-
+        await fetchApi(user, `http://localhost:3000/student/update`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json");
+        if (!apiError) navigate('/dashboard', {replace: true});
         setRerender();
     };
 
@@ -156,25 +174,25 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                     <Input type="text" name="lastName" disabled/>
                 </CategoryContainer>
 
-                <CategoryContainer title="Nick w Github">
+                <CategoryContainer title="Nick w Github"  error={!!errors?.githubUsername}>
                     <Input type="text" name="githubUsername" additionalClasses="border-2 border-black" required
                            maxLength={50}/>
                 </CategoryContainer>
 
-                <CategoryContainer title="Telefon">
-                    <Input type="tel" name="contactNumber" additionalClasses="border-2 border-black" required
-                           maxLength={20}/>
+                <CategoryContainer title="Telefon"  error={!!errors?.contactNumber}>
+                    <Input type="number" name="contactNumber" additionalClasses="border-2 border-black" required
+                           maxLength={20} minLength={6}/>
                 </CategoryContainer>
             </BodyOfSection>
 
             {newUser && <>
                 <TitleOfSection title="Ustaw hasło"/>
                 <BodyOfSection additionalClasses="my-4">
-                    <CategoryContainer title="Hasło">
+                    <CategoryContainer title="Hasło"  error={!!errors?.password}>
                         <Input type="password" name="password" additionalClasses="border-2 border-black" required
                                minLength={7} maxLength={255}/>
                     </CategoryContainer>
-                    <CategoryContainer title="Powtórz hasło">
+                    <CategoryContainer title="Powtórz hasło"  error={!!errors?.confirmPassword}>
                         <Input type="password" name="confirmPassword" additionalClasses="border-2 border-black" required
                                minLength={7} maxLength={255}/>
                     </CategoryContainer>
@@ -187,9 +205,9 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
 
             <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
             <BodyOfSection additionalClasses="my-4">
-                <CategoryContainer title="Preferowane miejsce pracy">
+                <CategoryContainer title="Preferowane miejsce pracy"  error={!!errors?.expectedTypeWork}>
                     <select {...register("expectedTypeWork")} defaultValue={studentData.student_expected_type_work}
-                            className="h-10 bg-neutral input border-2 border-black">
+                            className="h-10 bg-neutral input border-2 border-black" required>
                         <option value={ExpectedTypeWork.DM}>{ExpectedTypeWork.DM}</option>
                         <option value={ExpectedTypeWork.office}>{ExpectedTypeWork.office}</option>
                         <option value={ExpectedTypeWork.hybrid}>{ExpectedTypeWork.hybrid}</option>
@@ -198,12 +216,13 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                     </select>
                 </CategoryContainer>
 
-                <CategoryContainer title="Docelowe miasto, gdzie chce pracować kandydat">
-                    <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black"/>
+                <CategoryContainer title="Docelowe miasto, gdzie chce pracować kandydat"  error={!!errors?.targetWorkCity}>
+                    <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black" required minLength={3} maxLength={60}/>
                 </CategoryContainer>
 
-                <CategoryContainer title="Oczekiwany typ kontraktu">
-                    <select {...register("expectedContractType")} defaultValue={studentData.student_expected_contract_type}
+                <CategoryContainer title="Oczekiwany typ kontraktu"  error={!!errors?.expectedContractType}>
+                    <select {...register("expectedContractType")}
+                            defaultValue={studentData.student_expected_contract_type}
                             className="h-10 bg-neutral input max-w-fit px-0 border-2 border-black">
                         <option value={ExpectedContractType.none}>{ExpectedContractType.none}</option>
                         <option value={ExpectedContractType.employ}>{ExpectedContractType.employ}</option>
@@ -212,7 +231,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                     </select>
                 </CategoryContainer>
 
-                <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN]">
+                <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN]" error={!!errors?.expectedSalary}>
                     <Input type="number" name="expectedSalary" additionalClasses="border-2 border-black" min={0}
                            max={9999999.99}/>
                 </CategoryContainer>
@@ -221,7 +240,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                     <input type="checkbox" {...register("canTakeApprenticeship")} className="checkbox"/>
                 </CategoryContainer>
 
-                <CategoryContainer title="Komercyjne doświadczenie w programowaniu [miesiące]">
+                <CategoryContainer title="Komercyjne doświadczenie w programowaniu [miesiące]"  error={!!errors?.monthsOfCommercialExp}>
                     <Input type="number" name="monthsOfCommercialExp" additionalClasses="border-2 border-black" min={0}
                            max={9999} required/>
                 </CategoryContainer>
@@ -261,42 +280,43 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
 
             <TitleOfSection title="Portfolio"/>
             <BodyOfSection additionalClasses="my-4">
-                <CategoryContainer title="Link główny:">
+                <CategoryContainer title="Link główny:"  error={!!errors?.portfolioUrl1}>
                     <Input type="url" name="portfolioUrl1" additionalClasses="border-2 border-black" required
                            maxLength={255}/>
                 </CategoryContainer>
 
-                <CategoryContainer title="Link dodatkowy:">
+                <CategoryContainer title="Link dodatkowy:"  error={!!errors?.portfolioUrl2}>
                     <Input type="url" name="portfolioUrl2" additionalClasses="border-2 border-black" maxLength={255}/>
                 </CategoryContainer>
             </BodyOfSection>
 
             <TitleOfSection title="Projekt w zespole Scrumowym"/>
             <BodyOfSection additionalClasses="my-4">
-                <CategoryContainer title="Link do repozytorium:">
-                    <Input type="url" name="bonusProjectUrl1" additionalClasses="border-2 border-black" required
+                <CategoryContainer title="Link do repozytorium:"  error={!!errors?.scrumProjectUrl1}>
+                    <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black" required
                            maxLength={255}/>
                 </CategoryContainer>
-                <CategoryContainer title="Link do kodu własnego (commity):">
-                    <Input type="url" name="bonusProjectUrl2" additionalClasses="border-2 border-black" required
+                <CategoryContainer title="Link do kodu własnego (commity):" error={!!errors?.scrumProjectUrl2}>
+                    <Input type="url" name="scrumProjectUrl2" additionalClasses="border-2 border-black" required
                            maxLength={255}/>
                 </CategoryContainer>
-                <CategoryContainer title="Link do code review:">
-                    <Input type="url" name="bonusProjectUrl3" additionalClasses="border-2 border-black" required
+                <CategoryContainer title="Link do code review:" error={!!errors?.scrumProjectUrl3}>
+                    <Input type="url" name="scrumProjectUrl3" additionalClasses="border-2 border-black" required
                            maxLength={255}/>
                 </CategoryContainer>
             </BodyOfSection>
 
             <TitleOfSection title="Projekt na zaliczenie"/>
             <BodyOfSection additionalClasses="my-4">
-                <CategoryContainer title="Link 1:">
+                <CategoryContainer title="Link 1:" error={!!errors?.projectUrl1}>
                     <Input type="url" name="projectUrl1" additionalClasses="border-2 border-black" required
                            maxLength={255}/>
                 </CategoryContainer>
-                <CategoryContainer title="Link dodatkowy:">
+                <CategoryContainer title="Link dodatkowy:" error={!!errors?.projectUrl2}>
                     <Input type="url" name="projectUrl2" additionalClasses="border-2 border-black" maxLength={255}/>
                 </CategoryContainer>
             </BodyOfSection>
+            {apiError && <p className="font-bold text-red-500">{apiError}</p>}
             <button
                 className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none mb-10">Zapisz
             </button>

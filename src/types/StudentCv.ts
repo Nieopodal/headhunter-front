@@ -17,7 +17,7 @@ export interface StudentCv {
     student_months_of_commercial_exp: number
     student_portfolio_urls: string;
     student_project_urls: string;
-    student_bonus_project_urls: string;
+    student_scrum_project_urls: string;
     student_project_degree:number;
     student_target_work_city: string;
     student_team_project_degree: number;
