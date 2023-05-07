@@ -12,8 +12,6 @@ interface Props {
 }
 
 export const StudentCvInfo = ({studentData}: Props) => {
-
-    console.log(studentData)
     return <>
         <TitleOfSection title="Oceny"/>
         <BodyOfSection>

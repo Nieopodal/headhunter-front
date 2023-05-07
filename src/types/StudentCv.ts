@@ -1,4 +1,4 @@
-import {ExpectedContractType, ExpectedTypeWork} from "../components/StudentCvForm/StudentCvForm";
+import {ExpectedContractType, ExpectedTypeWork } from "types";
 
 export interface StudentCv {
     student_courses: string;

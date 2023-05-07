@@ -11,21 +11,7 @@ import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
 import {useNavigate} from "react-router-dom";
-
-export enum ExpectedTypeWork {
-    office = 'Na miejscu',
-    move = 'Przeprowadzka',
-    remote = 'Praca zdalna',
-    hybrid = 'Praca hybrydowa',
-    DM = 'Nie ma znaczenia',
-} //@TODO: remove and import from types, when BE is ready
-
-export enum ExpectedContractType {
-    B2B = 'Możliwe B2B',
-    employ = 'Tylko umowa o pracę',
-    contract = 'Umowa zlecenie / dzieło',
-    none = 'Brak preferencji',
-}//@TODO: remove and import from types, when BE is ready
+import {ExpectedContractType, ExpectedTypeWork } from "types";
 
 interface StudentFormData {
     email: string;
