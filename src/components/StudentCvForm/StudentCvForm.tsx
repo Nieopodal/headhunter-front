@@ -83,7 +83,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
         education: yup.string().max(1000),
         workExperience: yup.string().max(1000),
         courses: yup.string().max(1000),
-        expectedSalary: yup.number().integer().min(0).max(9999.99, 'Dostępne kwoty: 0 - 9999.99'),
+        expectedSalary: yup.number().integer().min(0).max(9999999.99, 'Dostępne kwoty: 0 - 9999.99'),
         password: yup.string(),
         confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
             return this.parent.password === value
