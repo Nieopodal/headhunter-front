@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {BiSearch} from "react-icons/bi";
 import {FaFilter} from "react-icons/fa";
 import {SampleStudent, sampleStudents} from "../../helpers/sampleStudents";
@@ -9,6 +9,9 @@ import {HrPagination} from "./HrPagination";
 import { useModal } from '../../hooks/useModal'
 import {FilteringModal} from "./FilteringModal";
 import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
+import {useFetch} from "../../hooks/useFetch";
+import {UserContext} from "../../contexts/user.context";
+import {AvailableStudentsResponse} from "../../types/AvailableStudentsResponse";
 
 
 export const HrView = () => {
@@ -18,8 +21,10 @@ export const HrView = () => {
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
     const [maxStudentsPerPage, setMaxStudentsPerPage] = useState(5);
-    const [filteringCriteria, setFilteringCriteria] = useState<HrFilteringCriteria | null>(null)
-    const { setModal } = useModal()
+    const [filteringCriteria, setFilteringCriteria] = useState<HrFilteringCriteria | null>(null);
+    const {fetchApi, apiError, data, apiLoading} = useFetch();
+    const { setModal } = useModal();
+    const {user} = useContext(UserContext);
 
 
     const handleFiltering = (data: HrFilteringCriteria) => {
@@ -45,13 +50,23 @@ export const HrView = () => {
         } else setCurrentPageNr(prev => prev + 1)
     }
 
-    useEffect(() => {
+    useEffect( () => {
         // @TODO: actual fetch should be used here to get students and total pages nr. Fetch api route conditionally based on viewmode (different route for viewmode Available Students and different for Students to Interview.
-        const totalStudents = sampleStudents
+
+        // if (viewMode === HrViewMode.AvailableStudents) {}
+
+        (async () => {
+            await fetchApi(user, `http://localhost:3000/hr/available`, "GET", "Wystąpił błąd");
+            console.log('oto dane:', data)
+        })();
+
+        console.log('hi')
+
+        const totalStudents = data as AvailableStudentsResponse[]
         const splitNr = maxStudentsPerPage
 
         // Temporary function for simulating pagination @ backend. It splits into chunks.
-        const result = totalStudents.reduce((resultArray: any, item: SampleStudent, index) => {
+        const result = totalStudents.reduce((resultArray: any, item: AvailableStudentsResponse, index) => {
             const chunkIndex = Math.floor(index / splitNr)
             if (!resultArray[chunkIndex]) {
                 resultArray[chunkIndex] = [] //start a new chunk
