@@ -27,7 +27,7 @@ export const PasswordReset = () => {
                                 type="email"
                                 placeholder="E-mail"
                                 name="email"
-                                customClasses="h-10 bg-neutral input text-3xl tracking-widest placeholder:tracking-normal placeholder:text-base placeholder:text-neutral-content"
+                                additionalClasses="h-10 bg-neutral input text-3xl tracking-widest placeholder:tracking-normal placeholder:text-base placeholder:text-neutral-content"
                             />
                         </div>
                         <div className="items-center flex flex-row place-content-between align-middle mt-6">

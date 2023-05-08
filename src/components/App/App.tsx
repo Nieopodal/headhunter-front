@@ -11,10 +11,12 @@ import {DashboardView} from "../../views/DashboardView";
 import {DashboardContainer} from "../common/DashboardContainer";
 import {UserRole} from "../../types/UserRole";
 import {ModalProvider} from "../../contexts/modal.context";
+import {StudentDashboardView} from "../../views/StudentDashboardView";
 
 export const App = () => {
     const {error, findUser, loading} = useAuth();
     const [user, setUser] = useState<TemporaryUserEntity | null>(null);
+    const [rerender, setRerender] = useState<boolean>(false);
 
     useEffect(() => {
         (async () => {
@@ -27,6 +29,8 @@ export const App = () => {
         setUser,
         error,
         isLoading: loading,
+        rerender: rerender,
+        setRerender: () => setRerender(prev => !prev),
     }}>
         <ModalProvider>
         <DashboardContainer>
@@ -56,14 +60,14 @@ export const App = () => {
                     }
                 />
 
-                {/*<Route*/}
-                {/*    path='/change-cv'*/}
-                {/*    element={*/}
-                {/*        <PrivateRoute */}
-                {/*            outlet={< xxxx />} */}
-                {/*            accessFor={[UserRole.Student]}/>*/}
-                {/*    }*/}
-                {/*/>*/}
+                <Route
+                    path='/change-cv'
+                    element={
+                        <PrivateRoute
+                            outlet={<StudentDashboardView showAsForm/>}
+                            accessFor={[UserRole.Student]}/>
+                    }
+                />
 
                 {/*<Route path='/see-cv'/>  to chyba jako zwykły dashboard dla usera?*/}
                 {/*<Route path='/got-employed'/> to chyba nie musi być osobna ścieżka, tylko sam fetch na BE*/}
