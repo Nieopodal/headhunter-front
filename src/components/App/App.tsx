@@ -10,6 +10,7 @@ import {PasswordReset} from "../PasswordReset/PasswordReset";
 import {DashboardView} from "../../views/DashboardView";
 import {DashboardContainer} from "../common/DashboardContainer";
 import {UserRole} from "../../types/UserRole";
+import {ModalProvider} from "../../contexts/modal.context";
 import {StudentDashboardView} from "../../views/StudentDashboardView";
 
 export const App = () => {
@@ -31,6 +32,7 @@ export const App = () => {
         rerender: rerender,
         setRerender: () => setRerender(prev => !prev),
     }}>
+        <ModalProvider>
         <DashboardContainer>
             {/*<TempModal userName={userName}/>*/}
             <Routes>
@@ -72,6 +74,7 @@ export const App = () => {
 
             </Routes>
         </DashboardContainer>
+        </ModalProvider>
     </UserContext.Provider>
 };
 

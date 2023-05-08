@@ -6,6 +6,10 @@ import {SingleStudent} from "./SingleStudent";
 import {HrViewMode} from "../../types/HrViewMode"
 import {HrTab} from "./HrTab";
 import {HrPagination} from "./HrPagination";
+import { useModal } from '../../hooks/useModal'
+import {FilteringModal} from "./FilteringModal";
+import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
+
 
 export const HrView = () => {
 
@@ -14,7 +18,14 @@ export const HrView = () => {
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
     const [maxStudentsPerPage, setMaxStudentsPerPage] = useState(5);
+    const [filteringCriteria, setFilteringCriteria] = useState<HrFilteringCriteria | null>(null)
+    const { setModal } = useModal()
 
+
+    const handleFiltering = (data: HrFilteringCriteria) => {
+        setFilteringCriteria(data);
+        console.log(data)
+    }
 
     const setMaxPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
         /* @TODO: useFetch to set max records per page @ backend */
@@ -50,7 +61,7 @@ export const HrView = () => {
         }, []);
         setTotalPagesNr(result.length);
         setStudents(result[currentPageNr - 1]);
-    }, [viewMode, maxStudentsPerPage, currentPageNr]);
+    }, [viewMode, maxStudentsPerPage, currentPageNr, filteringCriteria]);
 
     return (
         <>
@@ -67,7 +78,7 @@ export const HrView = () => {
                                text={`Do rozmowy`}/>
 
                     </div>
-                    <div className="w-full px-5">
+                    <div className="w-full px-5 pb-5">
                         <div className="py-4 border-b-[3px] place-content-between border-base-200 flex">
 
                             <div className="input-group flex items-center relative">
@@ -76,10 +87,11 @@ export const HrView = () => {
                                 <BiSearch className="fill-neutral-500 absolute left-[15px] scale-[110%]"/>
                             </div>
 
-                            <div
+                            <button
+                                onClick={() => {setModal(<FilteringModal handleFiltering={handleFiltering}/>)}}
                                 className="cursor-pointer w-min-fit px-4 flex items-center justify-center text-neutral-500 bg-base-200 gap-1.5">
                                 <FaFilter className="fill-neutral-500 min-w-[15%] min-h-[15%]"/>Filtrowanie
-                            </div>
+                            </button>
 
                         </div>
                         <div className="flex flex-col bg-base-200 gap-3">
