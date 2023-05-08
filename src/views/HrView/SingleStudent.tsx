@@ -5,10 +5,11 @@ import {SingleStudentGrade} from "./SingleStudentGrade";
 import {SingleStudentPreferenceItem} from "./SingleStudentPrefernceItem";
 import {HrViewMode} from "../../types/HrViewMode";
 import {SingleStudentTitleBar} from "./SingleStudentTitleBar";
+import {AvailableStudentsResponse} from "../../types/AvailableStudentsResponse";
 
 
 type Props = {
-    studentData: SampleStudent;
+    studentData: AvailableStudentsResponse;
     viewMode: HrViewMode
 }
 
@@ -27,36 +28,36 @@ export const SingleStudent = (props: Props) => {
                 className="flex flex-row gap-0.5 bg-base-300 collapse-content p-0 max-lg:overflow-x-scroll max-lg:scroll-mx-96">
                 <SingleStudentGrade
                     title={`Ocena przejścia kursu`}
-                    grade={props.studentData.courseCompletion}
+                    grade={props.studentData.student_course_completion}
                 />
 
                 <SingleStudentGrade
                     title={`Ocena aktywności i zaangażowania na kursie`}
-                    grade={props.studentData.courseEngagment}/>
+                    grade={props.studentData.student_course_engagement}/>
 
                 <SingleStudentGrade
                     title={`Ocena kodu w projekcie własnym`}
-                    grade={props.studentData.projectDegree}
+                    grade={props.studentData.student_project_degree}
                 />
 
                 <SingleStudentGrade
                     title={`Ocena pracy w zespole w Scrum`}
-                    grade={props.studentData.teamProjectDegree}
+                    grade={props.studentData.student_team_project_degree}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Preferowane miejsce pracy`}
-                    description={props.studentData.expectedTypeWork}
+                    description={props.studentData.student_expected_type_work}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Docelowe miasto, gdzie chce pracować kandydat`}
-                    description={props.studentData.targetWorkCity}
+                    description={props.studentData.student_target_work_city}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Oczekiwany typ kontraktu`}
-                    description={props.studentData.expectedContractType}
+                    description={props.studentData.student_target_work_city} //@TODO: change this to the proper one
                 />
 
                 <SingleStudentPreferenceItem
@@ -64,17 +65,17 @@ export const SingleStudent = (props: Props) => {
                     description={numberWithSpaces(Intl.NumberFormat(undefined, {
                         currency: "PLN",
                         style: "currency"
-                    }).format(props.studentData.expectedSalary))}
+                    }).format(props.studentData.student_expected_salary))}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Zgoda na odbycie bezpłatnych praktyk/stażu na początek`}
-                    description={props.studentData.canTakeApprenticeship}
+                    description={props.studentData.student_can_take_apprenticeship}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Komercyjne doświadczenie w programowaniu`}
-                    description={props.studentData.monthsOfCommercialExp + ' ' + monthDeclension(props.studentData.monthsOfCommercialExp)}
+                    description={props.studentData.student_months_of_commercial_exp + ' ' + monthDeclension(props.studentData.student_months_of_commercial_exp)}
                 />
             </div>
         </div>
