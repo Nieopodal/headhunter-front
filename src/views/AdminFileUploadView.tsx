@@ -1,70 +1,48 @@
-import React, {ChangeEvent, useState} from 'react';
-import {Loader} from "../components/common/Loader";
-import {GoBack} from "../components/common/GoBack";
+import React from 'react';
+import * as yup from "yup";
+import {FormProvider, useForm} from "react-hook-form";
+import {SmallFormContainer} from "../components/common/SmallFormContainer";
+import {Input} from "../components/common/Form/Input";
+import {yupResolver} from "@hookform/resolvers/yup";
+
+interface FormData {
+    file: File[];
+}
 
 export const AdminFileUploadView = () => {
-    const [file, setFile] = useState<File>();
-    const [isUploading, setIsUploading] = useState(false);
 
-    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setFile(e.target.files[0]);
-        }
-    };
+    const validationSchema = yup.object().shape({
+        file: yup
+            .mixed<File[]>()
+            .required("Nie wybrano pliku.")
+            .test("oneFile", "Nie wybrano pliku.", (value) => (
+                value.length === 1
+            ))
+            .test("fileType", "Wybierz plik .csv", value => (
+                value[0] && "text/csv".includes(value[0].type)
+            ))
+            .test('fileSize', "Maksymalny rozmiar pliku to 1MB", value => (
+                value[0] && value[0].size <= 1024 * 1024
+            ))
+    });
 
-    const handleUploadClick = async () => {
-        if (!file) {
-            return;
-        }
+    const methods = useForm<FormData>({
+        resolver: yupResolver(validationSchema),
+    });
 
-        setIsUploading(true);
+    const {handleSubmit, formState: {errors}} = methods;
 
-        try {
+    return <SmallFormContainer title="Dodawanie kursantów do bazy danych"
+                               description="Skorzystaj z poniższego pola, aby wysłać plik .csv">
+        <form onSubmit={handleSubmit(data => console.log(data))}>
+            <FormProvider {...methods}>
+                <Input type="file" name="file" customClasses="file-input file-input-bordered w-full max-w-xs"/>
 
-            const res = await fetch('https://httpbin.org/post', {
-                method: 'POST',
-                body: file,
-                // 👇 Ustawienie nagłówków
-                headers: {
-                    'content-type': file.type,
-                    'content-length': `${file.size}`, // 👈 Nagłówki muszą być stringiem
-                },
-            });
-            const response = await res.json();
-            console.log(response);
-            if (response.isSuccess === "true") {
-                return <h1>Zaktualizowano bazę kursantów</h1>// 👈 Obsługa sukcesu
-            }
-
-        } catch (e: unknown) {
-            if (e instanceof Error)
-                throw new Error(e.message); // 👈 Obsługa błędu
-        } finally {
-            setIsUploading(false);
-        }
-    };
-
-    if (isUploading) {
-        return <div className="flex flex-col items-center h-screen w-full"><Loader/></div>;
-    }
-
-    return <div className="flex flex-col items-center justify-start w-full mt-10">
-            <div className="">
-                <div className="mb-7"><GoBack/></div>
-                <div className="flex flex-col">
-                    <div className="flex flex-col justify-start mb-10">
-                        <h1 className="text-2xl font-bold">Dodawanie kursantów do bazy danych</h1>
-                        <p className="text-base font-normal">Skorzystaj z poniższego pola, aby wysłać plik .csv</p>
-                    </div>
-                    <div>
-                        <input type="file" className="file-input file-input-bordered w-full max-w-xs"
-                               onChange={handleFileChange}/>
-
-                        <button className="btn-md mx-10 btn-primary normal-case font-normal text-base rounded-none"
-                                onClick={handleUploadClick}>Prześlij plik
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <button className="btn-md mx-10 btn-primary normal-case font-normal text-base rounded-none">
+                    Prześlij plik
+                </button>
+                {errors?.file && <p className="text-red-500 my-1">{errors.file.message}</p>}
+            </FormProvider>
+        </form>
+    </SmallFormContainer>
 };
