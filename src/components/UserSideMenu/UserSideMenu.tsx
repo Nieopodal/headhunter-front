@@ -31,7 +31,7 @@ export const UserSideMenu = () => {
                     <RiUserSearchLine className="h-6 w-6"/>
                 </MenuOption>
 
-                <MenuOption text="Zmień swoje dane" url="#">
+                <MenuOption text="Zmień swoje dane" url="/change-cv">
                     <RiUserSettingsLine className="h-6 w-6"/>
                 </MenuOption>
 

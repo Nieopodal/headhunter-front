@@ -4,17 +4,29 @@ import {useFormContext} from "react-hook-form";
 interface Props {
     type: string;
     name: string;
-    placeholder: string;
-    customClasses?: string;
+    placeholder?: string;
+    additionalClasses?: string;
+    disabled?: boolean;
+    required?: boolean;
+    min?: number;
+    max?: number;
+    minLength?: number;
+    maxLength?: number
 }
 
-export const Input = ({type, name, customClasses, placeholder}: Props) => {
-    const {register} = useFormContext()
+export const Input = ({type, name, additionalClasses, placeholder, disabled, required, min, max, minLength, maxLength}: Props) => {
+    const {register} = useFormContext();
 
     return <input
         type={type}
+        disabled={disabled}
         placeholder={placeholder}
         {...register(name)}
-        className={customClasses ?? "h-10 bg-neutral input input placeholder:text-neutral-content"}
+        required={required}
+        min={min}
+        max={max}
+        minLength={minLength}
+        maxLength={maxLength}
+        className={`${additionalClasses} h-10 bg-neutral input placeholder:text-neutral-content`}
     />
 };
