@@ -109,10 +109,10 @@ export const HrView = () => {
 
                     <div className="flex flex-row w-full items-start pt-2 border-b-[3px] border-base-200">
 
-                        <HrTab onClick={() => setViewMode(HrViewMode.AvailableStudents)}
+                        <HrTab onClick={() => {setViewMode(HrViewMode.AvailableStudents); setCurrentPageNr(1)}}
                                highlighted={viewMode === HrViewMode.AvailableStudents ?? true}
                                text={`Dostępni kursanci`}/>
-                        <HrTab onClick={() => setViewMode(HrViewMode.StudentsToInterview)}
+                        <HrTab onClick={() => {setViewMode(HrViewMode.StudentsToInterview); setCurrentPageNr(1)}}
                                highlighted={viewMode === HrViewMode.StudentsToInterview ?? true}
                                text={`Do rozmowy`}/>
 
