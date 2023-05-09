@@ -1,7 +1,6 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {BiSearch} from "react-icons/bi";
 import {FaFilter} from "react-icons/fa";
-// import {SampleStudent, sampleStudents} from "../../helpers/sampleStudents";
 import {HrViewMode} from "../../types/HrViewMode"
 import {HrTab} from "./HrTab";
 import {HrPagination} from "./HrPagination";
