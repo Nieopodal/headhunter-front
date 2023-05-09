@@ -1,27 +1,28 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {BiSearch} from "react-icons/bi";
 import {FaFilter} from "react-icons/fa";
-import {HrViewMode} from "../../types/HrViewMode"
-import {HrTab} from "./HrTab";
-import {HrPagination} from "./HrPagination";
-import {useModal} from '../../hooks/useModal'
-import {FilteringModal} from "./FilteringModal";
-import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
-import {useFetch} from "../../hooks/useFetch";
-import {UserContext} from "../../contexts/user.context";
-import {AvailableStudentsResponse} from "../../types/AvailableStudentsResponse";
-import {Loader} from "../../components/common/Loader";
-import {StudentToInterview} from "../../../../headhunter-back/src/types/student";
-import {SingleStudent} from "./SingleStudent";
+import {HrViewMode} from "../types/HrViewMode"
+import {HrTab} from "../components/HrViewElements/HrTab";
+import {HrPagination} from "../components/HrViewElements/HrPagination";
+import {useModal} from '../hooks/useModal'
+import {FilteringModal} from "../components/HrViewElements/FilteringModal";
+import {HrFilteringCriteria} from "../types/HrFilteringCriteria";
+import {UserContext} from "../contexts/user.context";
+import {AvailableStudentsResponse} from "../types/AvailableStudentsResponse";
+import {StudentToInterview} from "../../../headhunter-back/src/types/student";
+import {SingleStudent} from "../components/HrViewElements/SingleStudent";
 
+type Props = {
+    handleViewMode: (viewMode: HrViewMode) => void;
+    studentList: AvailableStudentsResponse[] | StudentToInterview[];
+    viewMode: HrViewMode;
+}
 
-export const HrView = () => {
+export const HrView = ({handleViewMode, studentList, viewMode}: Props) => {
 
     const {setModal} = useModal();
     const {user} = useContext(UserContext);
-    const {apiLoading} = useFetch();
-    const [students, setStudents] = useState<AvailableStudentsResponse[] | StudentToInterview[]>([]);
-    const [viewMode, setViewMode] = useState<HrViewMode>(HrViewMode.AvailableStudents);
+    const [paginatedStudents, setPaginatedStudents] = useState<AvailableStudentsResponse[] | StudentToInterview[]>([]);
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
     const [maxStudentsPerPage, setMaxStudentsPerPage] = useState(5);
@@ -51,7 +52,6 @@ export const HrView = () => {
     }
 
     useEffect(() => {
-        const fetchData = async (viewMode: HrViewMode) => {
 
             function paginate(data: Array<any>) {
                 const totalStudents = data
@@ -67,40 +67,9 @@ export const HrView = () => {
                 setTotalPagesNr(result.length);
                 return result[currentPageNr - 1];
             }
+            setPaginatedStudents(paginate(studentList))
 
-            if (viewMode === HrViewMode.AvailableStudents) {
-                const res = await fetch(`http://localhost:3000/hr/available`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Authorization": `Bearer ${user?.access_token}`,
-                    }
-                });
-                const data = await res.json();
-                const paginated = paginate(data.payload as AvailableStudentsResponse[]);
-                setStudents(paginated);
-            }
-
-            if (viewMode === HrViewMode.StudentsToInterview) {
-                const res = await fetch(`http://localhost:3000/hr/interview`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Authorization": `Bearer ${user?.access_token}`,
-                    }
-                });
-                const data = await res.json();
-                const paginated = paginate(data.payload as StudentToInterview[]);
-                setStudents(paginated);
-            }
-        };
-
-        void fetchData(viewMode);
-
-
-    }, [viewMode, currentPageNr, maxStudentsPerPage]);
-
-    if (apiLoading) return <Loader/>
+    }, [currentPageNr, maxStudentsPerPage, studentList]);
 
     return (
         <>
@@ -109,10 +78,10 @@ export const HrView = () => {
 
                     <div className="flex flex-row w-full items-start pt-2 border-b-[3px] border-base-200">
 
-                        <HrTab onClick={() => {setViewMode(HrViewMode.AvailableStudents); setCurrentPageNr(1)}}
+                        <HrTab onClick={() => {handleViewMode(HrViewMode.AvailableStudents); setCurrentPageNr(1)}}
                                highlighted={viewMode === HrViewMode.AvailableStudents ?? true}
                                text={`Dostępni kursanci`}/>
-                        <HrTab onClick={() => {setViewMode(HrViewMode.StudentsToInterview); setCurrentPageNr(1)}}
+                        <HrTab onClick={() => {handleViewMode(HrViewMode.StudentsToInterview); setCurrentPageNr(1)}}
                                highlighted={viewMode === HrViewMode.StudentsToInterview ?? true}
                                text={`Do rozmowy`}/>
 
@@ -137,7 +106,7 @@ export const HrView = () => {
                         </div>
                         <div className="flex flex-col bg-base-200 gap-3">
 
-                            {students?.map((student: AvailableStudentsResponse | StudentToInterview, index) =>
+                            {paginatedStudents?.map((student: AvailableStudentsResponse | StudentToInterview, index) =>
                                 <SingleStudent
                                     key={index}
                                     viewMode={viewMode}
