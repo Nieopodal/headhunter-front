@@ -16,17 +16,15 @@ type Props = {
 export const SingleStudent = ({studentData, viewMode}: Props) => {
 
 
-    const courseCompletion = ("student_course_completion" in studentData) ? studentData.student_course_completion : 0;
-    const courseEngagement = ("student_course_engagement" in studentData) ? studentData.student_course_engagement : 0;
-    const projectDegree = ("student_project_degree" in studentData) ? studentData.student_project_degree : 0;
-    const scrumDegree = ("student_team_project_degree" in studentData) ? studentData.student_team_project_degree : 0;
-    const typeWork = ("student_expected_type_work" in studentData) ? studentData.student_expected_type_work : "";
-    const workCity = ("student_target_work_city" in studentData) ? studentData.student_target_work_city : "";
-    const salary = ("student_expected_salary" in studentData) ? studentData.student_expected_salary : 0;
-    const takeAppr = ("student_can_take_apprenticeship" in studentData) ? studentData.student_can_take_apprenticeship : 0;
-    const commExp = ("student_months_of_commercial_exp" in studentData) ? studentData.student_months_of_commercial_exp : 0;
-
-
+    const courseCompletion = ("student_course_completion" in studentData) ? studentData.student_course_completion : studentData.courseCompletion;
+    const courseEngagement = ("student_course_engagement" in studentData) ? studentData.student_course_engagement : studentData.courseEngagement;
+    const projectDegree = ("student_project_degree" in studentData) ? studentData.student_project_degree : studentData.projectDegree;
+    const scrumDegree = ("student_team_project_degree" in studentData) ? studentData.student_team_project_degree : studentData.teamProjectDegree;
+    const typeWork = ("student_expected_type_work" in studentData) ? studentData.student_expected_type_work : studentData.expectedTypeWork;
+    const workCity = ("student_target_work_city" in studentData) ? studentData.student_target_work_city : studentData.targetWorkCity;
+    const salary = ("student_expected_salary" in studentData) ? studentData.student_expected_salary : studentData.expectedSalary;
+    const takeAppr = ("student_can_take_apprenticeship" in studentData) ? studentData.student_can_take_apprenticeship : studentData.canTakeApprenticeship;
+    const commExp = ("student_months_of_commercial_exp" in studentData) ? studentData.student_months_of_commercial_exp : studentData.monthsOfCommercialExp;
 
     return (<>
         <div tabIndex={0} className="collapse collapse-arrow rounded-box ">
@@ -78,7 +76,7 @@ export const SingleStudent = ({studentData, viewMode}: Props) => {
                     description={numberWithSpaces(Intl.NumberFormat(undefined, {
                         currency: "PLN",
                         style: "currency"
-                    }).format(salary))}
+                    }).format(Number(salary)))}
                 />
 
                 <SingleStudentPreferenceItem

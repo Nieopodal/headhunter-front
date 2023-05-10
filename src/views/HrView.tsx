@@ -67,7 +67,7 @@ export const HrView = ({handleViewMode, studentList, viewMode}: Props) => {
                 setTotalPagesNr(result.length);
                 return result[currentPageNr - 1];
             }
-            setPaginatedStudents(paginate(studentList))
+            setPaginatedStudents(paginate(studentList));
 
     }, [currentPageNr, maxStudentsPerPage, studentList]);
 
