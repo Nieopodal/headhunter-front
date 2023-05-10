@@ -1,10 +1,19 @@
 import logo from "../../assets/logo.png";
-import React from "react";
+import React, {useContext} from "react";
+import {useNavigate} from "react-router-dom";
+import {UserContext} from "../../contexts/user.context";
 
 interface Props {
     classes: string;
 }
 
-export const AppLogo = ({classes}: Props) => (
-    <img className={classes} src={logo} alt="logo"/>
-);
+
+
+export const AppLogo = ({classes}: Props) => {
+    const {user} = useContext(UserContext)
+
+    const navigate = useNavigate()
+    return(
+        <img onClick={() => navigate(user ? `/dashboard` : `/`)} className={classes} src={logo} alt="logo"/>
+    );
+}
