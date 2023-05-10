@@ -40,12 +40,10 @@ export const AdminFileUploadView = () => {
         resolver: yupResolver(validationSchema),
     });
 
-
     const formSubmitHandler = async (data: FormData) => {
         const formData = new FormData();
         formData.append("file", data.file[0]);
         await fetchApi(user, `${apiUrl}/admin/upload/file`, "POST", "Wystąpił błąd", formData);
-        console.log({apiData, apiError})
     };
 
     const {handleSubmit, formState: {errors}} = methods;
