@@ -9,6 +9,7 @@ import {UserContext} from "../../contexts/user.context";
 import {useNavigate} from "react-router-dom";
 import {ExpectedContractType, ExpectedTypeWork} from "types";
 import {StudentCvFormSections} from "./StudentCvFormSections";
+import {apiUrl} from "../../config/api";
 
 interface StudentFormData {
     email: string;
@@ -134,7 +135,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 ...initFormData,
             };
         }
-        await fetchApi(user, `http://localhost:3000/student/update`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json");
+        await fetchApi(user, `${apiUrl}/student/update`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json");
         if (!apiError) navigate('/dashboard', {replace: true});
         setRerender();
     };
