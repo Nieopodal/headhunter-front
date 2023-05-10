@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import * as yup from "yup";
 import {FormProvider, useForm} from "react-hook-form";
 import {SmallFormContainer} from "../components/common/SmallFormContainer";
 import {Input} from "../components/common/Form/Input";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {UserContext} from "../contexts/user.context";
+import {useFetch} from "../hooks/useFetch";
+import {apiUrl} from "../config/api";
 
 interface FormData {
     file: File[];
 }
 
 export const AdminFileUploadView = () => {
+    const {user} = useContext(UserContext);
+    const {fetchApi, apiError, data: apiData} = useFetch();
 
     const validationSchema = yup.object().shape({
         file: yup
@@ -30,11 +35,19 @@ export const AdminFileUploadView = () => {
         resolver: yupResolver(validationSchema),
     });
 
+
+    const formSubmitHandler = async (data: FormData) => {
+        const formData = new FormData();
+        formData.append("file", data.file[0]);
+        await fetchApi(user, `${apiUrl}/admin/upload/file`, "POST", "Wystąpił błąd", formData);
+        console.log({apiData, apiError})
+    };
+
     const {handleSubmit, formState: {errors}} = methods;
 
     return <SmallFormContainer title="Dodawanie kursantów do bazy danych"
                                description="Skorzystaj z poniższego pola, aby wysłać plik .csv">
-        <form onSubmit={handleSubmit(data => console.log(data))}>
+        <form onSubmit={handleSubmit(data => formSubmitHandler(data))}>
             <FormProvider {...methods}>
                 <Input type="file" name="file" customClasses="file-input file-input-bordered w-full max-w-xs"/>
 
