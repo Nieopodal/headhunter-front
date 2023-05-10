@@ -11,10 +11,11 @@ interface Props {
     min?: number;
     max?: number;
     minLength?: number;
-    maxLength?: number
+    maxLength?: number;
+    customClasses?: string;
 }
 
-export const Input = ({type, name, additionalClasses, placeholder, disabled, required, min, max, minLength, maxLength}: Props) => {
+export const Input = ({type, name, additionalClasses, placeholder, disabled, required, min, max, minLength, maxLength, customClasses}: Props) => {
     const {register} = useFormContext();
 
     return <input
@@ -27,6 +28,6 @@ export const Input = ({type, name, additionalClasses, placeholder, disabled, req
         max={max}
         minLength={minLength}
         maxLength={maxLength}
-        className={`${additionalClasses} h-10 bg-neutral input placeholder:text-neutral-content`}
+        className={`${additionalClasses} ${customClasses ?? 'h-10 bg-neutral input placeholder:text-neutral-content'}`}
     />
 };
