@@ -7,14 +7,19 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import {UserContext} from "../contexts/user.context";
 import {useFetch} from "../hooks/useFetch";
 import {apiUrl} from "../config/api";
+import {Loader} from "../components/common/Loader";
 
 interface FormData {
     file: File[];
 }
 
+interface ApiData {
+    numberAddedStudents: number;
+}
+
 export const AdminFileUploadView = () => {
     const {user} = useContext(UserContext);
-    const {fetchApi, apiError, data: apiData} = useFetch();
+    const {fetchApi, apiError, data: apiData, apiLoading} = useFetch();
 
     const validationSchema = yup.object().shape({
         file: yup
@@ -45,6 +50,8 @@ export const AdminFileUploadView = () => {
 
     const {handleSubmit, formState: {errors}} = methods;
 
+    if (apiLoading) return <div className="mx-auto w-fit"><Loader/></div>
+
     return <SmallFormContainer title="Dodawanie kursantów do bazy danych"
                                description="Skorzystaj z poniższego pola, aby wysłać plik .csv">
         <form onSubmit={handleSubmit(data => formSubmitHandler(data))}>
@@ -55,6 +62,8 @@ export const AdminFileUploadView = () => {
                     Prześlij plik
                 </button>
                 {errors?.file && <p className="text-red-500 my-1">{errors.file.message}</p>}
+                {(apiData as ApiData) && <p className="my-2 text-green-500">Pomyślnie załadowano plik. Dodanych studentów: {(apiData as ApiData).numberAddedStudents}.</p>}
+                {apiError && <p className="my-2 text-red-500">Akcja zakończona niepowodzeniem: {apiError}.</p>}
             </FormProvider>
         </form>
     </SmallFormContainer>
