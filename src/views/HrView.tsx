@@ -1,26 +1,32 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {BiSearch} from "react-icons/bi";
 import {FaFilter} from "react-icons/fa";
-import {SampleStudent, sampleStudents} from "../../helpers/sampleStudents";
-import {SingleStudent} from "./SingleStudent";
-import {HrViewMode} from "../../types/HrViewMode"
-import {HrTab} from "./HrTab";
-import {HrPagination} from "./HrPagination";
-import { useModal } from '../../hooks/useModal'
-import {FilteringModal} from "./FilteringModal";
-import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
+import {HrViewMode} from "../types/HrViewMode"
+import {HrTab} from "../components/HrViewElements/HrTab";
+import {HrPagination} from "../components/HrViewElements/HrPagination";
+import {useModal} from '../hooks/useModal'
+import {FilteringModal} from "../components/HrViewElements/FilteringModal";
+import {HrFilteringCriteria} from "../types/HrFilteringCriteria";
+import {UserContext} from "../contexts/user.context";
+import {AvailableStudentsResponse} from "../types/AvailableStudentsResponse";
+import {StudentToInterview} from "../../../headhunter-back/src/types/student";
+import {SingleStudent} from "../components/HrViewElements/SingleStudent";
 
+type Props = {
+    handleViewMode: (viewMode: HrViewMode) => void;
+    studentList: AvailableStudentsResponse[] | StudentToInterview[];
+    viewMode: HrViewMode;
+}
 
-export const HrView = () => {
+export const HrView = ({handleViewMode, studentList, viewMode}: Props) => {
 
-    const [viewMode, setViewMode] = useState<HrViewMode>(HrViewMode.AvailableStudents);
-    const [students, setStudents] = useState<SampleStudent[]>(sampleStudents);
+    const {setModal} = useModal();
+    const {user} = useContext(UserContext);
+    const [paginatedStudents, setPaginatedStudents] = useState<AvailableStudentsResponse[] | StudentToInterview[]>([]);
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
     const [maxStudentsPerPage, setMaxStudentsPerPage] = useState(5);
-    const [filteringCriteria, setFilteringCriteria] = useState<HrFilteringCriteria | null>(null)
-    const { setModal } = useModal()
-
+    const [filteringCriteria, setFilteringCriteria] = useState<HrFilteringCriteria | null>(null);
 
     const handleFiltering = (data: HrFilteringCriteria) => {
         setFilteringCriteria(data);
@@ -30,7 +36,7 @@ export const HrView = () => {
     const setMaxPerPage = (e: React.ChangeEvent<HTMLSelectElement>) => {
         /* @TODO: useFetch to set max records per page @ backend */
         e.preventDefault();
-        setMaxStudentsPerPage(prev => Number(e.target.value));
+        setMaxStudentsPerPage(Number(e.target.value));
     }
 
     const prevPage = () => {
@@ -46,34 +52,36 @@ export const HrView = () => {
     }
 
     useEffect(() => {
-        // @TODO: actual fetch should be used here to get students and total pages nr. Fetch api route conditionally based on viewmode (different route for viewmode Available Students and different for Students to Interview.
-        const totalStudents = sampleStudents
-        const splitNr = maxStudentsPerPage
 
-        // Temporary function for simulating pagination @ backend. It splits into chunks.
-        const result = totalStudents.reduce((resultArray: any, item: SampleStudent, index) => {
-            const chunkIndex = Math.floor(index / splitNr)
-            if (!resultArray[chunkIndex]) {
-                resultArray[chunkIndex] = [] //start a new chunk
+            function paginate(data: Array<any>) {
+                const totalStudents = data
+                const splitNr = maxStudentsPerPage
+                const result = totalStudents.reduce((resultArray: any, item: any, index: number) => {
+                    const chunkIndex = Math.floor(index / splitNr)
+                    if (!resultArray[chunkIndex]) {
+                        resultArray[chunkIndex] = []
+                    }
+                    resultArray[chunkIndex].push(item)
+                    return resultArray
+                }, []);
+                setTotalPagesNr(result.length);
+                return result[currentPageNr - 1];
             }
-            resultArray[chunkIndex].push(item)
-            return resultArray
-        }, []);
-        setTotalPagesNr(result.length);
-        setStudents(result[currentPageNr - 1]);
-    }, [viewMode, maxStudentsPerPage, currentPageNr, filteringCriteria]);
+            setPaginatedStudents(paginate(studentList));
+
+    }, [currentPageNr, maxStudentsPerPage, studentList]);
 
     return (
         <>
             <div className="flex justify-center items-center w-full mt-4">
-                <div className="flex flex-col place-content-between bg-base-300 items-center w-[1430px]">
+                <div className="flex flex-col place-content-between bg-base-300 items-center max-w-[1430px]">
 
                     <div className="flex flex-row w-full items-start pt-2 border-b-[3px] border-base-200">
 
-                        <HrTab onClick={() => setViewMode(HrViewMode.AvailableStudents)}
+                        <HrTab onClick={() => {handleViewMode(HrViewMode.AvailableStudents); setCurrentPageNr(1)}}
                                highlighted={viewMode === HrViewMode.AvailableStudents ?? true}
                                text={`Dostępni kursanci`}/>
-                        <HrTab onClick={() => setViewMode(HrViewMode.StudentsToInterview)}
+                        <HrTab onClick={() => {handleViewMode(HrViewMode.StudentsToInterview); setCurrentPageNr(1)}}
                                highlighted={viewMode === HrViewMode.StudentsToInterview ?? true}
                                text={`Do rozmowy`}/>
 
@@ -88,14 +96,17 @@ export const HrView = () => {
                             </div>
 
                             <button
-                                onClick={() => {setModal(<FilteringModal handleFiltering={handleFiltering}/>)}}
+                                onClick={() => {
+                                    setModal(<FilteringModal handleFiltering={handleFiltering}/>)
+                                }}
                                 className="cursor-pointer w-min-fit px-4 flex items-center justify-center text-neutral-500 bg-base-200 gap-1.5">
                                 <FaFilter className="fill-neutral-500 min-w-[15%] min-h-[15%]"/>Filtrowanie
                             </button>
 
                         </div>
                         <div className="flex flex-col bg-base-200 gap-3">
-                            {students.map((student: SampleStudent, index) =>
+
+                            {paginatedStudents?.map((student: AvailableStudentsResponse | StudentToInterview, index) =>
                                 <SingleStudent
                                     key={index}
                                     viewMode={viewMode}
@@ -112,6 +123,5 @@ export const HrView = () => {
                     </div>
                 </div>
             </div>
-        </>
-    )
+        </>)
 }

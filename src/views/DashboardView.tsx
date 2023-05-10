@@ -1,8 +1,8 @@
 import {useContext} from "react";
 import {UserContext} from "../contexts/user.context";
 import {StudentDashboardView} from "./StudentDashboardView";
-import {HrView} from "./HrView/HrView";
 import {UserRole} from "../types/UserRole";
+import {HrDashboardView} from "./HrDashboardView";
 import {AdminView} from "./AdminView";
 
 export const DashboardView = () => {
@@ -10,6 +10,7 @@ export const DashboardView = () => {
 
     return <div>
         {user!.role === UserRole.Student && <StudentDashboardView/>}
+        {user!.role === UserRole.Hr && <HrDashboardView/>}
         {user!.role === UserRole.Hr && <HrView/>}
         {user!.role === UserRole.Admin && <AdminView/>}
         </div>
