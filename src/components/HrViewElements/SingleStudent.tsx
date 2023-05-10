@@ -11,9 +11,10 @@ import { StudentToInterview } from "../../../../headhunter-back/src/types/studen
 type Props = {
     studentData: AvailableStudentsResponse | StudentToInterview;
     viewMode: HrViewMode
+    handleViewMode: (viewMode: HrViewMode) => void
 }
 
-export const SingleStudent = ({studentData, viewMode}: Props) => {
+export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) => {
 
 
     const courseCompletion = ("student_course_completion" in studentData) ? studentData.student_course_completion : studentData.courseCompletion;
@@ -32,7 +33,7 @@ export const SingleStudent = ({studentData, viewMode}: Props) => {
 
             <div
                 className="flex flex-row place-content-between items-center collapse-title text-lg font-normal pl-5 pr-0 bg-base-300 after:text-neutral-500 after:scale-150">
-                <SingleStudentTitleBar viewMode={viewMode} studentData={studentData}/>
+                <SingleStudentTitleBar handleViewMode={handleViewMode} viewMode={viewMode} studentData={studentData}/>
             </div>
 
             <div

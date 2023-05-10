@@ -21,7 +21,6 @@ type Props = {
 export const HrView = ({handleViewMode, studentList, viewMode}: Props) => {
 
     const {setModal} = useModal();
-    const {user} = useContext(UserContext);
     const [paginatedStudents, setPaginatedStudents] = useState<AvailableStudentsResponse[] | StudentToInterview[]>([]);
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
@@ -110,6 +109,7 @@ export const HrView = ({handleViewMode, studentList, viewMode}: Props) => {
                                 <SingleStudent
                                     key={index}
                                     viewMode={viewMode}
+                                    handleViewMode={handleViewMode}
                                     studentData={student}/>)}
                         </div>
                     </div>
