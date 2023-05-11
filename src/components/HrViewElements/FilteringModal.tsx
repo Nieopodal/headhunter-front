@@ -2,11 +2,11 @@ import React from "react";
 import {yupResolver} from '@hookform/resolvers/yup'
 import {FormProvider, useForm} from 'react-hook-form'
 import {useModal} from "../../hooks/useModal";
-import {FilteringSlider} from "./FilteringSlider";
+import {DegreeField} from "./DegreeField";
 import {FilteringOptionButton} from "./FilteringOptionButton";
 import {FilteringSalaryField} from "./FilteringSalaryField";
 import {hrFilterSchema} from "../../helpers/hrFilterSchema";
-import {FilteringNumberOfMonths} from "./FilteringNumberOfMonths";
+import {FilteringNumericalInput} from "./FilteringNumericalInput";
 import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
 import {FilteringButtonsSection} from "./FilteringButtonsSection";
 
@@ -17,13 +17,7 @@ type Props = {
 export const FilteringModal = (props: Props) => {
 
     const {...methods} = useForm<HrFilteringCriteria>({
-        resolver: yupResolver(hrFilterSchema),
-        defaultValues: {
-            courseCompletion: "3",
-            courseEngagment: "3",
-            projectDegree: "3",
-            teamProjectDegree: "3",
-        }
+        resolver: yupResolver(hrFilterSchema)
     });
 
     const onFilterSearchSubmit = (data: HrFilteringCriteria) => props.handleFiltering(data);
@@ -50,17 +44,21 @@ export const FilteringModal = (props: Props) => {
                 <form onSubmit={methods.handleSubmit(onFilterSearchSubmit)}
                       className="flex flex-col w-full gap-3 leading-tight">
 
-                    {/*SLIDERS*/}
-                    <FilteringSlider
+                    {/* NUMERICAL INPUTS */}
+                    <DegreeField
+                        errorMsg={methods.formState.errors.courseCompletion?.message}
                         registerName={"courseCompletion"}
                         title="Min. ocena przejścia kursu"/>
-                    <FilteringSlider
+                    <DegreeField
+                        errorMsg={methods.formState.errors.courseEngagment?.message}
                         registerName={"courseEngagment"}
                         title="Min. ocena aktywności i zaangażowania na kursie"/>
-                    <FilteringSlider
+                    <DegreeField
+                        errorMsg={methods.formState.errors.projectDegree?.message}
                         registerName={"projectDegree"}
                         title="Min. ocena kodu w projekcie własnym"/>
-                    <FilteringSlider
+                    <DegreeField
+                        errorMsg={methods.formState.errors.teamProjectDegree?.message}
                         registerName={"teamProjectDegree"}
                         title="Min. ocena pracy w zespole w Scrum"/>
 
@@ -132,7 +130,8 @@ export const FilteringModal = (props: Props) => {
                     <div className="flex flex-col items-start gap-2 mt-3">
                         <span>Ilość miesięcy doświadczenia komercyjnego kandydata w programowaniu</span>
                         <div className="flex flex-row gap-3 items-center">
-                            <FilteringNumberOfMonths/>
+                            <FilteringNumericalInput registerName={`monthsOfCommercialExp`} placeholder={`Np. 3`}
+                                                     min={"0"}/>
                             <span
                                 className="text-xs text-primary ml-6">
                                 {methods.formState.errors.monthsOfCommercialExp?.message}

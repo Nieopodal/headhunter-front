@@ -1,10 +1,10 @@
 import * as yup from "yup";
 
 export const hrFilterSchema = yup.object().shape({
-    courseCompletion: yup.number().positive().integer().min(1).max(5).required(),
-    courseEngagment: yup.number().positive().integer().min(1).max(5).required(),
-    projectDegree: yup.number().positive().integer().min(1).max(5).required(),
-    teamProjectDegree: yup.number().positive().integer().min(1).max(5).required(),
+    courseCompletion: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
+    courseEngagment: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
+    projectDegree: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
+    teamProjectDegree: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
     expectedTypeWork: yup.array().min(1, 'Wybierz conajmniej jedną opcję z tej grupy').typeError("Pole niewypełnione"),
     expectedContractType: yup.array().min(1, 'Wybierz conajmniej jedną opcję z tej grupy').typeError("Pole niewypełnione"),
     minSalary: yup.number().positive().integer().min(1, 'Podaj minimalne wynagrodzenie').max(999999, 'Zbyt dużo cyfr').required('Podaj minimalne wynagrodzenie').typeError("Pole niewypełnione"),
