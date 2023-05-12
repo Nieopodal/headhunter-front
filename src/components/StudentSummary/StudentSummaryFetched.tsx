@@ -11,7 +11,6 @@ export const StudentSummaryFetched = () => {
         (async () => {
             await fetchApi(user, `http://localhost:3000/student/cv/`, "GET", "Wystąpił błąd");
         })();
-        console.log('refresh')
     }, [rerender]);
 
     if (apiError) return <p>{apiError}</p>
