@@ -13,6 +13,7 @@ import {UserRole} from "../../types/UserRole";
 import {ModalProvider} from "../../contexts/modal.context";
 import {StudentDashboardView} from "../../views/StudentDashboardView";
 import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
+import {StudentCvForHr} from "../StudentCvForHr";
 
 export const App = () => {
     const {error, findUser, loading} = useAuth();
@@ -68,6 +69,15 @@ export const App = () => {
                         <PrivateRoute
                             outlet={<StudentDashboardView showAsForm/>}
                             accessFor={[UserRole.Student]}/>
+                    }
+                />
+
+                <Route
+                    path='/student-cv/:studentId'
+                    element={
+                        <PrivateRoute
+                            outlet={<StudentCvForHr/>}
+                            accessFor={[UserRole.Hr]}/>
                     }
                 />
 
