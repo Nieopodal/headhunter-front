@@ -1,16 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import {BiSearch} from "react-icons/bi";
 import {FaFilter} from "react-icons/fa";
-import {HrViewMode} from "../types/HrViewMode"
-import {HrTab} from "../components/HrViewElements/HrTab";
-import {HrPagination} from "../components/HrViewElements/HrPagination";
-import {useModal} from '../hooks/useModal'
-import {FilteringModal} from "../components/HrViewElements/FilteringModal";
-import {HrFilteringCriteria} from "../types/HrFilteringCriteria";
-import {UserContext} from "../contexts/user.context";
-import {AvailableStudentsResponse} from "../types/AvailableStudentsResponse";
-import {StudentToInterview} from "../../../headhunter-back/src/types/student";
-import {SingleStudent} from "../components/HrViewElements/SingleStudent";
+import {HrViewMode} from "../../types/HrViewMode"
+import {HrTab} from "./HrTab";
+import {HrPagination} from "./HrPagination";
+import {useModal} from '../../hooks/useModal'
+import {FilteringModal} from "./FilteringModal";
+import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
+import {UserContext} from "../../contexts/user.context";
+import {AvailableStudentsResponse} from "../../types/AvailableStudentsResponse";
+import {StudentToInterview} from "../../../../headhunter-back/src/types/student";
+import {SingleStudent} from "./SingleStudent";
 
 type Props = {
     handleViewMode: (viewMode: HrViewMode) => void;
@@ -18,7 +18,7 @@ type Props = {
     viewMode: HrViewMode;
 }
 
-export const HrView = ({handleViewMode, studentList, viewMode}: Props) => {
+export const HrMainDisplay = ({handleViewMode, studentList, viewMode}: Props) => {
 
     const {setModal} = useModal();
     const [paginatedStudents, setPaginatedStudents] = useState<AvailableStudentsResponse[] | StudentToInterview[]>([]);

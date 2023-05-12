@@ -12,6 +12,7 @@ import {DashboardContainer} from "../common/DashboardContainer";
 import {UserRole} from "../../types/UserRole";
 import {ModalProvider} from "../../contexts/modal.context";
 import {StudentDashboardView} from "../../views/StudentDashboardView";
+import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
 import {StudentCvForHr} from "../StudentCvForHr";
 
 export const App = () => {
@@ -39,6 +40,7 @@ export const App = () => {
             <Routes>
                 <Route path="/" element={<LoginView/>}/>
                 <Route path='/reset-password' element={<PasswordReset/>}/>
+                <Route path='/reset-password/:id/:token' element={<PasswordSendNew/>}/>
                 <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
                 <Route
