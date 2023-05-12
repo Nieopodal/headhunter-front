@@ -50,9 +50,18 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
     const navigate = useNavigate();
 
     const validationSchema = yup.object({
-
+        githubUsername: yup.string().max(255).required().test('userExists', 'Użytkownik nie istnieje', (value) => {
+            return new Promise((resolve) => {
+                fetch(`https://api.github.com/users/${value}`)
+                    .then(res => {
+                        resolve(res.status === 200)
+                    })
+                    .catch(() => {
+                        resolve(false);
+                    })
+            });
+        }),
         contactNumber: yup.number().integer().min(111111).max(9999999999999999999).required(),
-        githubUsername: yup.string().min(3).max(255).required(),
         portfolioUrl1: yup.string().min(10).max(255).required(),
         portfolioUrl2: yup.string().max(255).notRequired(),
         projectUrl1: yup.string().min(10).max(255).required(),
@@ -67,7 +76,7 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
         education: yup.string().max(1000),
         workExperience: yup.string().max(1000),
         courses: yup.string().max(1000),
-        expectedSalary: yup.number().integer().min(0).max(9999999.99, 'Dostępne kwoty: 0 - 9999.99'),
+        expectedSalary: yup.number().integer().min(0).max(9999999.99, 'Dostępne kwoty: 0 - 9999999.99'),
         password: yup.string(),
         confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
             return this.parent.password === value
