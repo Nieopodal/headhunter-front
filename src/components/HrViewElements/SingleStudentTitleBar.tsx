@@ -8,6 +8,7 @@ import {apiUrl} from "../../config/api";
 import {useModal} from "../../hooks/useModal";
 import {SuccessMessage} from "../common/SuccessMessage";
 import {ErrorMessage} from "../common/ErrorMessage";
+import {useNavigate} from "react-router-dom";
 
 
 type Props = {
@@ -18,8 +19,8 @@ type Props = {
 
 export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: Props) => {
 
-
-    const {fetchApi, data, apiError} = useFetch();
+    const navigate = useNavigate();
+    const {fetchApi, apiError} = useFetch();
     const {user} = useContext(UserContext);
     const {setModal} = useModal();
 
@@ -67,18 +68,20 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
         <div className="flex flex-row items-center gap-3 mr-14">
             {viewMode === HrViewMode.StudentsToInterview ? <>
                 <button
-                    className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
+                    className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
+                    onClick={() => navigate(`/student-cv/${studentId}`, {replace: true})}
+                    >
                     Pokaż CV
                 </button>
 
                 <button
-                    onClick={async (e) => handleStudent(HrViewMode.AvailableStudents, `${firstName}`, `${lastName}`, `withdraw`, `został przeniesiony do listy dostępnych`)}
+                    onClick={async () => handleStudent(HrViewMode.AvailableStudents, `${firstName}`, `${lastName}`, `withdraw`, `został przeniesiony do listy dostępnych`)}
                     className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
                     Brak zainteresowania
                 </button>
 
                 <button
-                    onClick={async (e) => handleStudent(HrViewMode.AvailableStudents, `${firstName}`, `${lastName}`, `employed`, `został oznaczony jako zatrudniony`)}
+                    onClick={async () => handleStudent(HrViewMode.AvailableStudents, `${firstName}`, `${lastName}`, `employed`, `został oznaczony jako zatrudniony`)}
                     className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
                     Zatrudniony
                 </button>
@@ -86,7 +89,7 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
 
             {viewMode === HrViewMode.AvailableStudents ?
                 <button
-                    onClick={async (e) => handleStudent(HrViewMode.StudentsToInterview, `${firstName}`, `${lastName}`, `interview`, `został dodany do Twojej listy "Do rozmowy"`)}
+                    onClick={async () => handleStudent(HrViewMode.StudentsToInterview, `${firstName}`, `${lastName}`, `interview`, `został dodany do Twojej listy "Do rozmowy"`)}
                     className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
                     Zarezerwuj rozmowę
                 </button> : null}
