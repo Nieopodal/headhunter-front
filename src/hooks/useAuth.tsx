@@ -1,8 +1,8 @@
 import {useContext, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {TemporaryUserEntity, UserContext} from "../contexts/user.context";
 import {LoginFormData} from "../types/LoginFormData";
 import {apiUrl} from "../config/api";
-import {useNavigate} from "react-router-dom";
 import {useFetch} from "./useFetch";
 
 export const useAuth = () => {
@@ -13,13 +13,11 @@ export const useAuth = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const findUser = async () => {
-        // @TODO: this function should get new access token and actual user object!
         setLoading(true);
-        await fetchApi(user, `${apiUrl}/auth/refresh`, "POST", "Wystąpił nieznany błąd.");
-        if (data) {
+        const restoredUser = await fetchApi(user, `${apiUrl}/auth/user`, "GET", "Wystąpił nieznany błąd.");
+        if (restoredUser) {
             setUser({
-                ...user,
-                access_token: (data as TemporaryUserEntity).access_token,
+                ...restoredUser,
             } as TemporaryUserEntity);
         } else {
             setError(apiError);
@@ -42,6 +40,6 @@ export const useAuth = () => {
     };
 
     return {
-        user, setUser, error, setError, loginUser, findUser, loading
+        user, setUser, error, setError, loginUser, findUser, apiLoading: loading ,
     }
 };

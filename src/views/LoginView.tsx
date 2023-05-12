@@ -5,11 +5,12 @@ import {AppLogo} from "../components/Header/AppLogo";
 import {Input} from "../components/common/Form/Input";
 import {UserContext} from "../contexts/user.context";
 import {useNavigate} from "react-router-dom";
+import {Loader} from "../components/common/Loader";
 
 export const LoginView = () => {
     const navigate = useNavigate();
     const {user} = useContext(UserContext);
-    const {loginUser} = useAuth();
+    const {loginUser, findUser, apiLoading} = useAuth();
     const methods = useForm({
         defaultValues: {
             email: '',
@@ -18,10 +19,16 @@ export const LoginView = () => {
     });
 
     useEffect(() => {
-        if (user) navigate('/dashboard', {replace: true});
+        if (user) {
+            navigate('/dashboard', {replace: true});
+        } else {
+            (async () => {
+                await findUser();
+            })();
+        }
     }, []);
 
-    return <form onSubmit={methods.handleSubmit(data => loginUser(data))}>
+    if (!user && !apiLoading) return <form onSubmit={methods.handleSubmit(data => loginUser(data))}>
         <FormProvider {...methods}>
             <div className="flex flex-col items-center justify-center h-screen">
                 <div className="w-[350px] flex flex-col">
@@ -38,10 +45,6 @@ export const LoginView = () => {
                             Zapomniałeś hasła?
                         </a>
 
-                        {/*<span className="text-sm tracking-wider">*/}
-                        {/*    Nie masz konta? <a className="link font-bold">Zaloguj się</a>*/}
-                        {/*</span>*/}
-
                         <button
                             className="w-1/3 btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">
                             Zaloguj się
@@ -51,4 +54,6 @@ export const LoginView = () => {
             </div>
         </FormProvider>
     </form>
+
+    else return <Loader/>
 };
