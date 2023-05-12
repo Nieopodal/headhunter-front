@@ -39,6 +39,7 @@ export const StudentCvForHr = () => {
                         about={(apiData as StudentCv).student_bio}
                     />
                     <div className="mx-auto w-fit mt-4"><GoBack/></div>
+                {/*    @TODO: we need to change this later to match adobe xd*/}
                 </SideMenu>
 
                 <div className="w-full mx-2">
