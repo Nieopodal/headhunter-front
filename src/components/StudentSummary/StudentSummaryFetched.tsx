@@ -9,7 +9,7 @@ export const StudentSummaryFetched = () => {
     const {fetchApi, data, apiError} = useFetch();
     useEffect(() => {
         (async () => {
-            await fetchApi(user, `http://localhost:3000/student/cv/${user?.id}`, "GET", "Wystąpił błąd");
+            await fetchApi(user, `http://localhost:3000/student/cv/`, "GET", "Wystąpił błąd");
         })();
         console.log('refresh')
     }, [rerender]);
