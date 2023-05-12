@@ -24,16 +24,16 @@ export const StudentCvInfo = ({studentData}: Props) => {
         <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
         <BodyOfSection>
             <ExpectationCategory title="Preferowane miejsce pracy" body={studentData.student_expected_type_work}/>
-            <ExpectationCategory title="Docelowe miasto, gdzie chce pracować kandydat" body={studentData.student_target_work_city}/>
+            <ExpectationCategory title="Docelowe miasto, gdzie chce pracować kandydat" body={studentData.student_expected_salary.length > 0 ? studentData.student_target_work_city : 'Nie podano'}/>
             <ExpectationCategory title="Oczekiwany typ kontraktu" body={studentData.student_expected_contract_type}/>
-            <ExpectationCategory title="Oczekiwane wynagrodzenie miesięczne netto" body={`${numberWithSpaces(studentData.student_expected_salary)} zł`}/>
+            <ExpectationCategory title="Oczekiwane wynagrodzenie miesięczne netto" body={Number(studentData.student_expected_salary) > 0 ? numberWithSpaces(studentData.student_expected_salary) : ''}/>
             <ExpectationCategory title="Zgoda na odbycie miesięcznych praktyk/stażu na początek" body={studentData.student_can_take_apprenticeship === 1 ? "TAK" : "NIE"}/>
             <ExpectationCategory title="Komercyjne doświadczenie w programowaniu" body={`${studentData.student_months_of_commercial_exp} ${monthDeclension(studentData.student_months_of_commercial_exp)}`}/>
         </BodyOfSection>
 
         <TitleOfSection title="Edukacja"/>
         <BodyOfSection>
-            <div className="text-base">
+            <div className="text-base whitespace-pre-line">
                 {studentData.student_education}
             </div>
 
@@ -41,14 +41,14 @@ export const StudentCvInfo = ({studentData}: Props) => {
 
         <TitleOfSection title="Kursy"/>
         <BodyOfSection>
-            <div className="text-base">
+            <div className="text-bas whitespace-pre-line">
                 {studentData.student_courses}
             </div>
         </BodyOfSection>
 
         <TitleOfSection title="Doświadczenie zawodowe"/>
         <BodyOfSection>
-            <div className="text-base">
+            <div className="text-base whitespace-pre-line">
                 {studentData.student_work_experience}
             </div>
         </BodyOfSection>

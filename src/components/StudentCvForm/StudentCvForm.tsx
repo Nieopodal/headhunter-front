@@ -61,8 +61,11 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                     })
             });
         }),
-        contactNumber: yup.number().integer().min(111111).max(9999999999999999999).required(),
-        portfolioUrl1: yup.string().min(10).max(255).required(),
+        contactNumber: yup.number().integer().max(9999999999999999999)
+            .test('contactNumber', 'Podano nieprawidłowy format', value => (
+                !(value && (value.toString.length === 0 || value < 111111))
+            )),
+        portfolioUrl1: yup.string().max(255),
         portfolioUrl2: yup.string().max(255).notRequired(),
         projectUrl1: yup.string().min(10).max(255).required(),
         projectUrl2: yup.string().max(255).notRequired(),
@@ -70,13 +73,13 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
         scrumProjectUrl2: yup.string().min(10).max(255).required(),
         scrumProjectUrl3: yup.string().min(10).max(255).required(),
         expectedTypeWork: yup.string().required(),
-        targetWorkCity: yup.string().min(2).max(60).required(),
+        targetWorkCity: yup.string().max(60),
         expectedContractType: yup.string().required(),
         monthsOfCommercialExp: yup.number().min(0).max(9999).required(),
         education: yup.string().max(1000),
         workExperience: yup.string().max(1000),
         courses: yup.string().max(1000),
-        expectedSalary: yup.number().integer().min(0).max(9999999.99, 'Dostępne kwoty: 0 - 9999999.99'),
+        expectedSalary: yup.number().max(9999999.99, 'Dostępne kwoty: 0 - 9999999').notRequired(),
         password: yup.string(),
         confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
             return this.parent.password === value

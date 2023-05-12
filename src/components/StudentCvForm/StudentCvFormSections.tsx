@@ -31,13 +31,13 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
             </CategoryContainer>
 
             <CategoryContainer title="Nick w Github" error={!!errors?.githubUsername}>
-                <Input type="text" name="githubUsername" additionalClasses="border-2 border-black" required
-                       maxLength={50}/>
+                <Input type="text" name="githubUsername" additionalClasses="border-2 border-black"
+                       maxLength={60}/>
             </CategoryContainer>
 
-            <CategoryContainer title="Telefon" error={!!errors?.contactNumber}>
-                <Input type="number" name="contactNumber" additionalClasses="border-2 border-black" required
-                       maxLength={20} minLength={6}/>
+            <CategoryContainer title="Telefon (0 - brak)" error={!!errors?.contactNumber}>
+                <Input type="number" name="contactNumber" additionalClasses="border-2 border-black"
+                       maxLength={20}/>
             </CategoryContainer>
         </BodyOfSection>
 
@@ -73,8 +73,8 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
             </CategoryContainer>
 
             <CategoryContainer title="Docelowe miasto, gdzie chce pracować kandydat" error={!!errors?.targetWorkCity}>
-                <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black" required
-                       minLength={3} maxLength={60}/>
+                <Input type="text" name="targetWorkCity" additionalClasses="border-2 border-black"
+                       maxLength={60}/>
             </CategoryContainer>
 
             <CategoryContainer title="Oczekiwany typ kontraktu" error={!!errors?.expectedContractType}>
@@ -88,7 +88,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 </select>
             </CategoryContainer>
 
-            <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN]" error={!!errors?.expectedSalary}>
+            <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN] (0 - brak)" error={!!errors?.expectedSalary}>
                 <Input type="number" name="expectedSalary" additionalClasses="border-2 border-black" min={0}
                        max={9999999.99}/>
             </CategoryContainer>
@@ -108,7 +108,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
                                   maxLength={400}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("bio")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black whitespace-pre-line" {...register("bio")}
                                   defaultValue={studentData.student_bio}/>
         </BodyOfSection>
 
@@ -116,7 +116,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
                                   maxLength={1000}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("education")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black whitespace-pre-line" {...register("education")}
                                   defaultValue={studentData.student_education}/>
         </BodyOfSection>
 
@@ -124,7 +124,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
                                   maxLength={1000}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("courses")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black whitespace-pre-line" {...register("courses")}
                                   defaultValue={studentData.student_courses}/>
         </BodyOfSection>
 
@@ -132,7 +132,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         <BodyOfSection additionalClasses="my-4">
                         <textarea rows={6}
                                   maxLength={1000}
-                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black" {...register("workExperience")}
+                                  className=" h-24 bg-neutral p-2 mx-0 w-full placeholder:text-neutral-content text-base border-2 border-black whitespace-pre-line" {...register("workExperience")}
                                   defaultValue={studentData.student_courses}/>
         </BodyOfSection>
 
