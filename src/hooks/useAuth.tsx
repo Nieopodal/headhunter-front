@@ -7,7 +7,7 @@ import {useFetch} from "./useFetch";
 
 export const useAuth = () => {
     const navigate = useNavigate();
-    const {fetchApi, data, apiError} = useFetch();
+    const {fetchApi, apiError} = useFetch();
      const {user, setUser} = useContext(UserContext);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -28,18 +28,17 @@ export const useAuth = () => {
     const loginUser = async (formData: LoginFormData) => {
 
         setLoading(true);
-        await fetchApi(null, `${apiUrl}/auth/login`, "POST", "Wystąpił nieznany błąd.", formData, true, "application/json");
-        if (data) {
-            setUser(data as TemporaryUserEntity);
+        const loggedUser = await fetchApi(null, `${apiUrl}/auth/login`, "POST", "Wystąpił nieznany błąd.", formData, true, "application/json");
+        if (loggedUser) {
+            setUser(loggedUser as TemporaryUserEntity);
             navigate('/dashboard', {replace: true});
         } else {
             setError(apiError);
         }
         setLoading(false);
-
     };
 
     return {
-        user, setUser, error, setError, loginUser, findUser, apiLoading: loading ,
+        user, setUser, error, loginUser, findUser, apiLoading: loading,
     }
 };
