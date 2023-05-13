@@ -6,6 +6,7 @@ export interface TemporaryUserEntity {
     firstName: string;
     lastName: string;
     fullName?: string;
+    githubUsername?: string;
     email: string;
     access_token: string;
     role: UserRole;

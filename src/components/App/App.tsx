@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {LoginView} from "../../views/LoginView";
 import {useAuth} from "../../hooks/useAuth";
 import {TemporaryUserEntity, UserContext} from "../../contexts/user.context";
@@ -14,23 +14,20 @@ import {ModalProvider} from "../../contexts/modal.context";
 import {StudentDashboardView} from "../../views/StudentDashboardView";
 import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
 import {StudentCvForHr} from "../StudentCvForHr";
+import {Loader} from "../common/Loader";
 
 export const App = () => {
-    const {error, findUser, loading} = useAuth();
+    const {error, apiLoading} = useAuth();
     const [user, setUser] = useState<TemporaryUserEntity | null>(null);
     const [rerender, setRerender] = useState<boolean>(false);
 
-    useEffect(() => {
-        (async () => {
-            await findUser();
-        })();
-    }, []);
+    if (apiLoading) return <Loader/>
 
-    return <UserContext.Provider value={{
-        user,
+    else return <UserContext.Provider value={{
+        user: user,
         setUser,
         error,
-        isLoading: loading,
+        isLoading: apiLoading,
         rerender: rerender,
         setRerender: () => setRerender(prev => !prev),
     }}>
@@ -43,49 +40,46 @@ export const App = () => {
                 <Route path='/reset-password/:id/:token' element={<PasswordSendNew/>}/>
                 <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
-                <Route
-                    path="/add-students"
-                    element={
-                        <PrivateRoute
-                            outlet={<AdminFileUploadView/>}
-                            accessFor={[UserRole.Admin]}
-                        />
-                    }
-                />
+                    <Route
+                        path="/add-students"
+                        element={
+                            <PrivateRoute
+                                outlet={<AdminFileUploadView/>}
+                                accessFor={[UserRole.Admin]}
+                            />
+                        }
+                    />
 
-                <Route
-                    path="/add-hr"
-                    element={
-                        <PrivateRoute
-                            outlet={<AdminAddHrView/>}
-                            accessFor={[UserRole.Admin]}
-                        />
-                    }
-                />
+                    <Route
+                        path="/add-hr"
+                        element={
+                            <PrivateRoute
+                                outlet={<AdminAddHrView/>}
+                                accessFor={[UserRole.Admin]}
+                            />
+                        }
+                    />
 
-                <Route
-                    path='/change-cv'
-                    element={
-                        <PrivateRoute
-                            outlet={<StudentDashboardView showAsForm/>}
-                            accessFor={[UserRole.Student]}/>
-                    }
-                />
+                    <Route
+                        path='/change-cv'
+                        element={
+                            <PrivateRoute
+                                outlet={<StudentDashboardView showAsForm/>}
+                                accessFor={[UserRole.Student]}/>
+                        }
+                    />
 
-                <Route
-                    path='/student-cv/:studentId'
-                    element={
-                        <PrivateRoute
-                            outlet={<StudentCvForHr/>}
-                            accessFor={[UserRole.Hr]}/>
-                    }
-                />
+                    <Route
+                        path='/student-cv/:studentId'
+                        element={
+                            <PrivateRoute
+                                outlet={<StudentCvForHr/>}
+                                accessFor={[UserRole.Hr]}/>
+                        }
+                    />
 
-                {/*<Route path='/see-cv'/>  to chyba jako zwykły dashboard dla usera?*/}
-                {/*<Route path='/got-employed'/> to chyba nie musi być osobna ścieżka, tylko sam fetch na BE*/}
-
-            </Routes>
-        </DashboardContainer>
+                </Routes>
+            </DashboardContainer>
         </ModalProvider>
     </UserContext.Provider>
 };
