@@ -1,6 +1,5 @@
 import React from "react";
 import {FilteringNumericalInput} from "./FilteringNumericalInput";
-import {useFormContext} from "react-hook-form";
 
 type Props = {
     title: string,

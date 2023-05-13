@@ -22,6 +22,7 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
     const projectDegree = ("student_project_degree" in studentData) ? studentData.student_project_degree : studentData.projectDegree;
     const scrumDegree = ("student_team_project_degree" in studentData) ? studentData.student_team_project_degree : studentData.teamProjectDegree;
     const typeWork = ("student_expected_type_work" in studentData) ? studentData.student_expected_type_work : studentData.expectedTypeWork;
+    const contractType = ("student_expected_contract_type" in studentData) ? studentData.student_expected_contract_type : studentData.expectedContractType;
     const workCity = ("student_target_work_city" in studentData) ? studentData.student_target_work_city : studentData.targetWorkCity;
     const salary = ("student_expected_salary" in studentData) ? studentData.student_expected_salary : studentData.expectedSalary;
     const takeAppr = ("student_can_take_apprenticeship" in studentData) ? studentData.student_can_take_apprenticeship : studentData.canTakeApprenticeship;
@@ -69,7 +70,7 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
 
                 <SingleStudentPreferenceItem
                     title={`Oczekiwany typ kontraktu`}
-                    description={workCity} //@TODO: change this to the proper one
+                    description={contractType}
                 />
 
                 <SingleStudentPreferenceItem

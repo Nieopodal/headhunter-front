@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch";
 import {UserContext} from "../contexts/user.context";
 import {Loader} from "../components/common/Loader";
-import {HrView} from "./HrView";
+import {HrMainDisplay} from "../components/HrViewElements/HrMainDisplay";
 import {HrViewMode} from "../types/HrViewMode";
 import {AvailableStudentsResponse} from "../types/AvailableStudentsResponse";
 import {StudentToInterview} from "../../../headhunter-back/src/types/student";
@@ -31,13 +31,13 @@ export const HrDashboardView = () => {
     if (apiLoading) return <Loader/>
 
     if (data && viewMode === HrViewMode.AvailableStudents)
-        return <HrView handleViewMode={handleViewMode}
-                       studentList={data as AvailableStudentsResponse[]}
-                       viewMode={viewMode}/>
+        return <HrMainDisplay handleViewMode={handleViewMode}
+                              studentList={data as AvailableStudentsResponse[]}
+                              viewMode={viewMode}/>
 
     if (data && viewMode === HrViewMode.StudentsToInterview)
-        return <HrView handleViewMode={handleViewMode}
-                       studentList={data as StudentToInterview[]}
-                       viewMode={viewMode}/>
+        return <HrMainDisplay handleViewMode={handleViewMode}
+                              studentList={data as StudentToInterview[]}
+                              viewMode={viewMode}/>
     return null
 };
