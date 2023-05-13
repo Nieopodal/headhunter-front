@@ -6,9 +6,9 @@ import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
 import {apiUrl} from "../../config/api";
 import {useModal} from "../../hooks/useModal";
-import {SuccessMessage} from "../common/SuccessMessage";
-import {ErrorMessage} from "../common/ErrorMessage";
+import {Message} from "../common/Message";
 import {useNavigate} from "react-router-dom";
+import {ModalPosition} from "../../types/ModalPosition";
 
 
 type Props = {
@@ -35,12 +35,19 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
     const handleStudent = async (viewMode: HrViewMode, firstName: string, lastName: string, path: string, message: string) => {
         await fetchApi(user, `${apiUrl}/hr/${path}/${studentId}`, "PATCH", "Błąd przy ładowaniu wybranego kursanta");
 
-        setModal(<SuccessMessage
-            message={`Kandydat ${firstName} ${lastName} ${message}`}/>)
-
         if (apiError) {
-            setModal(<ErrorMessage error={apiError}/>)
+            setModal({modal: <Message type={"error"} body={apiError}/>});
+            return
         }
+
+        setModal({
+            modal:
+                <Message
+                    type={"success"}
+                    body={`Kandydat ${firstName} ${lastName} ${message}`}/>,
+            position: ModalPosition.top,
+            timer: 5,
+        })
         handleViewMode(viewMode);
     }
 
@@ -70,7 +77,7 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
                 <button
                     className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
                     onClick={() => navigate(`/student-cv/${studentId}`, {replace: true})}
-                    >
+                >
                     Pokaż CV
                 </button>
 
