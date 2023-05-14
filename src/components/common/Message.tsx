@@ -20,7 +20,7 @@ export const Message = ({type, body, customTitle}: Props) => {
         <h1 className="text-4xl text-center font-bold p-5">
             {customTitle ?? defaultTitle}
         </h1>
-        <p className={`p-5 text-center text-${type ?? 'base-content'}`}>{body}</p>
+        <p className={`p-5 text-center text-${type ? type : 'base-content'}`}>{body}</p>
     </>
 
 }
