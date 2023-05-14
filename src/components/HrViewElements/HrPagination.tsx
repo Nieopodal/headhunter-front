@@ -4,21 +4,23 @@ import {IoIosArrowBack, IoIosArrowForward} from "react-icons/io";
 type Props = {
     currentPageNr: number,
     totalPagesNr: number,
+    maxStudentsPerPage: number,
     nextPage: () => void,
     prevPage: () => void,
     setMaxPerPage: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const HrPagination = ({currentPageNr, prevPage, setMaxPerPage, nextPage, totalPagesNr}: Props) => {
+export const HrPagination = ({currentPageNr, prevPage, setMaxPerPage, nextPage, totalPagesNr, maxStudentsPerPage}: Props) => {
     return (
         <div className="flex flex-row gap-5 items-center">
             Ilość elementów
             <select onChange={(e) => setMaxPerPage(e)}
                     className="select bg-white text-base-100 select-sm w-13">
-                <option>5</option>
+                <option disabled selected style={{display: "none"}}>{maxStudentsPerPage}</option>
                 <option>10</option>
                 <option>20</option>
                 <option>30</option>
+                <option>40</option>
                 <option>50</option>
             </select>
             {currentPageNr} z {totalPagesNr}
