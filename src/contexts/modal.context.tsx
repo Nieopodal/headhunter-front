@@ -15,7 +15,6 @@ type ModalProps = {
 }
 
 const Modal = ({modal, timer, position, unSetModal}: ModalProps) => {
-    console.log(position, timer);
 
     useEffect(() => {
         if (timer) {
