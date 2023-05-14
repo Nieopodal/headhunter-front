@@ -18,12 +18,14 @@ const Modal = ({modal, timer, position, unSetModal}: ModalProps) => {
     console.log(position, timer);
 
     useEffect(() => {
-        const modalTimer = setTimeout(() => {
-            unSetModal();
-        }, 1000 * timer!);
-        return () => {
-            clearTimeout(modalTimer)
-        };
+        if (timer) {
+            const modalTimer = setTimeout(() => {
+                unSetModal();
+            }, 1000 * timer);
+            return () => {
+                clearTimeout(modalTimer)
+            };
+        }
     }, [timer, unSetModal]);
 
     return (
