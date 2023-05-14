@@ -9,37 +9,25 @@ type Props = {
 export const Message = ({type, body, customTitle}: Props) => {
 
     function setTitle() {
-        if (type === "error") {
-            return "Ups, coś poszło nie tak :("
-        }
-        if (type === "success") {
-            return "Sukces!"
-        }
-        if (!type) {
-            return "Hej!"
-        }
+        if (customTitle) {return customTitle}
+        if (type === "error") {return "Ups, coś poszło nie tak :("}
+        if (type === "success") {return "Sukces!"}
     }
 
     function setColor() {
-        if (type === "error") {
-            return "error"
-        }
-        if (type === "success") {
-            return "success"
-        }
-        if (!type) {
-            return "base"
-        }
+        if (type === "error") {return `text-error`}
+        if (type === "success") {return `text-success`}
+        if (!type) {return `text-base`}
     }
 
     const color = setColor();
-    const defaultTitle = setTitle();
+    const title = setTitle();
 
     return <>
         <h1 className="text-4xl text-center font-bold p-5">
-            {customTitle ?? defaultTitle}
+            {title}
         </h1>
-        <p className={`p-5 text-center text-${color}`}>{body}</p>
+        <p className={`p-5 text-center ${color}`}>{body}</p>
     </>
 
 }
