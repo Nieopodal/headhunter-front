@@ -29,7 +29,7 @@ const Modal = ({modal, timer, position, unSetModal}: ModalProps) => {
     return (
         <div onClick={unSetModal}
              className={`flex absolute z-20 top-0 left-0 w-full h-full bg-neutral-900/30 items-${position ?? 'center'} justify-center`}>
-            <div onClick={e => e.stopPropagation()} className="rounded-xl flex flex-col p-5 bg-neutral-900 mt-4">
+            <div onClick={e => e.stopPropagation()} className="rounded-xl flex flex-col p-5 bg-neutral-900 mt-5 mb-5">
                 {modal}
             </div>
         </div>
