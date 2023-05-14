@@ -52,21 +52,22 @@ export const HrMainDisplay = ({handleViewMode, studentList, viewMode}: Props) =>
 
     useEffect(() => {
 
-            function paginate(data: Array<any>) {
-                const totalStudents = data
-                const splitNr = maxStudentsPerPage
-                const result = totalStudents.reduce((resultArray: any, item: any, index: number) => {
-                    const chunkIndex = Math.floor(index / splitNr)
-                    if (!resultArray[chunkIndex]) {
-                        resultArray[chunkIndex] = []
-                    }
-                    resultArray[chunkIndex].push(item)
-                    return resultArray
-                }, []);
-                setTotalPagesNr(result.length);
-                return result[currentPageNr - 1];
-            }
-            setPaginatedStudents(paginate(studentList));
+        function paginate(data: Array<any>) {
+            const totalStudents = data
+            const splitNr = maxStudentsPerPage
+            const result = totalStudents.reduce((resultArray: any, item: any, index: number) => {
+                const chunkIndex = Math.floor(index / splitNr)
+                if (!resultArray[chunkIndex]) {
+                    resultArray[chunkIndex] = []
+                }
+                resultArray[chunkIndex].push(item)
+                return resultArray
+            }, []);
+            setTotalPagesNr(result.length);
+            return result[currentPageNr - 1];
+        }
+
+        setPaginatedStudents(paginate(studentList));
 
     }, [currentPageNr, maxStudentsPerPage, studentList]);
 
@@ -77,10 +78,16 @@ export const HrMainDisplay = ({handleViewMode, studentList, viewMode}: Props) =>
 
                     <div className="flex flex-row w-full items-start pt-2 border-b-[3px] border-base-200">
 
-                        <HrTab onClick={() => {handleViewMode(HrViewMode.AvailableStudents); setCurrentPageNr(1)}}
+                        <HrTab onClick={() => {
+                            handleViewMode(HrViewMode.AvailableStudents);
+                            setCurrentPageNr(1)
+                        }}
                                highlighted={viewMode === HrViewMode.AvailableStudents ?? true}
                                text={`Dostępni kursanci`}/>
-                        <HrTab onClick={() => {handleViewMode(HrViewMode.StudentsToInterview); setCurrentPageNr(1)}}
+                        <HrTab onClick={() => {
+                            handleViewMode(HrViewMode.StudentsToInterview);
+                            setCurrentPageNr(1)
+                        }}
                                highlighted={viewMode === HrViewMode.StudentsToInterview ?? true}
                                text={`Do rozmowy`}/>
 
@@ -96,7 +103,10 @@ export const HrMainDisplay = ({handleViewMode, studentList, viewMode}: Props) =>
 
                             <button
                                 onClick={() => {
-                                    setModal(<FilteringModal handleFiltering={handleFiltering}/>)
+                                    setModal({
+                                        modal:
+                                            <FilteringModal handleFiltering={handleFiltering}/>
+                                    })
                                 }}
                                 className="cursor-pointer w-min-fit px-4 flex items-center justify-center text-neutral-500 bg-base-200 gap-1.5">
                                 <FaFilter className="fill-neutral-500 min-w-[15%] min-h-[15%]"/>Filtrowanie

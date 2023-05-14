@@ -6,12 +6,14 @@ import {HrMainDisplay} from "../components/HrViewElements/HrMainDisplay";
 import {HrViewMode} from "../types/HrViewMode";
 import {AvailableStudentsResponse} from "../types/AvailableStudentsResponse";
 import {StudentToInterview} from "../../../headhunter-back/src/types/student";
-import {ErrorMessage} from "../components/common/ErrorMessage";
+import {Message} from "../components/common/Message";
+import {useModal} from "../hooks/useModal";
 
 export const HrDashboardView = () => {
     const [viewMode, setViewMode] = useState<HrViewMode>(HrViewMode.AvailableStudents);
     const {user} = useContext(UserContext);
     const {fetchApi, apiLoading, apiError, data} = useFetch();
+    const {setModal} = useModal()
 
     const handleViewMode = (viewMode: HrViewMode) => {
         setViewMode(viewMode)
@@ -26,7 +28,10 @@ export const HrDashboardView = () => {
         })();
     }, [viewMode]);
 
-    if (apiError) {return <ErrorMessage error={apiError}/>}
+    if (apiError) {
+        setModal({modal: <Message type={"error"} body={apiError}/>});
+        return null
+    }
 
     if (apiLoading) return <Loader/>
 
