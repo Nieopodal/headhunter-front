@@ -27,7 +27,7 @@ export const FilteringModal = (props: Props) => {
     return (
 
         <div className="flex flex-col items-start justify-between gap-10">
-            <div className="flex flex-row justify-between align-middle w-full">
+            <div className="flex max-sm:flex-col flex-row justify-between align-middle w-full">
                 <h1
                     className="text-3xl font-bold text-base-content">
                     Filtrowanie
@@ -36,7 +36,7 @@ export const FilteringModal = (props: Props) => {
                     onClick={() => {
                         methods.reset()
                     }}
-                    className="z-10 w-1/8 btn-sm h-7 bg-[#172A35] normal-case font-normal text-base rounded-none">
+                    className="z-10 w-1/8 max-sm:w-1/2 btn-sm h-7 bg-[#172A35] normal-case font-normal text-base rounded-none">
                     Wyczyść wszystkie
                 </button>
             </div>
@@ -103,9 +103,9 @@ export const FilteringModal = (props: Props) => {
                     {/* NUMERIC INPUT SECTION #1 */}
                     <div className="flex flex-col items-start gap-2 mt-5">
                         <span>Oczekiwane wynagrodzenie miesięczne netto </span>
-                        <div className="flex flex-row gap-3 items-center">
-                            Od <FilteringSalaryField registerName={"minSalary"} placeholder="Np. 1000"/>
-                            do <FilteringSalaryField registerName={"maxSalary"} placeholder="Np. 7000"/>
+                        <div className="flex max-sm:flex-col flex-row gap-3 items-center">
+                            <span className="flex flex-row items-center">Od&nbsp; <FilteringSalaryField registerName={"minSalary"} placeholder="Np. 1000"/></span>
+                            <span className="flex flex-row items-center">do&nbsp; <FilteringSalaryField registerName={"maxSalary"} placeholder="Np. 7000"/></span>
                             {(methods.formState.errors.minSalary || methods.formState.errors.maxSalary) &&
                                 <span className="flex flex-col text-xs text-primary ml-6">
                                     <span>{methods.formState.errors.minSalary?.message}</span>

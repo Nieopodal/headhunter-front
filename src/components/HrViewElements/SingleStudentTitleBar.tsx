@@ -75,7 +75,7 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
         <div className="flex flex-row items-center gap-3 mr-14">
             {viewMode === HrViewMode.StudentsToInterview ? <>
                 <button
-                    className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
+                    className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
                     onClick={() => navigate(`/student-cv/${studentId}`, {replace: true})}
                 >
                     Pokaż CV
@@ -83,13 +83,13 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
 
                 <button
                     onClick={async () => handleStudent(HrViewMode.AvailableStudents, `${firstName}`, `${lastName}`, `withdraw`, `został przeniesiony do listy dostępnych`)}
-                    className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
+                    className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
                     Brak zainteresowania
                 </button>
 
                 <button
                     onClick={async () => handleStudent(HrViewMode.AvailableStudents, `${firstName}`, `${lastName}`, `employed`, `został oznaczony jako zatrudniony`)}
-                    className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
+                    className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
                     Zatrudniony
                 </button>
             </> : null}
@@ -97,7 +97,7 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
             {viewMode === HrViewMode.AvailableStudents ?
                 <button
                     onClick={async () => handleStudent(HrViewMode.StudentsToInterview, `${firstName}`, `${lastName}`, `interview`, `został dodany do Twojej listy "Do rozmowy"`)}
-                    className="z-10 w-1/8 btn-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
+                    className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none">
                     Zarezerwuj rozmowę
                 </button> : null}
         </div>

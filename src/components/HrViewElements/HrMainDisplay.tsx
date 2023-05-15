@@ -64,9 +64,9 @@ export const HrMainDisplay = ({
                 <div className="w-full px-5 pb-5">
                     <div className="py-4 border-b-[3px] place-content-between border-base-200 flex">
 
-                        <div className="input-group flex items-center relative">
+                        <div className="input-group max-sm:gap-5 flex items-center relative">
                             <input type="text" placeholder="Szukaj"
-                                   className="placeholder:text-neutral-500 input w-min-1/4 pl-10 bg-base-200 h-9"/>
+                                   className="placeholder:text-neutral-500 max-sm:pr-0 max-sm:mr-3 max-sm:w-full input w-min-1/4 pl-10 bg-base-200 h-9"/>
                             <BiSearch className="fill-neutral-500 absolute left-[15px] scale-[110%]"/>
                         </div>
 
