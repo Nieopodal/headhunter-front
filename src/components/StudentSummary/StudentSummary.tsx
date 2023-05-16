@@ -19,8 +19,8 @@ export const StudentSummary = ({email, about, githubName, firstName, lastName, p
         <div className="xl:flex xl:flex-col xl:items-center xl:justify-center ">
             <div className="flex items-center mb-4">
                 <div className="flex xl:flex-col items-center">
-                    <Avatar customSize="40" imgUrl={avatarUrl ?? ""}/>
-                    <div className="flex flex-col ml-2">
+                    <Avatar bigger imgUrl={avatarUrl ?? ""}/>
+                    <div className="flex flex-col ml-4 xl:mt-2">
                         <div className="text-3xl xl:text-xl font-bold">
                             {`${firstName} ${lastName}`}
                         </div>

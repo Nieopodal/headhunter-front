@@ -3,6 +3,7 @@ import React, {useContext, useEffect} from "react";
 import {UserContext} from "../../contexts/user.context";
 import {useFetch} from "../../hooks/useFetch";
 import {StudentCv} from "../../types/StudentCv";
+import {Loader} from "../common/Loader";
 
 export const StudentSummaryFetched = () => {
     const {user, rerender} = useContext(UserContext);
@@ -27,5 +28,5 @@ export const StudentSummaryFetched = () => {
         />
     }
 
-    return <p>Ładowanie...</p>
+    return <Loader/>
 };
