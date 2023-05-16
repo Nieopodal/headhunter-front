@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const BodyOfSection = ({children, additionalClasses, color}: Props) => (
-    <div className={`${additionalClasses} text-lg p-4 flex overflow-x-auto`} style={color ? {color: color} : {}}>
+    <div className={`${additionalClasses} text-lg p-4 flex`} style={color ? {color: color} : {}}>
         {children}
     </div>
 );
