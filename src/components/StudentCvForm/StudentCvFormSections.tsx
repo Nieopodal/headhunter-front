@@ -17,18 +17,21 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
 
     return <>
         <TitleOfSection title="Podstawowe dane"/>
-        <BodyOfSection additionalClasses="my-4">
+        <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="E-mail">
                 <Input type="email" name="email" disabled/>
             </CategoryContainer>
 
-            <CategoryContainer title="Imię">
+            {!newUser && <CategoryContainer title="Imię">
                 <Input type="text" name="firstName" disabled/>
             </CategoryContainer>
+            }
 
+            {!newUser &&
             <CategoryContainer title="Nazwisko">
                 <Input type="text" name="lastName" disabled/>
             </CategoryContainer>
+            }
 
             <CategoryContainer title="Nick w Github" error={!!errors?.githubUsername}>
                 <Input type="text" name="githubUsername" additionalClasses="border-2 border-black"
@@ -60,7 +63,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         }
 
         <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
-        <BodyOfSection additionalClasses="my-4">
+        <BodyOfSection additionalClasses="my-4 my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="Preferowane miejsce pracy" error={!!errors?.expectedTypeWork}>
                 <select {...register("expectedTypeWork")} defaultValue={studentData.student_expected_type_work}
                         className="h-10 bg-neutral input border-2 border-black" required>
@@ -137,7 +140,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         </BodyOfSection>
 
         <TitleOfSection title="Portfolio"/>
-        <BodyOfSection additionalClasses="my-4">
+        <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="Link główny:" error={!!errors?.portfolioUrl1}>
                 <Input type="url" name="portfolioUrl1" additionalClasses="border-2 border-black" required
                        maxLength={255}/>
@@ -149,7 +152,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         </BodyOfSection>
 
         <TitleOfSection title="Projekt w zespole Scrumowym"/>
-        <BodyOfSection additionalClasses="my-4">
+        <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="Link do repozytorium:" error={!!errors?.scrumProjectUrl1}>
                 <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black" required
                        maxLength={255}/>
@@ -165,7 +168,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
         </BodyOfSection>
 
         <TitleOfSection title="Projekt na zaliczenie"/>
-        <BodyOfSection additionalClasses="my-4">
+        <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="Link 1:" error={!!errors?.projectUrl1}>
                 <Input type="url" name="projectUrl1" additionalClasses="border-2 border-black" required
                        maxLength={255}/>

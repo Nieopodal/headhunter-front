@@ -22,7 +22,7 @@ export const StudentCvInfo = ({studentData}: Props) => {
         </BodyOfSection>
 
         <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
-        <BodyOfSection>
+        <BodyOfSection additionalClasses="grid grid-cols-2 md:grid-cols-3 lg:flex">
             <ExpectationCategory title="Preferowane miejsce pracy" body={studentData.student_expected_type_work}/>
             <ExpectationCategory title="Docelowe miasto, gdzie chce pracować kandydat" body={studentData.student_expected_salary.length > 0 ? studentData.student_target_work_city : 'Nie podano'}/>
             <ExpectationCategory title="Oczekiwany typ kontraktu" body={studentData.student_expected_contract_type}/>
