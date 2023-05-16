@@ -27,7 +27,7 @@ export const StudentCvForHr = () => {
     </div>
 
     if (apiData) return <div className="flex flex-row justify-center items-center w-full mt-2">
-            <div className="flex flex-row w-[1430px]">
+            <div className="xl:flex block xl:flex-row w-full xl:w-full 2xl:w-[1500px]">
                 <SideMenu>
                     <StudentSummary
                         firstName={(apiData as StudentCv).student_first_name}
@@ -38,11 +38,11 @@ export const StudentCvForHr = () => {
                         email={(apiData as StudentCv).student_email}
                         about={(apiData as StudentCv).student_bio}
                     />
-                    <div className="mx-auto w-fit mt-4"><GoBack/></div>
-                {/*    @TODO: we need to change this later to match adobe xd*/}
+                    <div className="mx-auto w-fit mt-4 sm:hidden xl:block"><GoBack/></div>
                 </SideMenu>
 
                 <div className="w-full mx-2">
+                    <div className=" w-fit my-4 hidden sm:block xl:hidden"><GoBack/></div>
                     <StudentCvInfo studentData={apiData as StudentCv}/>
                 </div>
             </div>
