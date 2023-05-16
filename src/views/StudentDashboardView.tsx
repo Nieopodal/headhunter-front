@@ -4,6 +4,7 @@ import {UserContext} from "../contexts/user.context";
 import {StudentCvInfo} from "../components/StudentCv/StudentCvInfo";
 import {StudentCv} from "../types/StudentCv";
 import {StudentCvForm} from "../components/StudentCvForm/StudentCvForm";
+import {Loader} from "../components/common/Loader";
 
 interface Props {
     showAsForm?: boolean;
@@ -23,5 +24,5 @@ export const StudentDashboardView = ({showAsForm}: Props) => {
     if (data && !showAsForm) return <StudentCvInfo studentData={data as StudentCv} />
     if (data && showAsForm) return <StudentCvForm studentData={data as StudentCv} />
 
-     return <p>Ładowanie...</p>
+     return <Loader/>
 };

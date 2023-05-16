@@ -33,7 +33,7 @@ export const useAuth = () => {
             setUser(loggedUser as TemporaryUserEntity);
             navigate('/dashboard', {replace: true});
         } else {
-            setError(apiError);
+            setError("Błędny login i/lub hasło.");
         }
         setLoading(false);
     };

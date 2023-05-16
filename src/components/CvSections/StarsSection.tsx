@@ -8,7 +8,8 @@ interface Props {
 
 export const StarsSection = ({amount, title}: Props) => (
     <CategoryContainer title={title}>
-        <span className="font-bold">{amount}&nbsp;</span> /5 &nbsp;
+        <div className="hidden sm:flex"><span className="font-bold">{amount}&nbsp;</span> /5 &nbsp;
+    </div>
         <StarRating howMany={amount}/>
     </CategoryContainer>
 );

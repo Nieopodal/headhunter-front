@@ -15,6 +15,7 @@ import {StudentDashboardView} from "../../views/StudentDashboardView";
 import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
 import {StudentCvForHr} from "../StudentCvForHr";
 import {Loader} from "../common/Loader";
+import {StudentFoundJobFormView} from "../../views/StudentFoundJobFormView";
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
@@ -77,6 +78,15 @@ export const App = () => {
                                 accessFor={[UserRole.Hr]}/>
                         }
                     />
+
+                <Route
+                    path='/found-job'
+                    element={
+                        <PrivateRoute
+                            outlet={<StudentFoundJobFormView/>}
+                            accessFor={[UserRole.Student]}/>
+                    }
+                />
 
                 </Routes>
             </DashboardContainer>

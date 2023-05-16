@@ -22,7 +22,7 @@ export const StudentCvInfo = ({studentData}: Props) => {
         </BodyOfSection>
 
         <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia"/>
-        <BodyOfSection>
+        <BodyOfSection additionalClasses="grid grid-cols-2 md:grid-cols-3 lg:flex">
             <ExpectationCategory title="Preferowane miejsce pracy" body={studentData.student_expected_type_work}/>
             <ExpectationCategory title="Docelowe miasto, gdzie chce pracować kandydat" body={studentData.student_expected_salary.length > 0 ? studentData.student_target_work_city : 'Nie podano'}/>
             <ExpectationCategory title="Oczekiwany typ kontraktu" body={studentData.student_expected_contract_type}/>
@@ -33,7 +33,7 @@ export const StudentCvInfo = ({studentData}: Props) => {
 
         <TitleOfSection title="Edukacja"/>
         <BodyOfSection>
-            <div className="text-base whitespace-pre-line">
+            <div className="text-sm sm:text-base whitespace-pre-line break-words">
                 {studentData.student_education}
             </div>
 
@@ -41,14 +41,14 @@ export const StudentCvInfo = ({studentData}: Props) => {
 
         <TitleOfSection title="Kursy"/>
         <BodyOfSection>
-            <div className="text-bas whitespace-pre-line">
+            <div className="text-sm sm:text-base whitespace-pre-line break-words">
                 {studentData.student_courses}
             </div>
         </BodyOfSection>
 
         <TitleOfSection title="Doświadczenie zawodowe"/>
         <BodyOfSection>
-            <div className="text-base whitespace-pre-line">
+            <div className="text-sm sm:text-base whitespace-pre-line break-words">
                 {studentData.student_work_experience}
             </div>
         </BodyOfSection>

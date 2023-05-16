@@ -9,7 +9,7 @@ interface Props {
 
 export const MenuOption = ({children, text, url}: Props) => (
     <li>
-        <NavLink to={url} style={{background: "e02735"}} className="mb-2">
+        <NavLink to={url} style={{background: "e02735"}} className="flex justify-center mb-2 mx-1 sm:text-sm md:text-base">
             {children}
             {text}
         </NavLink>

@@ -1,15 +1,15 @@
 import React from "react";
 
 interface Props {
-    customSize?: string;
+    bigger?: boolean;
     imgUrl?: string;
 }
 
-export const Avatar = ({customSize, imgUrl}: Props) => {
+export const Avatar = ({bigger, imgUrl}: Props) => {
 
     // if user.role !== admin -> fetch to get user's GtiHub or get this with login!
 
-    return <label className={`${customSize ? `w-${customSize} h-${customSize}` : `w-10 h-10`} btn-circle cursor-pointer avatar`}>
+    return <label className={` btn-circle cursor-pointer avatar ${bigger && ' xl:w-40 xl:h-40 w-20 h-20'}`}>
         <div className="rounded-full">
             <img className="object-contain" src={imgUrl ? imgUrl : "https://randomuser.me/api/portraits/lego/2.jpg"} alt="user profile"/>
         </div>
