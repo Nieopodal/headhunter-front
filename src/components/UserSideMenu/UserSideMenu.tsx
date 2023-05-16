@@ -36,7 +36,7 @@ export const UserSideMenu = () => {
                     <RiUserSettingsLine className="h-6 w-6"/>
                 </MenuOption>
 
-                <MenuOption text=" Znalazłem/am pracę!" url="#">
+                <MenuOption text=" Znalazłem/am pracę!" url="/found-job">
                     <MdOutlineHandshake className="h-6 w-6"/>
                 </MenuOption>
 
