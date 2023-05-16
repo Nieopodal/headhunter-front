@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import {FormProvider, useForm} from "react-hook-form";
 import * as yup from 'yup';
+import {FormProvider, useForm} from "react-hook-form";
 import {useAuth} from "../hooks/useAuth";
 import {AppLogo} from "../components/Header/AppLogo";
 import {Input} from "../components/common/Form/Input";
@@ -60,7 +60,6 @@ export const LoginView = () => {
                                        disabled={apiLoading}/>
                                 {errors?.email && <ResponseParagraph text={errors.email.message!}/>}
                             </div>
-
                             <div>
                                 <Input type="password" name="password" placeholder="Hasło"
                                        additionalClasses="block w-full" disabled={apiLoading}/>
@@ -68,7 +67,6 @@ export const LoginView = () => {
                             </div>
                         </div>
                         <div className="items-center flex flex-row place-content-between align-middle mt-2">
-
                             <NavLink to="/reset-password"
                                      className="link link-hover font-medium text-sm tracking-wider w-1/2 sm:w-2/3 pr-2">
                                 Zapomniałeś hasła?
