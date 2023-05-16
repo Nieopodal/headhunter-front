@@ -45,10 +45,10 @@ export const LoginView = () => {
 
     return <form onSubmit={methods.handleSubmit(data => loginUser(data))}>
         <FormProvider {...methods}>
-            <div className="flex flex-col items-center justify-center h-screen">
+            <div className="flex flex-col justify-center items-center w-screen h-screen">
                 {checkingUser && <Loader/>}
                 {(!checkingUser && !user) &&
-                    <div className="w-[350px] flex flex-col">
+                    <div className="w-screen px-3 sm:w-[350px] flex flex-col">
                         <div className="flex justify-center">
                             <AppLogo classes="w-32"/>
                         </div>
@@ -70,12 +70,12 @@ export const LoginView = () => {
                         <div className="items-center flex flex-row place-content-between align-middle mt-2">
 
                             <NavLink to="/reset-password"
-                                     className="link link-hover font-medium text-sm tracking-wider">
+                                     className="link link-hover font-medium text-sm tracking-wider w-1/2 sm:w-2/3 pr-2">
                                 Zapomniałeś hasła?
                             </NavLink>
 
                             <button
-                                className={`${apiLoading ? ' btn btn-square loading' : ''} w-1/3 btn-sm h-10 btn-primary disabled:btn-primary normal-case font-normal text-base rounded-none`}
+                                className={`${apiLoading ? ' btn btn-square loading' : ''} w-1/2 sm:w-1/3 btn-sm h-10 btn-primary disabled:btn-primary normal-case font-normal text-base rounded-none`}
                                 disabled={apiLoading}
                             >
                                 {!apiLoading && `Zaloguj się`}

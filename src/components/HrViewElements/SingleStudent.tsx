@@ -33,7 +33,7 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
             <input type="checkbox"/>
 
             <div
-                className="flex flex-row place-content-between items-center collapse-title text-lg font-normal pl-5 pr-0 bg-base-300 after:text-neutral-500 after:scale-150">
+                className="max-sm:flex-col max-sm:items-start max-sm:gap-3 flex flex-row place-content-between items-center collapse-title text-lg font-normal pl-5 pr-0 bg-base-300 after:text-neutral-500 after:scale-150">
                 <SingleStudentTitleBar handleViewMode={handleViewMode} viewMode={viewMode} studentData={studentData}/>
             </div>
 
