@@ -33,7 +33,7 @@ export const StudentCvInfo = ({studentData}: Props) => {
 
         <TitleOfSection title="Edukacja"/>
         <BodyOfSection>
-            <div className="text-base whitespace-pre-line">
+            <div className="text-sm sm:text-base whitespace-pre-line">
                 {studentData.student_education}
             </div>
 
@@ -41,14 +41,14 @@ export const StudentCvInfo = ({studentData}: Props) => {
 
         <TitleOfSection title="Kursy"/>
         <BodyOfSection>
-            <div className="text-bas whitespace-pre-line">
+            <div className="text-sm sm:text-base whitespace-pre-line">
                 {studentData.student_courses}
             </div>
         </BodyOfSection>
 
         <TitleOfSection title="Doświadczenie zawodowe"/>
         <BodyOfSection>
-            <div className="text-base whitespace-pre-line">
+            <div className="text-sm sm:text-base whitespace-pre-line">
                 {studentData.student_work_experience}
             </div>
         </BodyOfSection>

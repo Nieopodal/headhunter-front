@@ -25,6 +25,7 @@ export const UserSideMenu = () => {
 
         {user?.role === 'student' &&
             <>
+
                 <StudentSummaryFetched/>
 
                 <MenuOption text="Zobacz swoje CV" url="/dashboard">
@@ -42,5 +43,6 @@ export const UserSideMenu = () => {
 
             </>
         }
+
     </SideMenu>
 };
