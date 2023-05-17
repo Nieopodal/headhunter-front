@@ -10,6 +10,7 @@ import {AvailableStudent, StudentToInterview} from "../../../../headhunter-back/
 import {SingleStudent} from "./SingleStudent";
 import {TbPlayerTrackNext} from "react-icons/tb";
 import {HrFilteringContext} from "../../contexts/hr.filtering.context";
+import {ImCancelCircle} from "react-icons/im";
 
 type Props = {
     handleViewMode: (viewMode: HrViewMode) => void;
@@ -49,6 +50,12 @@ export const HrMainDisplay = ({
             handleNameSearch(name!);
         }
 
+       const clearSearch = (e: FormEvent) => {
+            e.preventDefault();
+           if (searchRef.current?.value) {searchRef.current.value = ''}
+           handleNameSearch('');
+        }
+
 
         return (
                 <div className="flex justify-center items-center w-full mt-4">
@@ -84,7 +91,11 @@ export const HrMainDisplay = ({
                                                         className="relative placeholder:text-neutral-500 max-sm:pr-0 max-sm:w-full input w-min-1/4 pl-10 bg-base-200 h-9"/>
                                                     <BiSearch
                                                         className="absolute fill-neutral-500 left-[15px] top-[10px] scale-[110%]"/>
-                                                    <button className="btn-sm h-8 ml-2 mr-4 btn-primary" type="submit">
+                                                    <button onClick={(e) => clearSearch(e)} className="btn-sm h-8 ml-2 mr-1 btn-primary" type="submit">
+                                                        <ImCancelCircle
+                                                            className="scale-[150%]"/>
+                                                    </button>
+                                                    <button className="btn-sm h-8 ml-1 mr-4 btn-primary" type="submit">
                                                         <TbPlayerTrackNext
                                                             className="scale-[150%]"/>
                                                     </button>
