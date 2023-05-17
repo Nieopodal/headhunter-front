@@ -10,6 +10,6 @@ export const FilteringButtonsSection = ({children, title, errorMsg}: PropsWithCh
     return (<>
         <span>{title} <span className="text-xs text-primary ml-6">{errorMsg ?? errorMsg}</span>
         </span>
-        <div className="flex max-sm:flex-col max-sm:items-start flex-row gap-3"> {children} </div>
+        <div className="flex max-sm:flex-col flex-row flex-wrap max-sm:items-start flex-row gap-3"> {children} </div>
     </>)
 }

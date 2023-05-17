@@ -2,7 +2,7 @@ import * as yup from "yup";
 
 export const hrFilterSchema = yup.object().shape({
     courseCompletion: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
-    courseEngagment: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
+    courseEngagement: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
     projectDegree: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
     teamProjectDegree: yup.number().transform((value) => isNaN(value) ? undefined : value).positive().integer().min(1).max(5).required('Pole niewypełnione'),
     expectedTypeWork: yup.array().min(1, 'Wybierz conajmniej jedną opcję z tej grupy').typeError("Pole niewypełnione"),

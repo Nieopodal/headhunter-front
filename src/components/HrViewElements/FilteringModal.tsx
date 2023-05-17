@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {yupResolver} from '@hookform/resolvers/yup'
 import {FormProvider, useForm} from 'react-hook-form'
 import {useModal} from "../../hooks/useModal";
@@ -9,35 +9,77 @@ import {hrFilterSchema} from "../../helpers/hrFilterSchema";
 import {FilteringNumericalInput} from "./FilteringNumericalInput";
 import {HrFilteringCriteria} from "../../types/HrFilteringCriteria";
 import {FilteringButtonsSection} from "./FilteringButtonsSection";
+import {apiUrl} from "../../config/api";
+import {useFetch} from "../../hooks/useFetch";
+import {UserContext} from "../../contexts/user.context";
+import {Message} from "../common/Message";
+import {HrFilteringContext} from "../../contexts/hr.filtering.context";
 
 type Props = {
-    handleFiltering: (data: HrFilteringCriteria) => void;
 }
 
 export const FilteringModal = (props: Props) => {
 
+    const {setIsFiltering, currentFilters, setCurrentFilters} = useContext(HrFilteringContext)
+
     const {...methods} = useForm<HrFilteringCriteria>({
-        resolver: yupResolver(hrFilterSchema)
+        resolver: yupResolver(hrFilterSchema),
+        defaultValues: {
+            courseCompletion: currentFilters?.courseCompletion,
+            courseEngagement: currentFilters?.courseEngagement,
+            canTakeApprenticeship: currentFilters?.canTakeApprenticeship,
+            expectedContractType: currentFilters?.expectedContractType,
+            maxSalary: currentFilters?.maxSalary,
+            minSalary: currentFilters?.minSalary,
+            monthsOfCommercialExp: currentFilters?.monthsOfCommercialExp,
+            expectedTypeWork: currentFilters?.expectedContractType,
+            projectDegree: currentFilters?.projectDegree,
+            teamProjectDegree: currentFilters?.teamProjectDegree,
+        }
     });
 
-    const onFilterSearchSubmit = (data: HrFilteringCriteria) => props.handleFiltering(data);
+    const {fetchApi, apiError} = useFetch();
+    const {user} = useContext(UserContext);
+    const {unSetModal, setModal} = useModal();
 
-    const {unSetModal} = useModal();
+    const onFilterSearchSubmit = async (filters: HrFilteringCriteria) => {
+
+        const res = await fetchApi(user, `${apiUrl}/hr/set-filter/`, "POST", "Wystąpił błąd przy próbie zastosowania filtrów", filters, true, "application/json");
+
+        if (res) {
+            setIsFiltering(false)
+            setIsFiltering(true)
+            setCurrentFilters(filters);
+            console.log(filters)
+            unSetModal();
+        }
+
+        if (apiError) {
+            setModal({modal: <Message type={"error"} body={apiError}/>});
+            return
+        }
+    };
+
+    const handleFilterOff = async () => {
+        methods.reset();
+        await fetchApi(user, `${apiUrl}/hr/remove-filter/`, "GET", "Wystąpił błąd przy anulowaniu filtrów");
+        setCurrentFilters(null)
+        setIsFiltering(false);
+        unSetModal();
+    };
 
     return (
 
-        <div className="flex flex-col items-start justify-between gap-10">
+        <div className="flex flex-col items-start justify-between gap-10 max-w-[550px]">
             <div className="flex max-sm:flex-col flex-row justify-between align-middle w-full">
                 <h1
                     className="text-3xl font-bold text-base-content">
                     Filtrowanie
                 </h1>
                 <button
-                    onClick={() => {
-                        methods.reset()
-                    }}
+                    onClick={handleFilterOff}
                     className="z-10 w-1/8 max-sm:w-1/2 btn-sm h-7 bg-[#172A35] normal-case font-normal text-base rounded-none">
-                    Wyczyść wszystkie
+                    Wyłącz filtrowanie
                 </button>
             </div>
             <FormProvider {...methods}>
@@ -50,8 +92,8 @@ export const FilteringModal = (props: Props) => {
                         registerName={"courseCompletion"}
                         title="Min. ocena przejścia kursu"/>
                     <DegreeField
-                        errorMsg={methods.formState.errors.courseEngagment?.message}
-                        registerName={"courseEngagment"}
+                        errorMsg={methods.formState.errors.courseEngagement?.message}
+                        registerName={"courseEngagement"}
                         title="Min. ocena aktywności i zaangażowania na kursie"/>
                     <DegreeField
                         errorMsg={methods.formState.errors.projectDegree?.message}
@@ -71,11 +113,24 @@ export const FilteringModal = (props: Props) => {
                                 <FilteringOptionButton
                                     registerName={"expectedTypeWork"}
                                     title={"Praca zdalna"}
-                                    value={"remote"}/>
+                                    value={"Praca zdalna"}/>
                                 <FilteringOptionButton
                                     registerName={"expectedTypeWork"}
                                     title={"Praca w biurze"}
-                                    value={"office"}/></>
+                                    value={"Na miejscu"}/>
+                                <FilteringOptionButton
+                                    registerName={"expectedTypeWork"}
+                                    title={"Praca hybrydowa"}
+                                    value={"Praca hybrydowa"}/>
+                                <FilteringOptionButton
+                                    registerName={"expectedTypeWork"}
+                                    title={"Przeprowadzka"}
+                                    value={"Przeprowadzka"}/>
+                                <FilteringOptionButton
+                                    registerName={"expectedTypeWork"}
+                                    title={"Nie ma znaczenia"}
+                                    value={"Nie ma znaczenia"}/>
+                            </>
                         </FilteringButtonsSection>
                     </div>
 
@@ -88,15 +143,19 @@ export const FilteringModal = (props: Props) => {
                                 <FilteringOptionButton
                                     registerName={"expectedContractType"}
                                     title={"Umowa o pracę"}
-                                    value={"employ"}/>
+                                    value={"Tylko umowa o pracę"}/>
                                 <FilteringOptionButton
                                     registerName={"expectedContractType"}
                                     title={"B2B"}
-                                    value={"b2b"}/>
+                                    value={"Możliwe B2B"}/>
                                 <FilteringOptionButton
                                     registerName={"expectedContractType"}
-                                    title={"Umowa o dzieło / zlecenie"}
-                                    value={"contract"}/></>
+                                    title={"Umowa zlecenie / o dzieło"}
+                                    value={"Umowa zlecenie / dzieło"}/>
+                                <FilteringOptionButton
+                                    registerName={"expectedContractType"}
+                                    title={"Brak preferencji"}
+                                    value={"Brak preferencji"}/></>
                         </FilteringButtonsSection>
                     </div>
 
@@ -104,8 +163,10 @@ export const FilteringModal = (props: Props) => {
                     <div className="flex flex-col items-start gap-2 mt-5">
                         <span>Oczekiwane wynagrodzenie miesięczne netto </span>
                         <div className="flex max-sm:flex-col flex-row gap-3 items-center">
-                            <span className="flex flex-row items-center">Od&nbsp; <FilteringSalaryField registerName={"minSalary"} placeholder="Np. 1000"/></span>
-                            <span className="flex flex-row items-center">do&nbsp; <FilteringSalaryField registerName={"maxSalary"} placeholder="Np. 7000"/></span>
+                            <span className="flex flex-row items-center">Od&nbsp; <FilteringSalaryField
+                                registerName={"minSalary"} placeholder="Np. 1000"/></span>
+                            <span className="flex flex-row items-center">do&nbsp; <FilteringSalaryField
+                                registerName={"maxSalary"} placeholder="Np. 7000"/></span>
                             {(methods.formState.errors.minSalary || methods.formState.errors.maxSalary) &&
                                 <span className="flex flex-col text-xs text-primary ml-6">
                                     <span>{methods.formState.errors.minSalary?.message}</span>

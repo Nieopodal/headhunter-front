@@ -68,10 +68,10 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 <select {...register("expectedTypeWork")} defaultValue={studentData.student_expected_type_work}
                         className="h-10 bg-neutral input border-2 border-black" required>
                     <option value={ExpectedTypeWork.DM}>{ExpectedTypeWork.DM}</option>
-                    <option value={ExpectedTypeWork.office}>{ExpectedTypeWork.office}</option>
-                    <option value={ExpectedTypeWork.hybrid}>{ExpectedTypeWork.hybrid}</option>
-                    <option value={ExpectedTypeWork.remote as string}>{ExpectedTypeWork.remote}</option>
-                    <option value={ExpectedTypeWork.move}>{ExpectedTypeWork.move}</option>
+                    <option value={ExpectedTypeWork.OFFICE}>{ExpectedTypeWork.OFFICE}</option>
+                    <option value={ExpectedTypeWork.HYBRID}>{ExpectedTypeWork.HYBRID}</option>
+                    <option value={ExpectedTypeWork.REMOTE as string}>{ExpectedTypeWork.REMOTE}</option>
+                    <option value={ExpectedTypeWork.MOVE}>{ExpectedTypeWork.MOVE}</option>
                 </select>
             </CategoryContainer>
 
@@ -84,9 +84,9 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 <select {...register("expectedContractType")}
                         defaultValue={studentData.student_expected_contract_type}
                         className="h-10 bg-neutral input max-w-fit px-0 border-2 border-black">
-                    <option value={ExpectedContractType.none}>{ExpectedContractType.none}</option>
-                    <option value={ExpectedContractType.employ}>{ExpectedContractType.employ}</option>
-                    <option value={ExpectedContractType.contract}>{ExpectedContractType.contract}</option>
+                    <option value={ExpectedContractType.NONE}>{ExpectedContractType.NONE}</option>
+                    <option value={ExpectedContractType.EMPLOY}>{ExpectedContractType.EMPLOY}</option>
+                    <option value={ExpectedContractType.CONTRACT}>{ExpectedContractType.CONTRACT}</option>
                     <option value={ExpectedContractType.B2B}>{ExpectedContractType.B2B}</option>
                 </select>
             </CategoryContainer>
