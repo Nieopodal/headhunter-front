@@ -117,9 +117,7 @@ export const HrMainDisplay = ({
                                                 className={`${isFiltering ? "fill-white" : "fill-neutral-500"} min-w-[15%] min-h-[15%]`}/>Filtrowanie
                                         </button>
                                     </div>
-                                    {isFiltering && <span className={"text-right mt-2"}>Uwaga, filtry są aktywne!</span>}
-
-
+                                    {isFiltering && <span className={"text-right mt-2 text-success"}>Filtrowanie włączone</span>}
                             </div>
                             <div className="flex flex-col bg-base-200 gap-3">
 
