@@ -59,7 +59,7 @@ export const HrMainDisplay = ({
 
         return (
                 <div className="flex justify-center items-center w-full mt-4">
-                    <div className="flex flex-col place-content-between bg-base-300 items-center max-w-[1430px]">
+                    <div className="flex flex-col place-content-between bg-base-300 items-center sm:min-w-[600px] lg:min-w-[800px] max-w-[1430px]">
 
                         <div className="flex flex-row w-full items-start pt-2 border-b-[3px] border-base-200">
 
@@ -81,7 +81,7 @@ export const HrMainDisplay = ({
 
                                     <div className={"flex flex-row"}>
                                         <div className="input-group max-sm:gap-5 flex items-center relative">
-                                            <form onSubmit={(e) => handleSearching(e)}>
+
                                                 <div className="flex flex-row items-center">
                                                     <input
                                                         type="text"
@@ -95,12 +95,13 @@ export const HrMainDisplay = ({
                                                         <ImCancelCircle
                                                             className="scale-[150%]"/>
                                                     </button>
-                                                    <button className="btn-sm h-8 ml-1 mr-4 btn-primary" type="submit">
+                                                    <button className="btn-sm h-8 ml-1 mr-4 btn-primary"
+                                                    onClick={(e) => handleSearching(e)}>
                                                         <TbPlayerTrackNext
                                                             className="scale-[150%]"/>
                                                     </button>
                                                 </div>
-                                            </form>
+
 
                                         </div>
 
@@ -111,7 +112,7 @@ export const HrMainDisplay = ({
                                                         <FilteringModal/>,
                                                 })
                                             }}
-                                            className={`cursor-pointer w-min-fit px-4 flex items-center justify-center ${isFiltering ? "btn-primary text-base-content" : "bg-base-200 text-neutral-500"} gap-1.5`}>
+                                            className={`cursor-pointer w-min-fit px-4 flex items-center justify-center ${isFiltering ? "btn-active text-base-content" : "bg-base-200 text-neutral-500"} gap-1.5`}>
                                             <FaFilter
                                                 className={`${isFiltering ? "fill-white" : "fill-neutral-500"} min-w-[15%] min-h-[15%]`}/>Filtrowanie
                                         </button>

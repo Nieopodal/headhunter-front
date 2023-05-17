@@ -71,7 +71,7 @@ export const FilteringModal = (props: Props) => {
     return (
 
         <div className="flex flex-col items-start justify-between gap-10 max-w-[550px]">
-            <div className="flex max-sm:flex-col flex-row justify-between align-middle w-full">
+            <div className="flex flex-row justify-between align-middle w-full">
                 <h1
                     className="text-3xl font-bold text-base-content">
                     Filtrowanie
