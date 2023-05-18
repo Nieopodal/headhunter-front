@@ -56,7 +56,6 @@ export const StudentCvInfo = ({studentData}: Props) => {
         <TitleOfSection title="Portfolio"/>
         <BodyOfSection color="#0B8BD4">
             <div className="block">
-                {/*@TODO: skończyć to!*/}
                 {studentData.student_portfolio_urls && arrayFromStringHandler(studentData.student_portfolio_urls).map((el, i) => <OneLink url={el} key={i}/>)}
             </div>
         </BodyOfSection>

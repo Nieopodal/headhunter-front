@@ -17,7 +17,7 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
 
     const {courseCompletion, courseEngagement, expectedContractType, expectedTypeWork, monthsOfCommercialExp, expectedSalary, canTakeApprenticeship, targetWorkCity, teamProjectDegree, projectDegree} = studentData
 
-    return (<>
+    return <>
         <div tabIndex={0} className="collapse collapse-arrow rounded-box ">
             <input type="checkbox"/>
 
@@ -81,5 +81,5 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
                 />
             </div>
         </div>
-    </>)
-}
+    </>
+};
