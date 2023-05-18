@@ -50,6 +50,10 @@ export const HrMainDisplay = ({
             handleNameSearch(name!);
         }
 
+    const handleFiltering = (data: HrFilteringCriteria) => {
+        setFilteringCriteria(data);
+    }
+
        const clearSearch = (e: FormEvent) => {
             e.preventDefault();
            if (searchRef.current?.value) {searchRef.current.value = ''}

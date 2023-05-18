@@ -34,10 +34,6 @@ export const AdminAddHrView = () => {
 
     const methods = useForm<FormData>({
         defaultValues: {
-            fullName: '',
-            email: '',
-            company: '',
-            maxReservedStudents: 0,
         },
         resolver: yupResolver(validationSchema),
     });
@@ -82,7 +78,7 @@ export const AdminAddHrView = () => {
 
                 {apiError && <p className="text-red-500">{apiError}</p>}
                 {((apiData as ApiData) && !apiError) &&
-                    <ResponseParagraph text={`Pomyślnie dodano nową osobę HR o ID: ${(apiData as ApiData).id}`}/>
+                    <ResponseParagraph isSuccess text={`Pomyślnie dodano nową osobę HR o ID: ${(apiData as ApiData).id}`}/>
                 }
                 <button className="btn-md w-full btn-primary normal-case font-normal text-base">Dodaj osobę HR</button>
             </FormProvider>

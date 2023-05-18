@@ -17,6 +17,8 @@ import {StudentCvForHr} from "../StudentCvForHr";
 import {Loader} from "../common/Loader";
 import {StudentFoundJobFormView} from "../../views/StudentFoundJobFormView";
 import {HrFilteringProvider} from "../../contexts/hr.filtering.context";
+import {NewUserView} from "../../views/NewUserView";
+
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
@@ -33,11 +35,18 @@ export const App = () => {
         rerender: rerender,
         setRerender: () => setRerender(prev => !prev),
     }}>
+
         <HrFilteringProvider>
             <ModalProvider>
                 <DashboardContainer>
+              
+                <Routes>
+                    <Route path="/" element={<LoginView/>}/>
+                    <Route path="/auth/new-user/:role/confirm/:id/:token" element={<NewUserView/>}/>
+                    <Route path='/reset-password' element={<PasswordReset/>}/>
+                    <Route path='/auth/reset-password/:role/confirm/:id/:token' element={<PasswordSendNew/>}/>
+                    <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
-                    {/*<TempModal userName={userName}/>*/}
                     <Routes>
                         <Route path="/" element={<LoginView/>}/>
                         <Route path='/reset-password' element={<PasswordReset/>}/>
