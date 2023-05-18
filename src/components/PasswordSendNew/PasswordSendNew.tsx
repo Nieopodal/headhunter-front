@@ -79,9 +79,12 @@ export const PasswordSendNew = ({newHrMail, innerToken, newHr}: Props) => {
         }
 
         {loading && <Loader/>}
-        {/*{apiError && <ResponseParagraph text={apiError}/>}*/}
+        {apiError && <ResponseParagraph text={apiError}/>}
 
-        {success && <NavLink to="/login">Zaloguj się</NavLink>}
+        {success && <NavLink to="/"
+            className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">
+            Zaloguj się
+       </NavLink>}
 
         {!loading && !apiError && !success && <FormProvider handleSubmit={handleSubmit} formState={formState} {...methods}>
             <form onSubmit={handleSubmit(onSendNewPass)}>

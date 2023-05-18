@@ -34,14 +34,14 @@ export const App = () => {
         setRerender: () => setRerender(prev => !prev),
     }}>
         <ModalProvider>
-        <DashboardContainer>
-            {/*<TempModal userName={userName}/>*/}
-            <Routes>
-                <Route path="/" element={<LoginView/>}/>
-                <Route path="/auth/:role/confirm/:id/:token" element={<NewUserView/>}/>
-                <Route path='/reset-password' element={<PasswordReset/>}/>
-                <Route path='/reset-password/:role/:id/:token' element={<PasswordSendNew/>}/>
-                <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
+            <DashboardContainer>
+                {/*<TempModal userName={userName}/>*/}
+                <Routes>
+                    <Route path="/" element={<LoginView/>}/>
+                    <Route path="/auth/new-user/:role/confirm/:id/:token" element={<NewUserView/>}/>
+                    <Route path='/reset-password' element={<PasswordReset/>}/>
+                    <Route path='/auth/reset-password/:role/confirm/:id/:token' element={<PasswordSendNew/>}/>
+                    <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
                     <Route
                         path="/add-students"
@@ -81,14 +81,14 @@ export const App = () => {
                         }
                     />
 
-                <Route
-                    path='/found-job'
-                    element={
-                        <PrivateRoute
-                            outlet={<StudentFoundJobFormView/>}
-                            accessFor={[UserRole.Student]}/>
-                    }
-                />
+                    <Route
+                        path='/found-job'
+                        element={
+                            <PrivateRoute
+                                outlet={<StudentFoundJobFormView/>}
+                                accessFor={[UserRole.Student]}/>
+                        }
+                    />
 
                 </Routes>
             </DashboardContainer>

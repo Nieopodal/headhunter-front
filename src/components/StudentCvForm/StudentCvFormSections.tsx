@@ -153,21 +153,27 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
             </CategoryContainer>
         </BodyOfSection>
 
-        <TitleOfSection title="Projekt w zespole Scrumowym"/>
-        <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
-            <CategoryContainer title="Link do repozytorium:" error={!!errors?.scrumProjectUrl1}>
-                <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black" required
-                       maxLength={255}/>
-            </CategoryContainer>
-            <CategoryContainer title="Link do kodu własnego (commity):" error={!!errors?.scrumProjectUrl2}>
-                <Input type="url" name="scrumProjectUrl2" additionalClasses="border-2 border-black" required
-                       maxLength={255}/>
-            </CategoryContainer>
-            <CategoryContainer title="Link do code review:" error={!!errors?.scrumProjectUrl3}>
-                <Input type="url" name="scrumProjectUrl3" additionalClasses="border-2 border-black" required
-                       maxLength={255}/>
-            </CategoryContainer>
-        </BodyOfSection>
+        {!newUser && <>
+            <TitleOfSection title="Projekt w zespole Scrumowym"/>
+            <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
+                <CategoryContainer title="Link do repozytorium:" error={!!errors?.scrumProjectUrl1}>
+                    <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black"
+                           required={!newUser}
+                           maxLength={255}/>
+                </CategoryContainer>
+                <CategoryContainer title="Link do kodu własnego (commity):" error={!!errors?.scrumProjectUrl2}>
+                    <Input type="url" name="scrumProjectUrl2" additionalClasses="border-2 border-black"
+                           required={!newUser}
+                           maxLength={255}/>
+                </CategoryContainer>
+                <CategoryContainer title="Link do code review:" error={!!errors?.scrumProjectUrl3}>
+                    <Input type="url" name="scrumProjectUrl3" additionalClasses="border-2 border-black"
+                           required={!newUser}
+                           maxLength={255}/>
+                </CategoryContainer>
+            </BodyOfSection>
+        </>
+        }
 
         <TitleOfSection title="Projekt na zaliczenie"/>
         <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">

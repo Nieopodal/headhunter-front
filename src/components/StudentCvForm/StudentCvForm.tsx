@@ -1,6 +1,6 @@
 import {StudentCv} from "../../types/StudentCv";
 import * as yup from 'yup';
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {FormProvider, useForm} from "react-hook-form";
 import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
@@ -74,9 +74,18 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
         portfolioUrl2: yup.string().max(255).notRequired(),
         projectUrl1: yup.string().min(10).max(255).required(),
         projectUrl2: yup.string().max(255).notRequired(),
-        scrumProjectUrl1: yup.string().min(10).max(255).required(),
-        scrumProjectUrl2: yup.string().min(10).max(255).required(),
-        scrumProjectUrl3: yup.string().min(10).max(255).required(),
+        scrumProjectUrl1: yup.string().max(255).test('url-test', 'Link jest wymagany.', (value) => {
+            if (!newUser) return Boolean(value);
+            else return true;
+        }),
+        scrumProjectUrl2: yup.string().max(255).test('url-test', 'Link jest wymagany.', (value) => {
+            if (!newUser) return Boolean(value);
+            else return true;
+        }),
+        scrumProjectUrl3: yup.string().max(255).test('url-test', 'Link jest wymagany.', (value) => {
+            if (!newUser) return Boolean(value);
+            else return true;
+        }),
         expectedTypeWork: yup.string().required(),
         targetWorkCity: yup.string().max(60),
         expectedContractType: yup.string().required(),
@@ -133,10 +142,6 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
     });
 
     const {handleSubmit} = methods;
-
-    useEffect(() => {
-        console.log(methods.formState.errors)
-    }, [methods.formState.errors]);
 
     const formSubmitHandler = async (data: StudentFormData) => {
         const initFormData = {
