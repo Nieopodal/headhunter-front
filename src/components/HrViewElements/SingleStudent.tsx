@@ -4,29 +4,18 @@ import {SingleStudentGrade} from "./SingleStudentGrade";
 import {SingleStudentPreferenceItem} from "./SingleStudentPrefernceItem";
 import {HrViewMode} from "../../types/HrViewMode";
 import {SingleStudentTitleBar} from "./SingleStudentTitleBar";
-import {AvailableStudentsResponse} from "../../types/AvailableStudentsResponse";
-import { StudentToInterview } from "../../../../headhunter-back/src/types/student";
+import {AvailableStudent, StudentToInterview } from "../../../../headhunter-back/src/types/student";
 
 
 type Props = {
-    studentData: AvailableStudentsResponse | StudentToInterview;
+    studentData: AvailableStudent | StudentToInterview;
     viewMode: HrViewMode
     handleViewMode: (viewMode: HrViewMode) => void
 }
 
 export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) => {
 
-
-    const courseCompletion = ("student_course_completion" in studentData) ? studentData.student_course_completion : studentData.courseCompletion;
-    const courseEngagement = ("student_course_engagement" in studentData) ? studentData.student_course_engagement : studentData.courseEngagement;
-    const projectDegree = ("student_project_degree" in studentData) ? studentData.student_project_degree : studentData.projectDegree;
-    const scrumDegree = ("student_team_project_degree" in studentData) ? studentData.student_team_project_degree : studentData.teamProjectDegree;
-    const typeWork = ("student_expected_type_work" in studentData) ? studentData.student_expected_type_work : studentData.expectedTypeWork;
-    const contractType = ("student_expected_contract_type" in studentData) ? studentData.student_expected_contract_type : studentData.expectedContractType;
-    const workCity = ("student_target_work_city" in studentData) ? studentData.student_target_work_city : studentData.targetWorkCity;
-    const salary = ("student_expected_salary" in studentData) ? studentData.student_expected_salary : studentData.expectedSalary;
-    const takeAppr = ("student_can_take_apprenticeship" in studentData) ? studentData.student_can_take_apprenticeship : studentData.canTakeApprenticeship;
-    const commExp = ("student_months_of_commercial_exp" in studentData) ? studentData.student_months_of_commercial_exp : studentData.monthsOfCommercialExp;
+    const {courseCompletion, courseEngagement, expectedContractType, expectedTypeWork, monthsOfCommercialExp, expectedSalary, canTakeApprenticeship, targetWorkCity, teamProjectDegree, projectDegree} = studentData
 
     return (<>
         <div tabIndex={0} className="collapse collapse-arrow rounded-box ">
@@ -55,22 +44,22 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
 
                 <SingleStudentGrade
                     title={`Ocena pracy w zespole w Scrum`}
-                    grade={scrumDegree}
+                    grade={teamProjectDegree}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Preferowane miejsce pracy`}
-                    description={typeWork}
+                    description={expectedTypeWork}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Docelowe miasto, gdzie chce pracować kandydat`}
-                    description={workCity}
+                    description={targetWorkCity}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Oczekiwany typ kontraktu`}
-                    description={contractType}
+                    description={expectedContractType}
                 />
 
                 <SingleStudentPreferenceItem
@@ -78,17 +67,17 @@ export const SingleStudent = ({studentData, viewMode, handleViewMode}: Props) =>
                     description={numberWithSpaces(Intl.NumberFormat(undefined, {
                         currency: "PLN",
                         style: "currency"
-                    }).format(Number(salary)))}
+                    }).format(Number(expectedSalary)))}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Zgoda na odbycie bezpłatnych praktyk/stażu na początek`}
-                    description={takeAppr === 1 ? "TAK" : "NIE"}
+                    description={canTakeApprenticeship === true ? "TAK" : "NIE"}
                 />
 
                 <SingleStudentPreferenceItem
                     title={`Komercyjne doświadczenie w programowaniu`}
-                    description={commExp + ' ' + monthDeclension(commExp)}
+                    description={monthsOfCommercialExp + ' ' + monthDeclension(monthsOfCommercialExp)}
                 />
             </div>
         </div>

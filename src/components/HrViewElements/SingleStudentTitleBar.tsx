@@ -1,6 +1,5 @@
 import React, {useContext} from "react";
-import {AvailableStudentsResponse} from "src/types/AvailableStudentsResponse";
-import {StudentToInterview} from "../../../../headhunter-back/src/types/student";
+import {AvailableStudent, StudentToInterview} from "../../../../headhunter-back/src/types/student";
 import {HrViewMode} from "../../types/HrViewMode";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
@@ -13,7 +12,7 @@ import {ModalPosition} from "../../types/ModalPosition";
 
 type Props = {
     viewMode: HrViewMode,
-    studentData: AvailableStudentsResponse | StudentToInterview,
+    studentData: AvailableStudent | StudentToInterview,
     handleViewMode: (viewMode: HrViewMode) => void;
 }
 
@@ -24,11 +23,11 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
     const {user} = useContext(UserContext);
     const {setModal} = useModal();
 
-    const firstName = ("student_first_name" in studentData) ? studentData.student_first_name : studentData.firstName;
-    const lastName = ("student_last_name" in studentData) ? studentData.student_last_name : studentData.lastName;
-    const reservationTime = ("reservationTime" in studentData) ? studentData.reservationTime : new Date();
-    const pictureUrl = ("pictureUrl" in studentData) ? studentData.pictureUrl : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
-    const studentId = ("student_id" in studentData) ? studentData.student_id : studentData.id;
+    const {firstName, lastName, id: studentId} = studentData;
+    const pictureUrl = (("githubUsername" in studentData) && studentData.githubUsername !== "") ? `https://github.com/${studentData.githubUsername}.png` : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+
+  const reservationTime = ("reservationTime" in studentData) ? studentData.reservationTime : new Date();
+
     const userFullName = `${firstName} ${lastName}`;
     const userShortName = `${firstName} ${lastName.slice(0, 1).concat('.')}`;
 
