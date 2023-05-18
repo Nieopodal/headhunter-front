@@ -38,9 +38,9 @@ export const App = () => {
             {/*<TempModal userName={userName}/>*/}
             <Routes>
                 <Route path="/" element={<LoginView/>}/>
-                <Route path="/new-user/:role/:id/:token" element={<NewUserView/>}/>
+                <Route path="/auth/:role/confirm/:id/:token" element={<NewUserView/>}/>
                 <Route path='/reset-password' element={<PasswordReset/>}/>
-                <Route path='/reset-password/:id/:token' element={<PasswordSendNew/>}/>
+                <Route path='/reset-password/:role/:id/:token' element={<PasswordSendNew/>}/>
                 <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
                     <Route

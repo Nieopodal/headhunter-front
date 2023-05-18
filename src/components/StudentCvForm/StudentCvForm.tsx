@@ -10,6 +10,8 @@ import {useNavigate} from "react-router-dom";
 import {ExpectedContractType, ExpectedTypeWork} from "types";
 import {StudentCvFormSections} from "./StudentCvFormSections";
 import {apiUrl} from "../../config/api";
+import {Message} from "../common/Message";
+import {useModal} from "../../hooks/useModal";
 
 interface StudentFormData {
     email: string;
@@ -45,13 +47,13 @@ interface Props {
 }
 
 export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
-
+    const {setModal} = useModal();
     const {user, setRerender} = useContext(UserContext);
     const {fetchApi, apiError} = useFetch();
     const navigate = useNavigate();
 
     const validationSchema = yup.object({
-        githubUsername: yup.string().max(255).required().test('userExists', 'Użytkownik nie istnieje', (value) => {
+        githubUsername: yup.string().max(255).required().test('userExists', 'Użytkownik nie istnieje w bazie Github', (value) => {
             return new Promise((resolve) => {
                 fetch(`https://api.github.com/users/${value}`)
                     .then(res => {
@@ -62,6 +64,8 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
                     })
             });
         }),
+        firstName: yup.string().required('Imię jest wymagane').max(50),
+        lastName: yup.string().required('Nazwisko jest wymagane').max(70),
         contactNumber: yup.number().integer().max(9999999999999999999)
             .test('contactNumber', 'Podano nieprawidłowy format', value => (
                 !(value && (value.toString.length === 0 || value < 111111))
@@ -145,14 +149,19 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
             finalFormData = {
                 ...initFormData,
                 password: data.password,
+                firstName: data.firstName,
+                lastName: data.lastName,
             };
         } else {
             finalFormData = {
                 ...initFormData,
             };
         }
-        await fetchApi(user, `${newUser ? `${apiUrl}/student/register` : `${apiUrl}/student/update`}`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json", innerToken ?? undefined);
-        if (!apiError) navigate(newUser ? '/login' : '/dashboard', {replace: true});
+        const responseData = await fetchApi(newUser ? null : user, `${newUser ? `${apiUrl}/student/register` : `${apiUrl}/student/update`}`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json", innerToken ?? undefined);
+        if (responseData) {
+            setModal({modal: <Message type={"success"} body={"Zmiany zostały zapisane"}/>});
+            navigate(newUser ? '/login' : '/dashboard', {replace: true})
+        }
         setRerender();
     };
 

@@ -34,10 +34,6 @@ export const AdminAddHrView = () => {
 
     const methods = useForm<FormData>({
         defaultValues: {
-            fullName: '',
-            email: '',
-            company: '',
-            maxReservedStudents: 0,
         },
         resolver: yupResolver(validationSchema),
     });

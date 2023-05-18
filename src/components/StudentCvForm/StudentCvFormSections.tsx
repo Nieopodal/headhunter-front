@@ -16,21 +16,22 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
     const {register, formState: {errors}} = useFormContext();
 
     return <>
-        <TitleOfSection title="Podstawowe dane"/>
+        <TitleOfSection title="Podstawowe dane"
+                        errorMsg={errors?.githubUsername && errors.githubUsername.message as string}/>
         <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="E-mail">
-                <Input type="email" name="email" disabled/>
+                <Input type="email" name="email" additionalClasses="border-2 border-black" disabled/>
             </CategoryContainer>
 
-            {!newUser && <CategoryContainer title="Imię">
-                <Input type="text" name="firstName" disabled/>
+            {<CategoryContainer title="Imię">
+                <Input type="text" name="firstName" additionalClasses="border-2 border-black" disabled={!newUser}/>
             </CategoryContainer>
             }
 
-            {!newUser &&
-            <CategoryContainer title="Nazwisko">
-                <Input type="text" name="lastName" disabled/>
-            </CategoryContainer>
+            {
+                <CategoryContainer title="Nazwisko">
+                    <Input type="text" name="lastName" additionalClasses="border-2 border-black" disabled={!newUser}/>
+                </CategoryContainer>
             }
 
             <CategoryContainer title="Nick w Github" error={!!errors?.githubUsername}>
@@ -91,7 +92,8 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 </select>
             </CategoryContainer>
 
-            <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN] (0 - brak)" error={!!errors?.expectedSalary}>
+            <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN] (0 - brak)"
+                               error={!!errors?.expectedSalary}>
                 <Input type="number" name="expectedSalary" additionalClasses="border-2 border-black" min={0}
                        max={9999999.99}/>
             </CategoryContainer>

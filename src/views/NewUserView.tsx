@@ -6,6 +6,8 @@ import {ConfirmResponse, ExpectedContractType, ExpectedTypeWork} from "types";
 import {SmallFormContainer} from "../components/common/SmallFormContainer";
 import {UserRole} from "../types/UserRole";
 import {StudentCvForm} from "../components/StudentCvForm/StudentCvForm";
+import {PasswordSendNew} from "../components/PasswordSendNew/PasswordSendNew";
+import {Loader} from "../components/common/Loader";
 
 export const NewUserView = () => {
     const {role, id, token} = useParams();
@@ -26,13 +28,13 @@ export const NewUserView = () => {
         })();
     }, []);
 
-    return <SmallFormContainer title='Aktywacja nowego użytkownika'
+    return <SmallFormContainer title='Rejestracja nowego użytkownika'
                                description={(loading || apiError) ? '' : "Aby aktywować konto uzupełnij poniższe pola."}
                                hideGoBack>
-        {/*{loading && <Loader/>}*/}
+        {loading && <Loader/>}
         {/*{apiError && <ResponseParagraph text={apiError}/>}*/}
 
-        {!loading && <>
+        {!loading && !apiError && <>
             {role === UserRole.Student &&
                    <div className="lg:w-[100vw] xl:w-full"> <StudentCvForm innerToken={emailToken!} newUser studentData={{
                         student_courses: "",
@@ -62,7 +64,7 @@ export const NewUserView = () => {
                    </div>}
 
             {role === UserRole.Hr && <>
-
+                <PasswordSendNew innerToken={emailToken!} newHrMail={email!} newHr/>
             </>}
         </>}
     </SmallFormContainer>
