@@ -12,6 +12,7 @@ import {TbPlayerTrackNext} from "react-icons/tb";
 import {HrFilteringContext} from "../../contexts/hr.filtering.context";
 import {ImCancelCircle} from "react-icons/im";
 
+
 type Props = {
     handleViewMode: (viewMode: HrViewMode) => void;
     studentList: AvailableStudent[] | StudentToInterview[];
@@ -50,9 +51,7 @@ export const HrMainDisplay = ({
             handleNameSearch(name!);
         }
 
-    const handleFiltering = (data: HrFilteringCriteria) => {
-        setFilteringCriteria(data);
-    }
+
 
        const clearSearch = (e: FormEvent) => {
             e.preventDefault();
@@ -113,7 +112,7 @@ export const HrMainDisplay = ({
                                             onClick={() => {
                                                 setModal({
                                                     modal:
-                                                        <FilteringModal/>,
+                                                        <FilteringModal />,
                                                 })
                                             }}
                                             className={`cursor-pointer w-min-fit px-4 flex items-center justify-center ${isFiltering ? "btn-active text-base-content" : "bg-base-200 text-neutral-500"} gap-1.5`}>

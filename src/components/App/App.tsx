@@ -39,15 +39,14 @@ export const App = () => {
         <HrFilteringProvider>
             <ModalProvider>
                 <DashboardContainer>
-              
-                <Routes>
-                    <Route path="/" element={<LoginView/>}/>
-                    <Route path="/auth/new-user/:role/confirm/:id/:token" element={<NewUserView/>}/>
-                    <Route path='/reset-password' element={<PasswordReset/>}/>
-                    <Route path='/auth/reset-password/:role/confirm/:id/:token' element={<PasswordSendNew/>}/>
-                    <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
                     <Routes>
+                        <Route path="/" element={<LoginView/>}/>
+                        <Route path="/auth/new-user/:role/confirm/:id/:token" element={<NewUserView/>}/>
+                        <Route path='/reset-password' element={<PasswordReset/>}/>
+                        <Route path='/auth/reset-password/:role/confirm/:id/:token' element={<PasswordSendNew/>}/>
+                        <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
+
                         <Route path="/" element={<LoginView/>}/>
                         <Route path='/reset-password' element={<PasswordReset/>}/>
                         <Route path='/reset-password/:id/:token' element={<PasswordSendNew/>}/>
@@ -100,7 +99,8 @@ export const App = () => {
                             }
                         />
 
-                    </Routes>
+
+                        </Routes>
 
                 </DashboardContainer>
             </ModalProvider>
