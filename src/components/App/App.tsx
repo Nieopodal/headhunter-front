@@ -16,6 +16,7 @@ import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
 import {StudentCvForHr} from "../StudentCvForHr";
 import {Loader} from "../common/Loader";
 import {StudentFoundJobFormView} from "../../views/StudentFoundJobFormView";
+import {NewUserView} from "../../views/NewUserView";
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
@@ -37,6 +38,7 @@ export const App = () => {
             {/*<TempModal userName={userName}/>*/}
             <Routes>
                 <Route path="/" element={<LoginView/>}/>
+                <Route path="/new-user/:role/:id/:token" element={<NewUserView/>}/>
                 <Route path='/reset-password' element={<PasswordReset/>}/>
                 <Route path='/reset-password/:id/:token' element={<PasswordSendNew/>}/>
                 <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>

@@ -26,11 +26,11 @@ export const PasswordSendNew = () => {
     const {id, token} = useParams<PollParams>();
 
     const schema = yup.object().shape({
-        newPass: yup.string().min(6, 'Hasło musi zawierać conajmniej 6 znaków').required('Pole wymagane').matches(
+        newPass: yup.string().min(6, 'Hasło musi zawierać co najmniej 6 znaków').required('Pole wymagane').matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
             "Hasło musi zawierać minimum 6 znaków, jedną wielką literę, jedną małą, jedną liczbę oraz znak specjalny"
         ),
-        confirmNewPass: yup.string().oneOf([yup.ref("newPass")], `Stare hasło i nowe hasło muszą być jednakowe!`).required('Pole wymagane')
+        confirmNewPass: yup.string().oneOf([yup.ref("newPass")], `Hasła muszą być jednakowe!`).required('Pole wymagane')
     });
 
     const {handleSubmit, formState, ...methods} = useForm<PasswordSetNewRequest>({
@@ -62,8 +62,7 @@ export const PasswordSendNew = () => {
             </div>
             <div className="flex flex-col">
                 <div className="flex flex-col justify-start">
-                    <h1 className="text-2xl font-bold">Wprowadź nowe hasło
-                    </h1>
+                    <h1 className="text-2xl font-bold">Wprowadź nowe hasło</h1>
                 </div>
                 <FormProvider handleSubmit={handleSubmit} formState={formState} {...methods}>
                     <form onSubmit={handleSubmit(onSendNewPass)}>
@@ -76,7 +75,8 @@ export const PasswordSendNew = () => {
                                 name="newPass"
                                 additionalClasses="h-10 bg-neutral input text-3xl tracking-widest placeholder:tracking-normal placeholder:text-base placeholder:text-neutral-content"
                             />
-                            <span className="text-xs text-primary mb-2 text-left">{formState.errors.newPass?.message}</span>
+                            <span
+                                className="text-xs text-primary mb-2 text-left">{formState.errors.newPass?.message}</span>
 
                             <Input
                                 type="password"
@@ -84,7 +84,8 @@ export const PasswordSendNew = () => {
                                 name="confirmNewPass"
                                 additionalClasses="h-10 bg-neutral input text-3xl tracking-widest placeholder:tracking-normal placeholder:text-base placeholder:text-neutral-content"
                             />
-                            <span className="text-xs text-primary text-left">{formState.errors.confirmNewPass?.message}</span>
+                            <span
+                                className="text-xs text-primary text-left">{formState.errors.confirmNewPass?.message}</span>
                         </div>
                         <div className="items-center flex flex-row place-content-between align-middle mt-6">
                             <button

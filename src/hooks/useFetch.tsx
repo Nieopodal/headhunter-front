@@ -8,10 +8,10 @@ export const useFetch = () => {
     const [apiError, setApiError] = useState<string | null>(null);
     const [apiLoading, setApiLoading] = useState<boolean>(false);
 
-    async function fetchApi<T>(user: TemporaryUserEntity | null, url: string, method: string = "GET", customErrMsg: string, body?: T, asJson?: boolean, contentType?: string): Promise<unknown> {
+    async function fetchApi<T>(user: TemporaryUserEntity | null, url: string, method: string = "GET", customErrMsg: string, body?: T, asJson?: boolean, contentType?: string, innerToken?: string): Promise<unknown> {
         try {
             setApiLoading(true);
-            const res = await fetchHandler(user?.access_token, url, method, body, asJson, contentType);
+            const res = await fetchHandler(innerToken ?? user?.access_token, url, method, body, asJson, contentType);
             const data = await res.json();
             if (data.isSuccess) {
                 setData(data.payload as unknown);

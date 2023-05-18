@@ -41,9 +41,10 @@ interface StudentFormData {
 interface Props {
     studentData: StudentCv;
     newUser?: boolean;
+    innerToken?: string;
 }
 
-export const StudentCvForm = ({studentData, newUser}: Props) => {
+export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
 
     const {user, setRerender} = useContext(UserContext);
     const {fetchApi, apiError} = useFetch();
@@ -80,8 +81,11 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
         workExperience: yup.string().max(1000),
         courses: yup.string().max(1000),
         expectedSalary: yup.number().max(9999999.99, 'Dostępne kwoty: 0 - 9999999').notRequired(),
-        password: yup.string(),
-        confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
+        password:  yup.string().required('Pole wymagane'),
+        confirmPassword: yup.string().matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
+            "Hasło musi zawierać minimum 6 znaków, jedną wielką literę, jedną małą, jedną liczbę oraz znak specjalny"
+        ).test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
             return this.parent.password === value
         }),
     });
@@ -147,13 +151,13 @@ export const StudentCvForm = ({studentData, newUser}: Props) => {
                 ...initFormData,
             };
         }
-        await fetchApi(user, `${apiUrl}/student/update`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json");
-        if (!apiError) navigate('/dashboard', {replace: true});
+        await fetchApi(user, `${newUser ? `${apiUrl}/student/register` : `${apiUrl}/student/update`}`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json", innerToken ?? undefined);
+        if (!apiError) navigate(newUser ? '/login' : '/dashboard', {replace: true});
         setRerender();
     };
 
     return <form onSubmit={handleSubmit(data => formSubmitHandler(data))}>
-        <h2 className="mx-auto w-fit text-2xl font-bold my-6">Edycja danych</h2>
+        <h2 className="mx-auto w-fit text-2xl font-bold my-6">{newUser ? "Dane kursanta" : "Edycja danych"}</h2>
         <FormProvider {...methods}>
 
             <StudentCvFormSections studentData={studentData} newUser={newUser}/>
