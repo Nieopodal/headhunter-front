@@ -1,46 +1,131 @@
-# Getting Started with Create React App
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://i.ibb.co/CMYzDvn/logo-white.png">
+  <source media="(prefers-color-scheme: light)" srcset="https://i.ibb.co/pR1by1g/logo-black.png">
+  <img alt="MegaK HeadHunter logo" src="https://i.ibb.co/pR1by1g/logo-black.png">
+</picture>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# About The Project
 
-## Available Scripts
+![screenshot of the app](https://i.ibb.co/mSzmTB6/browser-mockup.png)
 
-In the project directory, you can run:
+MegaK HeadHunter is a project made by participants of a Polish webdev course called [MegaKurs](https://megak.pl). It was a team-based (agile/scrum) effort, that was assigned as a final project.
 
-### `npm start`
+MegaK HeadHunter is an IT employment-focused platform, which allows the students, who have completed the abovementioned course, to apply for their first jobs. It allows head hunters from various companies to browse each sudent's CV's and appoint interviews.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Check out the live demo 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**https://mwyso.usermd.net**
 
-### `npm test`
+Test student account credentials:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**login:** student@hh.com
+**password:** Test123!@#
 
-### `npm run build`
+Test headhunter account credentials:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**login:** hr@hh.com
+**password:** Test123!@#
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Features 🔧
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* Three types of accounts: administrator, headhunter and student
+* Authorization and authentication (JWT/bearer)
+* All accounts are created by administrator either by CSV file upload or a special form
+* Account activation or password-reset links sent through e-mail
+* Responsive for mobile
 
-### `npm run eject`
+# About this repo🔍
+This is a frontend client for the MegaK HeadHunter app. It was made using:
+* React [![react][react]][react-url]
+* Typescript [![typescript][typescript]][typescript-url]
+* Tailwind [![tailwind][tailwind]][typescript-url]
+* DaisyUI [![DaisyUI][DaisyUI]][DaisyUI-url]
+* React Hook Form [![React Hook Form][React Hook Form]][React Hook Form-url]
+* packages like [react-icons](https://react-icons.github.io/react-icons/), [Yup](https://github.com/jquense/yup) and others
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Install locally
+To install HeadHunter app locally:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Nieopodal/headhunter-front.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. run npm start
+   ```sh
+   npm start
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Configure your port and API url
+By default, the app runs on port 3001. You can change it in the scripts section of `package.json` file:
+```
+"scripts": {
+"start": "set PORT=3001 && react-app-rewired start",
+...
+},
+```
+There, you can also change the API url
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+"scripts": {
+    "build:win": "set REACT_APP_API_URL=/your_api_url&& react-app-rewired  build",
+    "build:unix": "REACT_APP_API_URL=/your_api_url react-app-rewired  build",
+...
+},
+```
+The default API address is `http://localhost:3000` and it can be found and changed in the `src/config/api.ts` file:
+```
+export const apiUrl = process.env.REACT_APP_API_URL ?? `http://localhost:3000`;
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+### Backend app
+<span style="color:#e02735">You *will* need the MegaK HeadHunter backend app for this to work</span>.
+
+Check it out at [https://github.com/Nieopodal/headhunter-back](https://github.com/Nieopodal/headhunter-back)
+
+⚠️ Make sure the file structure of both apps is this *(and mind the folder names)*:
+
+```
+├─ //your folder
+│   ├── headhunter-back
+│   ├── headhunter-front
+```
+
+# About the authors
+This version of MegaK HeadHunter app was made by participants of the group #2 from the 2nd edition of [MegaKurs](https://megak.pl) webdev course:
+
+* Maciej [https://github.com/Nieopodal/](https://github.com/Nieopodal)
+* Marcin [https://github.com/mp-martin/](https://github.com/mp-martin/)
+* Mateusz [https://github.com/MWyso](https://github.com/MWyso)
+* Irek [https://github.com/IrePro78](https://github.com/IrePro78)
+* Wojtek [https://github.com/RavenPl](https://github.com/RavenPl)
+* Paweł [https://github.com/Now1k](https://github.com/Now1k)
+* Radek [https://github.com/RadekK1996](https://github.com/RadekK1996)
+* Arek [https://github.com/bubelarek](https://github.com/bubelarek)
+
+It was a great co-working experience 🤝
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[react]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[react-url]: https://reactjs.org/
+[typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[typescript-url]: https://www.typescriptlang.org/
+[tailwind]: https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white
+[tailwind-url]: https://tailwindcss.com/
+
+[React Hook Form]: https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white
+[React Hook Form-url]: https://react-hook-form.com/
+
+[DaisyUI]: https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white
+[DaisyUI-url]: https://daisyui.com/
+
+[//]: # ([NestJS]: https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+
+[//]: # ([NestJS-url]: https://https://nestjs.com/)

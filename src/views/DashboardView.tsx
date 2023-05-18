@@ -1,10 +1,16 @@
-// import {useContext} from "react";
-// import {UserContext} from "../contexts/user.context";
+import {useContext} from "react";
+import {UserContext} from "../contexts/user.context";
+import {StudentDashboardView} from "./StudentDashboardView";
+import {UserRole} from "../types/UserRole";
+import {HrDashboardView} from "./HrDashboardView";
+import {AdminView} from "./AdminView";
 
 export const DashboardView = () => {
-    // const {user} = useContext(UserContext); to get user's role
+    const {user} = useContext(UserContext);
 
     return <div>
-            User interface based on role
-        </div>
+        {user!.role === UserRole.Student && <StudentDashboardView/>}
+        {user!.role === UserRole.Hr && <HrDashboardView/>}
+        {user!.role === UserRole.Admin && <AdminView/>}
+    </div>
 };
