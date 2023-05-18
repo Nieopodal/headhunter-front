@@ -16,6 +16,7 @@ import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
 import {StudentCvForHr} from "../StudentCvForHr";
 import {Loader} from "../common/Loader";
 import {StudentFoundJobFormView} from "../../views/StudentFoundJobFormView";
+import {NewUserView} from "../../views/NewUserView";
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
@@ -33,13 +34,14 @@ export const App = () => {
         setRerender: () => setRerender(prev => !prev),
     }}>
         <ModalProvider>
-        <DashboardContainer>
-            {/*<TempModal userName={userName}/>*/}
-            <Routes>
-                <Route path="/" element={<LoginView/>}/>
-                <Route path='/reset-password' element={<PasswordReset/>}/>
-                <Route path='/reset-password/:id/:token' element={<PasswordSendNew/>}/>
-                <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
+            <DashboardContainer>
+                {/*<TempModal userName={userName}/>*/}
+                <Routes>
+                    <Route path="/" element={<LoginView/>}/>
+                    <Route path="/auth/new-user/:role/confirm/:id/:token" element={<NewUserView/>}/>
+                    <Route path='/reset-password' element={<PasswordReset/>}/>
+                    <Route path='/auth/reset-password/:role/confirm/:id/:token' element={<PasswordSendNew/>}/>
+                    <Route path="/dashboard" element={<PrivateRoute outlet={<DashboardView/>}/>}/>
 
                     <Route
                         path="/add-students"
@@ -79,14 +81,14 @@ export const App = () => {
                         }
                     />
 
-                <Route
-                    path='/found-job'
-                    element={
-                        <PrivateRoute
-                            outlet={<StudentFoundJobFormView/>}
-                            accessFor={[UserRole.Student]}/>
-                    }
-                />
+                    <Route
+                        path='/found-job'
+                        element={
+                            <PrivateRoute
+                                outlet={<StudentFoundJobFormView/>}
+                                accessFor={[UserRole.Student]}/>
+                        }
+                    />
 
                 </Routes>
             </DashboardContainer>

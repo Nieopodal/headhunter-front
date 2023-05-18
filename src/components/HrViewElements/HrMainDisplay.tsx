@@ -40,7 +40,6 @@ export const HrMainDisplay = ({
 
     const handleFiltering = (data: HrFilteringCriteria) => {
         setFilteringCriteria(data);
-        console.log(data)
     }
 
 

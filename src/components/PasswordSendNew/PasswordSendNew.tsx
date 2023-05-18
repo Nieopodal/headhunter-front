@@ -1,36 +1,45 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {FormProvider, useForm} from "react-hook-form";
-import {Input} from "../common/Form/Input";
 import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useFetch} from "../../hooks/useFetch";
-import {useParams} from 'react-router-dom';
+import {NavLink, useParams} from 'react-router-dom';
 import {AppLogo} from "../Header/AppLogo";
 import {apiUrl} from "../../config/api";
-
-
-type PollParams = {
-    id: string,
-    token: string
-};
+import {NewPassword} from "../common/NewPassword";
+import {ConfirmResponse} from "types";
+import {Loader} from "../common/Loader";
+import {useModal} from "../../hooks/useModal";
+import {Message} from "../common/Message";
+import {ResponseParagraph} from "../common/ResponseParagraph";
 
 type PasswordSetNewRequest = {
-    newPass: string,
+    password: string,
     confirmNewPass: string,
 }
 
-export const PasswordSendNew = () => {
+interface Props {
+    newHr?: boolean;
+    newHrMail?: string;
+    innerToken?: string;
+}
 
+export const PasswordSendNew = ({newHrMail, innerToken, newHr}: Props) => {
+    const [loading, setLoading] = useState<boolean>(false);
+    const [email, setEmail] = useState<string | null>(null);
+    const [success, setSuccess] = useState<boolean>(false);
+    const [emailToken, setEmailToken] = useState<string | null>(null);
     const {fetchApi, data: fetchData, apiError} = useFetch();
+    const {setModal} = useModal();
 
-    const {id, token} = useParams<PollParams>();
+    const {id, token, role} = useParams();
 
     const schema = yup.object().shape({
-        newPass: yup.string().min(6, 'Hasło musi zawierać conajmniej 6 znaków').required('Pole wymagane').matches(
+        password: yup.string().min(6, 'Hasło musi zawierać co najmniej 6 znaków').required('Pole wymagane').matches(
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
             "Hasło musi zawierać minimum 6 znaków, jedną wielką literę, jedną małą, jedną liczbę oraz znak specjalny"
         ),
-        confirmNewPass: yup.string().oneOf([yup.ref("newPass")], `Stare hasło i nowe hasło muszą być jednakowe!`).required('Pole wymagane')
+        confirmNewPass: yup.string().oneOf([yup.ref("password")], `Hasła muszą być jednakowe!`).required('Pole wymagane')
     });
 
     const {handleSubmit, formState, ...methods} = useForm<PasswordSetNewRequest>({
@@ -38,64 +47,49 @@ export const PasswordSendNew = () => {
         resolver: yupResolver(schema)
     });
 
-    const onSendNewPass = async ({newPass}: PasswordSetNewRequest) => {
-        const dataToSend = {
-            newPass,
-            id,
-            token
-        };
-        // await fetchApi(null, `${apiUrl}/auth/newpass/`, "POST", "Błąd podczas próby zmiany hasła", dataToSend, true)
-        // setModal(<SuccessMessage
-        //             message={`Hasło zmienione!`}/>)
-        // if (apiError) {
-        //             setModal(<ErrorMessage error={apiError}/>)
-        //         }
-        // @TODO: handle this when BE is ready
+    const onSendNewPass = async ({password}: PasswordSetNewRequest) => {
+            const data = await fetchApi(null, `${newHr ? `${apiUrl}/hr/update` : `${apiUrl}/auth/password/reset`}`, "PATCH", "Wystąpił nieznany błąd.", {
+                id,
+                password
+            }, true, "application/json", newHr ? innerToken! : emailToken!);
 
-        console.log(dataToSend)
+            if (data) {
+                setSuccess(true);
+                setModal({modal: <Message type={"success"} body={newHr ? "Hasło zostało zapisane. Zaloguj się." : "Hasło zostało zmienione. Zaloguj się."}/>});
+            }
     }
 
+    useEffect(() => {
+        (async () => {
+            if (newHr) return;
+            setLoading(true);
+            const data = await fetchApi(null, `${apiUrl}/auth/${role}/confirm/${id}/${token}`, "POST", "Wystąpił nieznany błąd");
+            if (data) {
+                setEmail((data as ConfirmResponse).email);
+                setEmailToken((data as ConfirmResponse).emailToken);
+            }
+            setLoading(false);
+        })();
+    }, []);
+
     return <div className="flex flex-col items-center justify-start w-full mt-10">
-        <div className="">
-            <div className="flex justify-center">
-                <AppLogo classes="w-32 mb-12"/>
-            </div>
-            <div className="flex flex-col">
-                <div className="flex flex-col justify-start">
-                    <h1 className="text-2xl font-bold">Wprowadź nowe hasło
-                    </h1>
-                </div>
-                <FormProvider handleSubmit={handleSubmit} formState={formState} {...methods}>
-                    <form onSubmit={handleSubmit(onSendNewPass)}>
-
-                        <div className="form-control gap-2 my-4">
-
-                            <Input
-                                type="password"
-                                placeholder="Nowe hasło"
-                                name="newPass"
-                                additionalClasses="h-10 bg-neutral input text-3xl tracking-widest placeholder:tracking-normal placeholder:text-base placeholder:text-neutral-content"
-                            />
-                            <span className="text-xs text-primary mb-2 text-left">{formState.errors.newPass?.message}</span>
-
-                            <Input
-                                type="password"
-                                placeholder="Powtórz nowe hasło"
-                                name="confirmNewPass"
-                                additionalClasses="h-10 bg-neutral input text-3xl tracking-widest placeholder:tracking-normal placeholder:text-base placeholder:text-neutral-content"
-                            />
-                            <span className="text-xs text-primary text-left">{formState.errors.confirmNewPass?.message}</span>
-                        </div>
-                        <div className="items-center flex flex-row place-content-between align-middle mt-6">
-                            <button
-                                className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">
-                                Zmień hasło
-                            </button>
-                        </div>
-                    </form>
-                </FormProvider>
-
-            </div>
+        {!newHr && <div className="flex justify-center">
+            <AppLogo classes="w-32 mb-12"/>
         </div>
+        }
+
+        {loading && <Loader/>}
+        {apiError && <ResponseParagraph text={apiError}/>}
+
+        {success && <NavLink to="/"
+            className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">
+            Zaloguj się
+       </NavLink>}
+
+        {!loading && !apiError && !success && <FormProvider handleSubmit={handleSubmit} formState={formState} {...methods}>
+            <form onSubmit={handleSubmit(onSendNewPass)}>
+                <NewPassword newHrMail={newHrMail}/>
+            </form>
+        </FormProvider>}
     </div>
 };

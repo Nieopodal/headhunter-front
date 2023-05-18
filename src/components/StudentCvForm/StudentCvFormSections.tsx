@@ -16,21 +16,22 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
     const {register, formState: {errors}} = useFormContext();
 
     return <>
-        <TitleOfSection title="Podstawowe dane"/>
+        <TitleOfSection title="Podstawowe dane"
+                        errorMsg={errors?.githubUsername && errors.githubUsername.message as string}/>
         <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
             <CategoryContainer title="E-mail">
-                <Input type="email" name="email" disabled/>
+                <Input type="email" name="email" additionalClasses="border-2 border-black" disabled/>
             </CategoryContainer>
 
-            {!newUser && <CategoryContainer title="Imię">
-                <Input type="text" name="firstName" disabled/>
+            {<CategoryContainer title="Imię">
+                <Input type="text" name="firstName" additionalClasses="border-2 border-black" disabled={!newUser}/>
             </CategoryContainer>
             }
 
-            {!newUser &&
-            <CategoryContainer title="Nazwisko">
-                <Input type="text" name="lastName" disabled/>
-            </CategoryContainer>
+            {
+                <CategoryContainer title="Nazwisko">
+                    <Input type="text" name="lastName" additionalClasses="border-2 border-black" disabled={!newUser}/>
+                </CategoryContainer>
             }
 
             <CategoryContainer title="Nick w Github" error={!!errors?.githubUsername}>
@@ -56,7 +57,7 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                            minLength={7} maxLength={255}/>
                 </CategoryContainer>
                 {errors.confirmPassword && <CategoryContainer title="Błąd:">
-                    <p className="flex flex-row text-red-500">{errors.confirmPassword?.message as string}</p>
+                    <p className="flex flex-row text-red-500 text-sm">{errors.confirmPassword?.message as string}</p>
                 </CategoryContainer>}
             </BodyOfSection>
         </>
@@ -68,10 +69,10 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 <select {...register("expectedTypeWork")} defaultValue={studentData.student_expected_type_work}
                         className="h-10 bg-neutral input border-2 border-black" required>
                     <option value={ExpectedTypeWork.DM}>{ExpectedTypeWork.DM}</option>
-                    <option value={ExpectedTypeWork.office}>{ExpectedTypeWork.office}</option>
-                    <option value={ExpectedTypeWork.hybrid}>{ExpectedTypeWork.hybrid}</option>
-                    <option value={ExpectedTypeWork.remote as string}>{ExpectedTypeWork.remote}</option>
-                    <option value={ExpectedTypeWork.move}>{ExpectedTypeWork.move}</option>
+                    <option value={ExpectedTypeWork.OFFICE}>{ExpectedTypeWork.OFFICE}</option>
+                    <option value={ExpectedTypeWork.HYBRID}>{ExpectedTypeWork.HYBRID}</option>
+                    <option value={ExpectedTypeWork.REMOTE as string}>{ExpectedTypeWork.REMOTE}</option>
+                    <option value={ExpectedTypeWork.MOVE}>{ExpectedTypeWork.MOVE}</option>
                 </select>
             </CategoryContainer>
 
@@ -84,14 +85,15 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
                 <select {...register("expectedContractType")}
                         defaultValue={studentData.student_expected_contract_type}
                         className="h-10 bg-neutral input max-w-fit px-0 border-2 border-black">
-                    <option value={ExpectedContractType.none}>{ExpectedContractType.none}</option>
-                    <option value={ExpectedContractType.employ}>{ExpectedContractType.employ}</option>
-                    <option value={ExpectedContractType.contract}>{ExpectedContractType.contract}</option>
+                    <option value={ExpectedContractType.NONE}>{ExpectedContractType.NONE}</option>
+                    <option value={ExpectedContractType.EMPLOY}>{ExpectedContractType.EMPLOY}</option>
+                    <option value={ExpectedContractType.CONTRACT}>{ExpectedContractType.CONTRACT}</option>
                     <option value={ExpectedContractType.B2B}>{ExpectedContractType.B2B}</option>
                 </select>
             </CategoryContainer>
 
-            <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN] (0 - brak)" error={!!errors?.expectedSalary}>
+            <CategoryContainer title="Oczekiwane wynagrodzenie miesięczne netto [PLN] (0 - brak)"
+                               error={!!errors?.expectedSalary}>
                 <Input type="number" name="expectedSalary" additionalClasses="border-2 border-black" min={0}
                        max={9999999.99}/>
             </CategoryContainer>
@@ -151,21 +153,27 @@ export const StudentCvFormSections = ({studentData, newUser}: Props) => {
             </CategoryContainer>
         </BodyOfSection>
 
-        <TitleOfSection title="Projekt w zespole Scrumowym"/>
-        <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
-            <CategoryContainer title="Link do repozytorium:" error={!!errors?.scrumProjectUrl1}>
-                <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black" required
-                       maxLength={255}/>
-            </CategoryContainer>
-            <CategoryContainer title="Link do kodu własnego (commity):" error={!!errors?.scrumProjectUrl2}>
-                <Input type="url" name="scrumProjectUrl2" additionalClasses="border-2 border-black" required
-                       maxLength={255}/>
-            </CategoryContainer>
-            <CategoryContainer title="Link do code review:" error={!!errors?.scrumProjectUrl3}>
-                <Input type="url" name="scrumProjectUrl3" additionalClasses="border-2 border-black" required
-                       maxLength={255}/>
-            </CategoryContainer>
-        </BodyOfSection>
+        {!newUser && <>
+            <TitleOfSection title="Projekt w zespole Scrumowym"/>
+            <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
+                <CategoryContainer title="Link do repozytorium:" error={!!errors?.scrumProjectUrl1}>
+                    <Input type="url" name="scrumProjectUrl1" additionalClasses="border-2 border-black"
+                           required={!newUser}
+                           maxLength={255}/>
+                </CategoryContainer>
+                <CategoryContainer title="Link do kodu własnego (commity):" error={!!errors?.scrumProjectUrl2}>
+                    <Input type="url" name="scrumProjectUrl2" additionalClasses="border-2 border-black"
+                           required={!newUser}
+                           maxLength={255}/>
+                </CategoryContainer>
+                <CategoryContainer title="Link do code review:" error={!!errors?.scrumProjectUrl3}>
+                    <Input type="url" name="scrumProjectUrl3" additionalClasses="border-2 border-black"
+                           required={!newUser}
+                           maxLength={255}/>
+                </CategoryContainer>
+            </BodyOfSection>
+        </>
+        }
 
         <TitleOfSection title="Projekt na zaliczenie"/>
         <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">

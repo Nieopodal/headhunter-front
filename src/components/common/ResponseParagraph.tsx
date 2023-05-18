@@ -4,5 +4,5 @@ interface Props {
 }
 
 export const ResponseParagraph = ({isSuccess, text}: Props) => (
-    <p className={isSuccess ? 'text-green-500' : 'text-red-500'}>{text}</p>
+    <div className={isSuccess ? 'text-green-500' : 'text-red-500'}>{text}</div>
 );
