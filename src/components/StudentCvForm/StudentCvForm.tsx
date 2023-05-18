@@ -1,6 +1,6 @@
 import {StudentCv} from "../../types/StudentCv";
 import * as yup from 'yup';
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {FormProvider, useForm} from "react-hook-form";
 import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
@@ -85,13 +85,21 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
         workExperience: yup.string().max(1000),
         courses: yup.string().max(1000),
         expectedSalary: yup.number().max(9999999.99, 'Dostępne kwoty: 0 - 9999999').notRequired(),
-        password:  yup.string().required('Pole wymagane'),
-        confirmPassword: yup.string().matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
-            "Hasło musi zawierać minimum 6 znaków, jedną wielką literę, jedną małą, jedną liczbę oraz znak specjalny"
-        ).test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
-            return this.parent.password === value
+        password:  yup.string().test('password-test', 'Hasło jest wymagane.', (value) => {
+            if (newUser) return Boolean(value);
+            else return true;
         }),
+        confirmPassword: yup.string().test('passwords-match', 'Hasła muszą się zgadzać.', function (value) {
+            return this.parent.password === value
+        }).test("password-quality", "Hasło musi zawierać minimum 6 znaków, jedną wielką literę, jedną małą, jedną liczbę oraz znak specjalny", (value) => {
+            if (newUser) {
+                if (!value) return false;
+                if (value) {
+                    return Boolean(value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/))
+                }
+            }
+            else return true;
+        })
     });
 
     const methods = useForm<StudentFormData>({
@@ -125,6 +133,10 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
     });
 
     const {handleSubmit} = methods;
+
+    useEffect(() => {
+        console.log(methods.formState.errors)
+    }, [methods.formState.errors]);
 
     const formSubmitHandler = async (data: StudentFormData) => {
         const initFormData = {
@@ -160,12 +172,12 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
         const responseData = await fetchApi(newUser ? null : user, `${newUser ? `${apiUrl}/student/register` : `${apiUrl}/student/update`}`, "PATCH", "Wystąpił błąd", finalFormData, true, "application/json", innerToken ?? undefined);
         if (responseData) {
             setModal({modal: <Message type={"success"} body={"Zmiany zostały zapisane"}/>});
-            navigate(newUser ? '/login' : '/dashboard', {replace: true})
+            navigate(newUser ? '/' : '/dashboard', {replace: true})
         }
         setRerender();
     };
 
-    return <form onSubmit={handleSubmit(data => formSubmitHandler(data))}>
+    return <form onSubmit={handleSubmit(formSubmitHandler)}>
         <h2 className="mx-auto w-fit text-2xl font-bold my-6">{newUser ? "Dane kursanta" : "Edycja danych"}</h2>
         <FormProvider {...methods}>
 
