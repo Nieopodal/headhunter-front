@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {LoginView} from "../../views/LoginView";
 import {useAuth} from "../../hooks/useAuth";
-import {TemporaryUserEntity, UserContext} from "../../contexts/user.context";
+import {BaseUserEntity, UserContext} from "../../contexts/user.context";
 import {Route, Routes} from "react-router-dom";
 import {PrivateRoute} from "../PrivateRoute/PrivateRoute";
 import {AdminFileUploadView} from "../../views/AdminFileUploadView";
@@ -9,7 +9,7 @@ import {AdminAddHrView} from "../../views/AdminAddHrView";
 import {PasswordReset} from "../PasswordReset/PasswordReset";
 import {DashboardView} from "../../views/DashboardView";
 import {DashboardContainer} from "../common/DashboardContainer";
-import {UserRole} from "../../types/UserRole";
+import {UserRole} from "@Types";
 import {ModalProvider} from "../../contexts/modal.context";
 import {StudentDashboardView} from "../../views/StudentDashboardView";
 import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
@@ -22,7 +22,7 @@ import {NewUserView} from "../../views/NewUserView";
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
-    const [user, setUser] = useState<TemporaryUserEntity | null>(null);
+    const [user, setUser] = useState<BaseUserEntity | null>(null);
     const [rerender, setRerender] = useState<boolean>(false);
 
     if (apiLoading) return <Loader/>
@@ -57,7 +57,7 @@ export const App = () => {
                             element={
                                 <PrivateRoute
                                     outlet={<AdminFileUploadView/>}
-                                    accessFor={[UserRole.Admin]}
+                                    accessFor={[UserRole.ADMIN]}
                                 />
                             }
                         />
@@ -67,7 +67,7 @@ export const App = () => {
                             element={
                                 <PrivateRoute
                                     outlet={<AdminAddHrView/>}
-                                    accessFor={[UserRole.Admin]}
+                                    accessFor={[UserRole.ADMIN]}
                                 />
                             }
                         />
@@ -77,7 +77,7 @@ export const App = () => {
                             element={
                                 <PrivateRoute
                                     outlet={<StudentDashboardView showAsForm/>}
-                                    accessFor={[UserRole.Student]}/>
+                                    accessFor={[UserRole.STUDENT]}/>
                             }
                         />
 
@@ -86,7 +86,7 @@ export const App = () => {
                             element={
                                 <PrivateRoute
                                     outlet={<StudentCvForHr/>}
-                                    accessFor={[UserRole.Hr]}/>
+                                    accessFor={[UserRole.HR]}/>
                             }
                         />
 
@@ -95,7 +95,7 @@ export const App = () => {
                             element={
                                 <PrivateRoute
                                     outlet={<StudentFoundJobFormView/>}
-                                    accessFor={[UserRole.Student]}/>
+                                    accessFor={[UserRole.STUDENT]}/>
                             }
                         />
 

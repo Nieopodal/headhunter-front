@@ -7,7 +7,7 @@ import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
 import {useNavigate} from "react-router-dom";
-import {ExpectedContractType, ExpectedTypeWork} from "types";
+import {ExpectedContractType, ExpectedTypeWork} from "@Types";
 import {StudentCvFormSections} from "./StudentCvFormSections";
 import {apiUrl} from "../../config/api";
 import {Message} from "../common/Message";

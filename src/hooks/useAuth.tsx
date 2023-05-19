@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {TemporaryUserEntity, UserContext} from "../contexts/user.context";
+import {BaseUserEntity, UserContext} from "../contexts/user.context";
 import {LoginFormData} from "../types/LoginFormData";
 import {apiUrl} from "../config/api";
 import {useFetch} from "./useFetch";
@@ -18,7 +18,7 @@ export const useAuth = () => {
         if (restoredUser) {
             setUser({
                 ...restoredUser,
-            } as TemporaryUserEntity);
+            } as BaseUserEntity);
         } else {
             setError(apiError);
         }
@@ -30,7 +30,7 @@ export const useAuth = () => {
         setLoading(true);
         const loggedUser = await fetchApi(null, `${apiUrl}/auth/login`, "POST", "Wystąpił nieznany błąd.", formData, true, "application/json");
         if (loggedUser) {
-            setUser(loggedUser as TemporaryUserEntity);
+            setUser(loggedUser as BaseUserEntity);
             navigate('/dashboard', {replace: true});
         } else {
             setError("Błędny login i/lub hasło.");

@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {fetchHandler} from "../handlers/fetch-handler";
-import {TemporaryUserEntity} from "../contexts/user.context";
+import {BaseUserEntity} from "../contexts/user.context";
 import {apiUrl} from "../config/api";
 
 export const useFetch = () => {
@@ -8,7 +8,7 @@ export const useFetch = () => {
     const [apiError, setApiError] = useState<string | null>(null);
     const [apiLoading, setApiLoading] = useState<boolean>(false);
 
-    async function fetchApi<T>(user: TemporaryUserEntity | null, url: string, method: string = "GET", customErrMsg: string, body?: T, asJson?: boolean, contentType?: string, innerToken?: string): Promise<unknown> {
+    async function fetchApi<T>(user: BaseUserEntity | null, url: string, method: string = "GET", customErrMsg: string, body?: T, asJson?: boolean, contentType?: string, innerToken?: string): Promise<unknown> {
         try {
             setApiLoading(true);
             const res = await fetchHandler(innerToken ?? user?.access_token, url, method, body, asJson, contentType);

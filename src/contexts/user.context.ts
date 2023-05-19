@@ -1,7 +1,7 @@
 import {createContext} from "react";
-import {UserRole} from "../types/UserRole";
+import {UserRole} from "@Types";
 
-export interface TemporaryUserEntity {
+export interface BaseUserEntity {
     id: string;
     firstName: string;
     lastName: string;
@@ -13,9 +13,9 @@ export interface TemporaryUserEntity {
 }
 
 interface UserContextInterface {
-    user: TemporaryUserEntity | null;
+    user: BaseUserEntity | null;
     isLoading: boolean;
-    setUser: (payload: TemporaryUserEntity | null) => void;
+    setUser: (payload: BaseUserEntity | null) => void;
     error: string | null;
     rerender: boolean;
     setRerender: () => void;

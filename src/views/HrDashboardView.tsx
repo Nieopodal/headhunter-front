@@ -4,7 +4,7 @@ import {UserContext} from "../contexts/user.context";
 import {Loader} from "../components/common/Loader";
 import {HrMainDisplay} from "../components/HrViewElements/HrMainDisplay";
 import {HrViewMode} from "../types/HrViewMode";
-import {AvailableStudent, StudentToInterview} from "../../../headhunter-back/src/types/student";
+import {AvailableStudent, StudentToInterview} from "@Types";
 import {Message} from "../components/common/Message";
 import {useModal} from "../hooks/useModal";
 import {apiUrl} from "../config/api";

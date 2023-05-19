@@ -6,7 +6,7 @@ import {HrTab} from "./HrTab";
 import {HrPagination} from "./HrPagination";
 import {useModal} from '../../hooks/useModal'
 import {FilteringModal} from "./FilteringModal";
-import {AvailableStudent, StudentToInterview} from "types";
+import {AvailableStudent, StudentToInterview} from "@Types";
 import {SingleStudent} from "./SingleStudent";
 import {TbPlayerTrackNext} from "react-icons/tb";
 import {HrFilteringContext} from "../../contexts/hr.filtering.context";
