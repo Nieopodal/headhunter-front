@@ -4,7 +4,7 @@ import {TitleOfSection} from "../CvSections/TitleOfSection";
 import {BodyOfSection} from "../CvSections/BodyOfSection";
 import {CategoryContainer} from "../CvSections/CategoryContainer";
 import {Input} from "../common/Form/Input";
-import {ExpectedContractType, ExpectedTypeWork} from "types";
+import {ExpectedContractType, ExpectedTypeWork} from "@Types";
 import {StudentCv} from "../../types/StudentCv";
 
 interface Props {

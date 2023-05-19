@@ -2,9 +2,8 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch";
 import {apiUrl} from "../config/api";
-import {ConfirmResponse, ExpectedContractType, ExpectedTypeWork} from "types";
+import {ConfirmResponse, ExpectedContractType, ExpectedTypeWork, UserRole} from "@Types";
 import {SmallFormContainer} from "../components/common/SmallFormContainer";
-import {UserRole} from "../types/UserRole";
 import {StudentCvForm} from "../components/StudentCvForm/StudentCvForm";
 import {PasswordSendNew} from "../components/PasswordSendNew/PasswordSendNew";
 import {Loader} from "../components/common/Loader";
@@ -35,7 +34,7 @@ export const NewUserView = () => {
         {/*{apiError && <ResponseParagraph text={apiError}/>}*/}
 
         {!loading && !apiError && <>
-            {role === UserRole.Student &&
+            {role === UserRole.STUDENT &&
                    <div className="lg:w-[100vw] xl:w-full"> <StudentCvForm innerToken={emailToken!} newUser studentData={{
                         student_courses: "",
                         student_bio: "",
@@ -63,7 +62,7 @@ export const NewUserView = () => {
                     }}/>
                    </div>}
 
-            {role === UserRole.Hr && <>
+            {role === UserRole.HR && <>
                 <PasswordSendNew innerToken={emailToken!} newHrMail={email!} newHr/>
             </>}
         </>}

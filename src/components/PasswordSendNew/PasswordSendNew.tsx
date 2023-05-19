@@ -7,7 +7,7 @@ import {NavLink, useParams} from 'react-router-dom';
 import {AppLogo} from "../Header/AppLogo";
 import {apiUrl} from "../../config/api";
 import {NewPassword} from "../common/NewPassword";
-import {ConfirmResponse} from "types";
+import {ConfirmResponse} from "@Types";
 import {Loader} from "../common/Loader";
 import {useModal} from "../../hooks/useModal";
 import {Message} from "../common/Message";

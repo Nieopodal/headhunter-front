@@ -4,7 +4,7 @@ import {SingleStudentGrade} from "./SingleStudentGrade";
 import {SingleStudentPreferenceItem} from "./SingleStudentPrefernceItem";
 import {HrViewMode} from "../../types/HrViewMode";
 import {SingleStudentTitleBar} from "./SingleStudentTitleBar";
-import {AvailableStudent, StudentToInterview } from "../../../../headhunter-back/src/types/student";
+import {AvailableStudent, StudentToInterview } from "@Types";
 
 
 type Props = {
