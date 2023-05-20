@@ -4,13 +4,14 @@ import {UserContext} from "../../contexts/user.context";
 import {useFetch} from "../../hooks/useFetch";
 import {StudentCv} from "../../types/StudentCv";
 import {Loader} from "../common/Loader";
+import {apiUrl} from "../../config/api";
 
 export const StudentSummaryFetched = () => {
     const {user, rerender} = useContext(UserContext);
     const {fetchApi, data, apiError} = useFetch();
     useEffect(() => {
         (async () => {
-            await fetchApi(user, `http://localhost:3000/student/cv/`, "GET", "Wystąpił błąd");
+            await fetchApi(user, `${apiUrl}/student/cv/`, "GET", "Wystąpił błąd");
         })();
     }, [rerender]);
 
