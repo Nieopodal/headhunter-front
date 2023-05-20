@@ -9,6 +9,7 @@ import {Message} from "../common/Message";
 import {useNavigate} from "react-router-dom";
 import {Loader} from "../common/Loader";
 import {ResponseParagraph} from "../common/ResponseParagraph";
+import { RecoveryPasswordResponse } from "@Types";
 
 export const PasswordReset = () => {
     const {setModal} = useModal();
@@ -28,10 +29,11 @@ export const PasswordReset = () => {
         if (responseData) {
             setModal({
                 modal: <Message type={"success"}
-                                body={"Jeśli podany adres jest prawidłowy, to został na niego wysłany link do zmiany hasła."}/>
+                                body={`Jeśli adres ${(responseData as RecoveryPasswordResponse ).sentToEmail} jest prawidłowy, to został na niego wysłany link do zmiany hasła.`}/>
             });
             navigate("/", {replace: true});
         }
+        setLoading(false);
     };
 
     return <div className="flex flex-col items-center justify-start w-full mt-10">
@@ -42,9 +44,9 @@ export const PasswordReset = () => {
                     <h1 className="text-2xl font-bold">Przypomnij hasło</h1>
                 </div>
 
-                {loading && <Loader/>}
-
                 {apiError && <ResponseParagraph text={apiError}/>}
+
+                {loading && <Loader/>}
 
                 {
                     !loading && <form onSubmit={methods.handleSubmit(formSubmitHandler)}>

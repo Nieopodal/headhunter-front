@@ -11,8 +11,7 @@ type Props = {
 }
 
 export const HrPagination = ({currentPageNr, prevPage, setMaxPerPage, nextPage, totalPagesNr, maxStudentsPerPage}: Props) => {
-    return (
-        <div className="flex flex-row gap-5 items-center">
+    return <div className="flex flex-row gap-5 items-center">
             Ilość elementów
             <select onChange={(e) => setMaxPerPage(e)}
                     className="select bg-white text-base-100 select-sm w-13">
@@ -35,5 +34,4 @@ export const HrPagination = ({currentPageNr, prevPage, setMaxPerPage, nextPage, 
                 </button>
             </div>
         </div>
-    )
-}
+};

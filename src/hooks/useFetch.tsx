@@ -30,8 +30,10 @@ export const useFetch = () => {
                         setApiError(data.error);
                     }
                 } else {
-                    setApiError(refreshData.error)
+                    setApiError(refreshData.error);
                 }
+            } else {
+                setApiError(data.error);
             }
         } catch (e) {
             setApiError('Podczas próby wykonania zapytania wystąpił błąd.');
@@ -41,4 +43,4 @@ export const useFetch = () => {
     }
 
     return {fetchApi, data, apiError, apiLoading};
-}
+};

@@ -4,8 +4,8 @@ import {ModalContext} from "../contexts/modal.context";
 export const useModal = () => {
     const context = React.useContext(ModalContext)
     if (context === undefined) {
-        throw new Error('useModal must be used within a UserProvider')
+        throw new Error('useModal must be used within a UserProvider');
     }
 
-    return context
-}
+    return context;
+};

@@ -9,9 +9,7 @@ type Props = {
 
 export const DegreeField = ({title, registerName, errorMsg}: Props) => {
 
-    return (
-
-        <label className="flex max-sm:gap-0 max-sm:flex-col max-sm:items-start flex-row items-center gap-10">
+    return <label className="flex max-sm:gap-0 max-sm:flex-col max-sm:items-start flex-row items-center gap-10">
             <div className="flex flex-col w-2/3 items-start">
                 <span className="">{title}</span>
                 <span className="text-xs text-primary mt-1 text-left">
@@ -20,6 +18,4 @@ export const DegreeField = ({title, registerName, errorMsg}: Props) => {
             <div className="flex max-sm:flex-row flex-col items-center">
                 <FilteringNumericalInput registerName={registerName} placeholder={`1-5`} min={`1`} max={`5`}/></div>
         </label>
-
-    )
-}
+};
