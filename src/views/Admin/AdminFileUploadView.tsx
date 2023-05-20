@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import * as yup from "yup";
 import {FormProvider, useForm} from "react-hook-form";
-import {SmallFormContainer} from "../components/common/SmallFormContainer";
-import {Input} from "../components/common/Form/Input";
+import {SmallFormContainer} from "../../components/common/SmallFormContainer";
+import {Input} from "../../components/common/Form/Input";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {UserContext} from "../contexts/user.context";
-import {useFetch} from "../hooks/useFetch";
-import {apiUrl} from "../config/api";
-import {Loader} from "../components/common/Loader";
+import {UserContext} from "../../contexts/user.context";
+import {useFetch} from "../../hooks/useFetch";
+import {apiUrl} from "../../config/api";
+import {Loader} from "../../components/common/Loader";
 
 interface FormData {
     file: File[];

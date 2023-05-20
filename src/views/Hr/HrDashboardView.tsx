@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useFetch} from "../hooks/useFetch";
-import {UserContext} from "../contexts/user.context";
-import {Loader} from "../components/common/Loader";
-import {HrMainDisplay} from "../components/HrViewElements/HrMainDisplay";
-import {HrViewMode} from "../types/HrViewMode";
+import {useFetch} from "../../hooks/useFetch";
+import {UserContext} from "../../contexts/user.context";
+import {Loader} from "../../components/common/Loader";
+import {HrMainDisplay} from "../../components/HrViewElements/HrMainDisplay";
+import {HrViewMode} from "../../types/HrViewMode";
 import {AvailableStudent, StudentToInterview} from "@Types";
-import {Message} from "../components/common/Message";
-import {useModal} from "../hooks/useModal";
-import {apiUrl} from "../config/api";
-import {HrFilteringContext} from "../contexts/hr.filtering.context";
+import {Message} from "../../components/common/Message";
+import {useModal} from "../../hooks/useModal";
+import {apiUrl} from "../../config/api";
+import {HrFilteringContext} from "../../contexts/hr.filtering.context";
 
 type PaginatedResponse = {
     studentData: AvailableStudent[] | StudentToInterview[],

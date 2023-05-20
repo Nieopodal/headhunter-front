@@ -1,10 +1,10 @@
-import {SmallFormContainer} from "../components/common/SmallFormContainer";
+import {SmallFormContainer} from "../../components/common/SmallFormContainer";
 import {useContext} from "react";
-import {UserContext} from "../contexts/user.context";
-import {useFetch} from "../hooks/useFetch";
-import {apiUrl} from "../config/api";
-import {useLogout} from "../hooks/useLogout";
-import {ResponseParagraph} from "../components/common/ResponseParagraph";
+import {UserContext} from "../../contexts/user.context";
+import {useFetch} from "../../hooks/useFetch";
+import {apiUrl} from "../../config/api";
+import {useLogout} from "../../hooks/useLogout";
+import {ResponseParagraph} from "../../components/common/ResponseParagraph";
 
 export const StudentFoundJobFormView = () => {
 
