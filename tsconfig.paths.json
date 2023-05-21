@@ -1,10 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@Types": [
-        "../headhunter-back/src/types"
-      ]
-    }
+    "baseUrl": "."
   }
 }
