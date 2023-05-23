@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
-import * as yup from "yup";
 import {FormProvider, useForm} from "react-hook-form";
-import {SmallFormContainer} from "../../components/common/SmallFormContainer";
-import {Input} from "../../components/common/Form/Input";
+import {SmallFormContainer} from "../../../components/common/SmallFormContainer";
+import {Input} from "../../../components/common/Form/Input";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {UserContext} from "../../contexts/user.context";
-import {useFetch} from "../../hooks/useFetch";
-import {apiUrl} from "../../config/api";
-import {Loader} from "../../components/common/Loader";
+import {UserContext} from "../../../contexts/user.context";
+import {useFetch} from "../../../hooks/useFetch";
+import {apiUrl} from "../../../config/api";
+import {Loader} from "../../../components/common/Loader";
+import {validationSchema} from "./validation-schema";
 
 interface FormData {
     file: File[];
@@ -21,23 +21,10 @@ export const AdminFileUploadView = () => {
     const {user} = useContext(UserContext);
     const {fetchApi, apiError, data: apiData, apiLoading} = useFetch();
 
-    const validationSchema = yup.object().shape({
-        file: yup
-            .mixed<File[]>()
-            .required("Nie wybrano pliku.")
-            .test("oneFile", "Nie wybrano pliku.", (value) => (
-                value.length === 1
-            ))
-            .test("fileType", "Wybierz plik .csv", value => (
-                value[0] && "text/csv".includes(value[0].type)
-            ))
-            .test('fileSize', "Maksymalny rozmiar pliku to 1MB", value => (
-                value[0] && value[0].size <= 1024 * 1024
-            ))
-    });
+    const schema = validationSchema();
 
     const methods = useForm<FormData>({
-        resolver: yupResolver(validationSchema),
+        resolver: yupResolver(schema),
     });
 
     const formSubmitHandler = async (data: FormData) => {

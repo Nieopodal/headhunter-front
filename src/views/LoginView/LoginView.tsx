@@ -1,14 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
-import * as yup from 'yup';
 import {FormProvider, useForm} from "react-hook-form";
-import {useAuth} from "../hooks/useAuth";
-import {AppLogo} from "../components/Header/AppLogo";
-import {Input} from "../components/common/Form/Input";
-import {UserContext} from "../contexts/user.context";
+import {useAuth} from "../../hooks/useAuth";
+import {AppLogo} from "../../components/Header/AppLogo";
+import {Input} from "../../components/common/Form/Input";
+import {UserContext} from "../../contexts/user.context";
 import {NavLink, useNavigate} from "react-router-dom";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {ResponseParagraph} from "../components/common/ResponseParagraph";
-import {Loader} from "../components/common/Loader";
+import {ResponseParagraph} from "../../components/common/ResponseParagraph";
+import {Loader} from "../../components/common/Loader";
+import {validationSchema} from "./validation-schema";
 
 export const LoginView = () => {
     const navigate = useNavigate();
@@ -16,17 +16,14 @@ export const LoginView = () => {
     const {loginUser, findUser, apiLoading, error} = useAuth();
     const [checkingUser, setCheckingUser] = useState<boolean>(false);
 
-    const validationSchema = yup.object({
-        email: yup.string().email("Podaj poprawny adres email.").required("Pole jest wymagane."),
-        password: yup.string().required("Pole jest wymagane."),
-    });
+    const schema = validationSchema();
 
     const methods = useForm({
         defaultValues: {
             email: '',
             password: '',
         },
-        resolver: yupResolver(validationSchema),
+        resolver: yupResolver(schema),
     });
 
     const {formState: {errors}} = methods;

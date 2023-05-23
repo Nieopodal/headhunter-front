@@ -75,6 +75,7 @@ export const NewUserView = () => {
                     <PasswordSendNew innerToken={emailToken!} newHrMail={email!} newHr/>
                 </>
             }
-        </>}
+        </>
+        }
     </SmallFormContainer>
 };

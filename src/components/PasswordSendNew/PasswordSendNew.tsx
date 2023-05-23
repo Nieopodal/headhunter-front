@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {FormProvider, useForm} from "react-hook-form";
-import * as yup from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useFetch} from "../../hooks/useFetch";
 import {NavLink, useParams} from 'react-router-dom';
@@ -12,6 +11,7 @@ import {Loader} from "../common/Loader";
 import {useModal} from "../../hooks/useModal";
 import {Message} from "../common/Message";
 import {ResponseParagraph} from "../common/ResponseParagraph";
+import {validationSchema} from "./validation-schema";
 
 type PasswordSetNewRequest = {
     password: string,
@@ -29,22 +29,16 @@ export const PasswordSendNew = ({newHrMail, innerToken, newHr}: Props) => {
     const [email, setEmail] = useState<string | null>(null);
     const [success, setSuccess] = useState<boolean>(false);
     const [emailToken, setEmailToken] = useState<string | null>(null);
-    const {fetchApi, data: fetchData, apiError} = useFetch();
+    const {fetchApi, apiError} = useFetch();
     const {setModal} = useModal();
 
     const {id, token, role} = useParams();
 
-    const schema = yup.object().shape({
-        password: yup.string().min(6, 'Hasło musi zawierać co najmniej 6 znaków').required('Pole wymagane').matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/,
-            "Hasło musi zawierać minimum 6 znaków, jedną wielką literę, jedną małą, jedną liczbę oraz znak specjalny"
-        ),
-        confirmNewPass: yup.string().oneOf([yup.ref("password")], `Hasła muszą być jednakowe!`).required('Pole wymagane')
-    });
+    const schema = validationSchema();
 
     const {handleSubmit, formState, ...methods} = useForm<PasswordSetNewRequest>({
         defaultValues: {},
-        resolver: yupResolver(schema)
+        resolver: yupResolver(schema),
     });
 
     const onSendNewPass = async ({password}: PasswordSetNewRequest) => {
@@ -57,10 +51,11 @@ export const PasswordSendNew = ({newHrMail, innerToken, newHr}: Props) => {
             setSuccess(true);
             setModal({
                 modal: <Message type={"success"}
-                                body={newHr ? "Hasło zostało zapisane. Zaloguj się." : "Hasło zostało zmienione. Zaloguj się."}/>
+                                body={newHr ? "Hasło zostało zapisane. Zaloguj się." : "Hasło zostało zmienione. Zaloguj się."}
+                />
             });
         }
-    }
+    };
 
     useEffect(() => {
         (async () => {

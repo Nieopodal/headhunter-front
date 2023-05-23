@@ -1,15 +1,15 @@
 import {useParams} from "react-router-dom";
 import React, {useContext, useEffect} from "react";
-import {UserContext} from "../contexts/user.context";
-import {useFetch} from "../hooks/useFetch";
-import {apiUrl} from "../config/api";
-import {Loader} from "./common/Loader";
-import {ResponseParagraph} from "./common/ResponseParagraph";
-import {StudentCvInfo} from "./StudentCv/StudentCvInfo";
-import {StudentCv} from "../types/StudentCv";
-import {SideMenu} from "./common/SideMenu";
-import {StudentSummary} from "./StudentSummary/StudentSummary";
-import {GoBack} from "./common/GoBack";
+import {UserContext} from "../../contexts/user.context";
+import {useFetch} from "../../hooks/useFetch";
+import {apiUrl} from "../../config/api";
+import {Loader} from "../common/Loader";
+import {ResponseParagraph} from "../common/ResponseParagraph";
+import {StudentCvInfo} from "../StudentCv/StudentCvInfo";
+import {StudentCv} from "../../types/StudentCv";
+import {SideMenu} from "../common/SideMenu";
+import {StudentSummary} from "../StudentSummary/StudentSummary";
+import {GoBack} from "../common/GoBack";
 
 export const StudentCvForHr = () => {
     const {studentId} = useParams();
