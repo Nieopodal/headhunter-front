@@ -48,15 +48,18 @@ export const PasswordSendNew = ({newHrMail, innerToken, newHr}: Props) => {
     });
 
     const onSendNewPass = async ({password}: PasswordSetNewRequest) => {
-            const data = await fetchApi(null, `${newHr ? `${apiUrl}/hr/update` : `${apiUrl}/auth/password/reset`}`, "PATCH", "Wystąpił nieznany błąd.", {
-                id,
-                password
-            }, true, "application/json", newHr ? innerToken! : emailToken!);
+        const data = await fetchApi(null, `${newHr ? `${apiUrl}/hr/update` : `${apiUrl}/auth/password/reset`}`, "PATCH", "Wystąpił nieznany błąd.", {
+            id,
+            password
+        }, true, "application/json", newHr ? innerToken! : emailToken!);
 
-            if (data) {
-                setSuccess(true);
-                setModal({modal: <Message type={"success"} body={newHr ? "Hasło zostało zapisane. Zaloguj się." : "Hasło zostało zmienione. Zaloguj się."}/>});
-            }
+        if (data) {
+            setSuccess(true);
+            setModal({
+                modal: <Message type={"success"}
+                                body={newHr ? "Hasło zostało zapisane. Zaloguj się." : "Hasło zostało zmienione. Zaloguj się."}/>
+            });
+        }
     }
 
     useEffect(() => {
@@ -82,14 +85,15 @@ export const PasswordSendNew = ({newHrMail, innerToken, newHr}: Props) => {
         {apiError && <ResponseParagraph text={apiError}/>}
 
         {success && <NavLink to="/"
-            className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">
+                             className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">
             Zaloguj się
-       </NavLink>}
+        </NavLink>}
 
-        {!loading && !apiError && !success && <FormProvider handleSubmit={handleSubmit} formState={formState} {...methods}>
-            <form onSubmit={handleSubmit(onSendNewPass)}>
-                <NewPassword newHrMail={newHrMail}/>
-            </form>
-        </FormProvider>}
+        {!loading && !apiError && !success &&
+            <FormProvider handleSubmit={handleSubmit} formState={formState} {...methods}>
+                <form onSubmit={handleSubmit(onSendNewPass)}>
+                    <NewPassword newHrMail={newHrMail}/>
+                </form>
+            </FormProvider>}
     </div>
 };

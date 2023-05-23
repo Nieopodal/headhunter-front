@@ -15,7 +15,19 @@ interface Props {
     customClasses?: string;
 }
 
-export const Input = ({type, name, additionalClasses, placeholder, disabled, required, min, max, minLength, maxLength, customClasses}: Props) => {
+export const Input = ({
+                          type,
+                          name,
+                          additionalClasses,
+                          placeholder,
+                          disabled,
+                          required,
+                          min,
+                          max,
+                          minLength,
+                          maxLength,
+                          customClasses
+                      }: Props) => {
     const {register} = useFormContext();
 
     return <input

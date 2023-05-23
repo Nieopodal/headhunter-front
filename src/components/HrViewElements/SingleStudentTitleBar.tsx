@@ -26,7 +26,7 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
     const {firstName, lastName, id: studentId} = studentData;
     const pictureUrl = (("githubUsername" in studentData) && studentData.githubUsername !== "") ? `https://github.com/${studentData.githubUsername}.png` : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
 
-  const reservationTime = ("reservationTime" in studentData) ? studentData.reservationTime : new Date();
+    const reservationTime = ("reservationTime" in studentData) ? studentData.reservationTime : new Date();
 
     const userFullName = `${firstName} ${lastName}`;
     const userShortName = `${firstName} ${lastName.slice(0, 1).concat('.')}`;

@@ -18,12 +18,12 @@ export const StudentDashboardView = ({showAsForm}: Props) => {
         (async () => {
             await fetchApi(user, `${apiUrl}/student/cv`, "GET", "Wystąpił błąd");
         })();
-    },[]);
+    }, []);
 
     if (apiError) return <p>Wystąpił błąd: {apiError}</p>
 
-    if (data && !showAsForm) return <StudentCvInfo studentData={data as StudentCv} />
-    if (data && showAsForm) return <StudentCvForm studentData={data as StudentCv} />
+    if (data && !showAsForm) return <StudentCvInfo studentData={data as StudentCv}/>
+    if (data && showAsForm) return <StudentCvForm studentData={data as StudentCv}/>
 
-     return <Loader/>
+    return <Loader/>
 };

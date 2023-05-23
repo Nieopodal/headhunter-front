@@ -7,38 +7,11 @@ import {arrayFromStringHandler} from "../../handlers/array-from-string-handler";
 import {useFetch} from "../../hooks/useFetch";
 import {UserContext} from "../../contexts/user.context";
 import {useNavigate} from "react-router-dom";
-import {ExpectedContractType, ExpectedTypeWork} from "@Types";
 import {StudentCvFormSections} from "./StudentCvFormSections";
 import {apiUrl} from "../../config/api";
 import {Message} from "../common/Message";
 import {useModal} from "../../hooks/useModal";
-
-interface StudentFormData {
-    email: string;
-    contactNumber: string;
-    firstName: string;
-    lastName: string;
-    githubUsername: string;
-    portfolioUrl1: string | null;
-    portfolioUrl2: string | null;
-    projectUrl1: string | null;
-    projectUrl2: string | null;
-    scrumProjectUrl1: string | null;
-    scrumProjectUrl2: string | null;
-    scrumProjectUrl3: string | null;
-    bio: string;
-    expectedTypeWork: ExpectedTypeWork;
-    targetWorkCity: string;
-    expectedContractType: ExpectedContractType;
-    expectedSalary: number;
-    canTakeApprenticeship: boolean;
-    monthsOfCommercialExp: number;
-    education: string;
-    workExperience: string;
-    courses: string;
-    password?: string;
-    confirmPassword?: string;
-}
+import {StudentFormData} from "../../types/StudentFormData";
 
 interface Props {
     studentData: StudentCv;
@@ -94,7 +67,7 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
         workExperience: yup.string().max(1000),
         courses: yup.string().max(1000),
         expectedSalary: yup.number().max(9999999.99, 'Dostępne kwoty: 0 - 9999999').notRequired(),
-        password:  yup.string().test('password-test', 'Hasło jest wymagane.', (value) => {
+        password: yup.string().test('password-test', 'Hasło jest wymagane.', (value) => {
             if (newUser) return Boolean(value);
             else return true;
         }),
@@ -106,8 +79,7 @@ export const StudentCvForm = ({studentData, newUser, innerToken}: Props) => {
                 if (value) {
                     return Boolean(value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{6,})/))
                 }
-            }
-            else return true;
+            } else return true;
         })
     });
 

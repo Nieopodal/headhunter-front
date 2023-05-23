@@ -9,12 +9,12 @@ export const StarRating = ({howMany}: Props) => {
     const [stars, setStars] = useState<string[]>([])
 
     useEffect(() => {
-        const starsArray =[];
+        const starsArray = [];
         for (let i = 1; i < 6; i++) {
             starsArray.push(i <= howMany ? `red` : `grey`);
         }
         setStars(starsArray);
-    },[howMany]);
+    }, [howMany]);
 
     return <div className="flex mx-1">
         {

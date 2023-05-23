@@ -17,4 +17,4 @@ export const monthDeclension = (count: number) => {
         return "miesiące"
     }
     return "miesięcy"
-}
+};

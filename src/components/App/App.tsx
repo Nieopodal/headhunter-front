@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {LoginView} from "../../views/LoginView";
 import {useAuth} from "../../hooks/useAuth";
 import {BaseUserEntity, UserContext} from "../../contexts/user.context";
@@ -18,7 +18,6 @@ import {Loader} from "../common/Loader";
 import {StudentFoundJobFormView} from "../../views/Student/StudentFoundJobFormView";
 import {HrFilteringProvider} from "../../contexts/hr.filtering.context";
 import {NewUserView} from "../../views/NewUserView";
-
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
@@ -98,9 +97,7 @@ export const App = () => {
                                     accessFor={[UserRole.STUDENT]}/>
                             }
                         />
-
-
-                        </Routes>
+                    </Routes>
 
                 </DashboardContainer>
             </ModalProvider>

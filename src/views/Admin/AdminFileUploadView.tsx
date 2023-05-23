@@ -60,7 +60,8 @@ export const AdminFileUploadView = () => {
                     Prześlij plik
                 </button>
                 {errors?.file && <p className="text-red-500 my-1">{errors.file.message}</p>}
-                {(apiData as ApiData) && <p className="my-2 text-green-500">Pomyślnie załadowano plik. Dodanych studentów: {(apiData as ApiData).numberAddedStudents}.</p>}
+                {(apiData as ApiData) && <p className="my-2 text-green-500">Pomyślnie załadowano plik. Dodanych
+                    studentów: {(apiData as ApiData).numberAddedStudents}.</p>}
                 {apiError && <p className="my-2 text-red-500">Akcja zakończona niepowodzeniem: {apiError}.</p>}
             </FormProvider>
         </form>

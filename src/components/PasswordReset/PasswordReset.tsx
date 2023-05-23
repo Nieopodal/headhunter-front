@@ -9,7 +9,7 @@ import {Message} from "../common/Message";
 import {useNavigate} from "react-router-dom";
 import {Loader} from "../common/Loader";
 import {ResponseParagraph} from "../common/ResponseParagraph";
-import { RecoveryPasswordResponse } from "@Types";
+import {RecoveryPasswordResponse} from "@Types";
 
 export const PasswordReset = () => {
     const {setModal} = useModal();
@@ -29,7 +29,7 @@ export const PasswordReset = () => {
         if (responseData) {
             setModal({
                 modal: <Message type={"success"}
-                                body={`Jeśli adres ${(responseData as RecoveryPasswordResponse ).sentToEmail} jest prawidłowy, to został na niego wysłany link do zmiany hasła.`}/>
+                                body={`Jeśli adres ${(responseData as RecoveryPasswordResponse).sentToEmail} jest prawidłowy, to został na niego wysłany link do zmiany hasła.`}/>
             });
             navigate("/", {replace: true});
         }
