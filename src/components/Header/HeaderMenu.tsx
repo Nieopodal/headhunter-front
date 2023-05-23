@@ -1,6 +1,6 @@
+import React, {useContext, useEffect, useState} from "react";
 import {Avatar} from "./Avatar";
 import {Dropdown} from "./Dropdown";
-import React, {useContext, useEffect, useState} from "react";
 import {UserContext} from "../../contexts/user.context";
 import {UserRole} from "@Types";
 import {useFetch} from "../../hooks/useFetch";

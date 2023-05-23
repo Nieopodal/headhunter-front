@@ -72,17 +72,18 @@ export const HrDashboardView = () => {
 
     if (data) {
         return <HrMainDisplay handleViewMode={handleViewMode}
-                           studentList={(data as PaginatedResponse).studentData}
-                           currentPageNr={currentPageNr}
-                           totalPagesNr={(data as PaginatedResponse).totalPages}
-                           setMaxPerPage={setMaxPerPage}
-                           prevPage={prevPage}
-                           nextPage={nextPage}
-                           maxStudentsPerPage={maxStudentsPerPage}
-                           viewMode={viewMode}
-                           handleNameSearch={handleNameSearch}
-                           searchedName={nameToSearch}/>
+                              studentList={(data as PaginatedResponse).studentData}
+                              currentPageNr={currentPageNr}
+                              totalPagesNr={(data as PaginatedResponse).totalPages}
+                              setMaxPerPage={setMaxPerPage}
+                              prevPage={prevPage}
+                              nextPage={nextPage}
+                              maxStudentsPerPage={maxStudentsPerPage}
+                              viewMode={viewMode}
+                              handleNameSearch={handleNameSearch}
+                              searchedName={nameToSearch}/>
 
     }
-    return null
+
+    return null;
 };

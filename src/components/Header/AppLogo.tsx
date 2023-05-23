@@ -7,13 +7,12 @@ interface Props {
     classes: string;
 }
 
-
-
 export const AppLogo = ({classes}: Props) => {
-    const {user} = useContext(UserContext)
+    const {user} = useContext(UserContext);
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    return(
-        <img onClick={() => navigate(user ? `/dashboard` : `/`)} className={classes} src={logo} alt="logo"/>
-    );
-}
+    return <img onClick={() => navigate(user ? `/dashboard` : `/`)}
+                className={classes}
+                src={logo} alt="logo"
+    />
+};

@@ -13,7 +13,7 @@ export const StudentFoundJobFormView = () => {
     const {logoutUser} = useLogout();
 
     return <SmallFormContainer title="Potwierdź znalezienie pracy." description="Opcja ta dezaktywuje konto.">
-        <form onSubmit={(e)=> {
+        <form onSubmit={(e) => {
             e.preventDefault();
             (async () => {
                 const data = await fetchApi(user, `${apiUrl}/student/employed`, "PATCH", "Wystąpił nieznany błąd");
@@ -22,7 +22,10 @@ export const StudentFoundJobFormView = () => {
                 }
             })();
         }}>
-            <button className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">Potwierdzam</button>
+            <button
+                className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none">Potwierdzam
+            </button>
+
             {apiError && <ResponseParagraph text={apiError}/>}
         </form>
     </SmallFormContainer>

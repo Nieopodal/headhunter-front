@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {LoginView} from "../../views/LoginView";
+import React, {useState} from "react";
+import {LoginView} from "../../views/LoginView/LoginView";
 import {useAuth} from "../../hooks/useAuth";
 import {BaseUserEntity, UserContext} from "../../contexts/user.context";
 import {Route, Routes} from "react-router-dom";
 import {PrivateRoute} from "../PrivateRoute/PrivateRoute";
-import {AdminFileUploadView} from "../../views/Admin/AdminFileUploadView";
-import {AdminAddHrView} from "../../views/Admin/AdminAddHrView";
+import {AdminFileUploadView} from "../../views/Admin/FileUploadView/AdminFileUploadView";
+import {AdminAddHrView} from "../../views/Admin/AddHrView/AdminAddHrView";
 import {PasswordReset} from "../PasswordReset/PasswordReset";
 import {DashboardView} from "../../views/DashboardView";
 import {DashboardContainer} from "../common/DashboardContainer";
@@ -13,12 +13,11 @@ import {UserRole} from "@Types";
 import {ModalProvider} from "../../contexts/modal.context";
 import {StudentDashboardView} from "../../views/Student/StudentDashboardView";
 import {PasswordSendNew} from "../PasswordSendNew/PasswordSendNew";
-import {StudentCvForHr} from "../StudentCvForHr";
+import {StudentCvForHr} from "../HrViewElements/StudentCvForHr";
 import {Loader} from "../common/Loader";
 import {StudentFoundJobFormView} from "../../views/Student/StudentFoundJobFormView";
 import {HrFilteringProvider} from "../../contexts/hr.filtering.context";
 import {NewUserView} from "../../views/NewUserView";
-
 
 export const App = () => {
     const {error, apiLoading} = useAuth();
@@ -98,9 +97,7 @@ export const App = () => {
                                     accessFor={[UserRole.STUDENT]}/>
                             }
                         />
-
-
-                        </Routes>
+                    </Routes>
 
                 </DashboardContainer>
             </ModalProvider>

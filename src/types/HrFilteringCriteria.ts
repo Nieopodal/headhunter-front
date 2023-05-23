@@ -8,5 +8,5 @@ export type HrFilteringCriteria = {
     minSalary?: number,
     maxSalary?: number,
     canTakeApprenticeship?: boolean,
-    monthsOfCommercialExp?: number
-}
+    monthsOfCommercialExp?: number,
+};

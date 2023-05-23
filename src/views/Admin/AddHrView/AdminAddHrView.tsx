@@ -1,14 +1,14 @@
 import React, {useContext} from 'react';
-import * as yup from "yup";
 import {FormProvider, useForm} from "react-hook-form";
-import {SmallFormContainer} from "../../components/common/SmallFormContainer";
-import {UserContext} from "../../contexts/user.context";
-import {useFetch} from "../../hooks/useFetch";
-import {Input} from "../../components/common/Form/Input";
+import {SmallFormContainer} from "../../../components/common/SmallFormContainer";
+import {UserContext} from "../../../contexts/user.context";
+import {useFetch} from "../../../hooks/useFetch";
+import {Input} from "../../../components/common/Form/Input";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {apiUrl} from "../../config/api";
-import {Loader} from "../../components/common/Loader";
-import {ResponseParagraph} from "../../components/common/ResponseParagraph";
+import {apiUrl} from "../../../config/api";
+import {Loader} from "../../../components/common/Loader";
+import {ResponseParagraph} from "../../../components/common/ResponseParagraph";
+import {validationSchema} from "./validation-schema";
 
 interface FormData {
     fullName: string;
@@ -24,18 +24,11 @@ interface ApiData {
 export const AdminAddHrView = () => {
     const {user} = useContext(UserContext);
     const {fetchApi, apiError, data: apiData, apiLoading} = useFetch();
-
-    const validationSchema = yup.object({
-        fullName: yup.string().min(3, 'Pole powinno zawierać od 3 do 70 znaków.').max(70, 'Pole powinno zawierać od 3 do 70 znaków.').required(),
-        email: yup.string().min(5, 'Pole powinno zawierać od 5 do 255 znaków.').max(255, 'Pole powinno zawierać od 5 do 255 znaków.').matches(/^\S+@\S+\.\S+$/, 'Podano niewłaściwy adres email.').required(),
-        company: yup.string().min(2, 'Pole powinno zawierać od 2 do 150 znaków.').max(150, 'Pole powinno zawierać od 2 do 150 znaków.').required(),
-        maxReservedStudents: yup.number().min(1, 'Wybierz wartość z przedziału 1 - 999.').max(999, 'Wybierz wartość z przedziału 1 - 999.').required(),
-    });
+    const schema = validationSchema();
 
     const methods = useForm<FormData>({
-        defaultValues: {
-        },
-        resolver: yupResolver(validationSchema),
+        defaultValues: {},
+        resolver: yupResolver(schema),
     });
 
     const {handleSubmit, formState: {errors}} = methods;
@@ -78,7 +71,8 @@ export const AdminAddHrView = () => {
 
                 {apiError && <p className="text-red-500">{apiError}</p>}
                 {((apiData as ApiData) && !apiError) &&
-                    <ResponseParagraph isSuccess text={`Pomyślnie dodano nową osobę HR o ID: ${(apiData as ApiData).id}`}/>
+                    <ResponseParagraph isSuccess
+                                       text={`Pomyślnie dodano nową osobę HR o ID: ${(apiData as ApiData).id}`}/>
                 }
                 <button className="btn-md w-full btn-primary normal-case font-normal text-base">Dodaj osobę HR</button>
             </FormProvider>

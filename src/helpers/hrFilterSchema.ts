@@ -10,5 +10,5 @@ export const hrFilterSchema = yup.object().shape({
     minSalary: yup.number().positive().integer().min(1, 'Podaj minimalne wynagrodzenie').max(999999, 'Zbyt dużo cyfr').required('Podaj minimalne wynagrodzenie').typeError("Pole niewypełnione"),
     maxSalary: yup.number().positive().integer().min(yup.ref("minSalary"), 'Druga wartość musi być większa').max(999999, 'Zbyt dużo cyfr').required('Podaj maksymalne wynagrodzenie').typeError("Pole niewypełnione"),
     canTakeApprenticeship: yup.boolean(),
-    monthsOfCommercialExp: yup.number().transform((value) => isNaN(value) ? undefined : value).integer().required("Pole niewypełnione")
-})
+    monthsOfCommercialExp: yup.number().transform((value) => isNaN(value) ? undefined : value).integer().required("Pole niewypełnione"),
+});

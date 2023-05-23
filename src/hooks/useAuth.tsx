@@ -40,5 +40,5 @@ export const useAuth = () => {
 
     return {
         user, setUser, error, loginUser, findUser, apiLoading: loading,
-    }
+    };
 };
