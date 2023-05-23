@@ -25,7 +25,6 @@ export const UserSideMenu = () => {
 
         {user?.role === 'student' &&
             <>
-
                 <StudentSummaryFetched/>
 
                 <MenuOption text="Zobacz swoje CV" url="/dashboard">
@@ -39,8 +38,6 @@ export const UserSideMenu = () => {
                 <MenuOption text=" Znalazłem/am pracę!" url="/found-job">
                     <MdOutlineHandshake className="h-6 w-6"/>
                 </MenuOption>
-
-
             </>
         }
 

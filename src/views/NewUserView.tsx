@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useFetch} from "../hooks/useFetch";
 import {apiUrl} from "../config/api";
 import {ConfirmResponse, ExpectedContractType, ExpectedTypeWork, UserRole} from "@Types";
@@ -7,6 +7,7 @@ import {SmallFormContainer} from "../components/common/SmallFormContainer";
 import {StudentCvForm} from "../components/StudentCvForm/StudentCvForm";
 import {PasswordSendNew} from "../components/PasswordSendNew/PasswordSendNew";
 import {Loader} from "../components/common/Loader";
+import {ResponseParagraph} from "../components/common/ResponseParagraph";
 
 export const NewUserView = () => {
     const {role, id, token} = useParams();
@@ -29,13 +30,18 @@ export const NewUserView = () => {
 
     return <SmallFormContainer title='Rejestracja nowego użytkownika'
                                description={(loading || apiError) ? '' : "Aby aktywować konto uzupełnij poniższe pola."}
-                               hideGoBack>
+                               hideGoBack
+    >
+
         {loading && <Loader/>}
-        {/*{apiError && <ResponseParagraph text={apiError}/>}*/}
+
+        {apiError && <ResponseParagraph text={apiError}/>}
 
         {!loading && !apiError && <>
-            {role === UserRole.STUDENT &&
-                   <div className="lg:w-[100vw] xl:w-full"> <StudentCvForm innerToken={emailToken!} newUser studentData={{
+            {
+                role === UserRole.STUDENT &&
+                <div className="lg:w-[100vw] xl:w-full">
+                    <StudentCvForm innerToken={emailToken!} newUser studentData={{
                         student_courses: "",
                         student_bio: "",
                         student_can_take_apprenticeship: 1,
@@ -59,12 +65,17 @@ export const NewUserView = () => {
                         student_work_experience: "",
                         student_contact_number: "",
                         student_email: email!,
-                    }}/>
-                   </div>}
+                    }}
+                    />
+                </div>
+            }
 
-            {role === UserRole.HR && <>
-                <PasswordSendNew innerToken={emailToken!} newHrMail={email!} newHr/>
-            </>}
-        </>}
+            {
+                role === UserRole.HR && <>
+                    <PasswordSendNew innerToken={emailToken!} newHrMail={email!} newHr/>
+                </>
+            }
+        </>
+        }
     </SmallFormContainer>
 };

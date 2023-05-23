@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const OneLink = ({url}: Props) => (
-        <span className="flex items-center"><IoMdAttach size={28}/>
+    <span className="flex items-center"><IoMdAttach size={28}/>
             <a className="text-base" href={url}>{url}</a>
-        </span>
+    </span>
 );

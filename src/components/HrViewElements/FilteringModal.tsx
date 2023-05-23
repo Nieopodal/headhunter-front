@@ -15,7 +15,6 @@ import {UserContext} from "../../contexts/user.context";
 import {Message} from "../common/Message";
 import {HrFilteringContext} from "../../contexts/hr.filtering.context";
 
-
 export const FilteringModal = () => {
 
     const {setIsFiltering, currentFilters, setCurrentFilters} = useContext(HrFilteringContext)

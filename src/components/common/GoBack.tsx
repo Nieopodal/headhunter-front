@@ -7,7 +7,8 @@ export const GoBack = () => {
     return <button
         onClick={() => navigate(-1)}
         className="cursor-pointer flex items-end text-base font-bold"
-    ><img src={goBack}/>
+    >
+        <img src={goBack} alt="go back icon"/>
         Wróć
     </button>
 };

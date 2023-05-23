@@ -2,10 +2,10 @@ import {createContext, Dispatch, PropsWithChildren, SetStateAction, useState} fr
 import {HrFilteringCriteria} from "../types/HrFilteringCriteria";
 
 type FilterContext = {
-    currentFilters: HrFilteringCriteria | null,
-    setCurrentFilters: Dispatch<SetStateAction<HrFilteringCriteria | null>>
-    isFiltering: boolean
-    setIsFiltering: Dispatch<SetStateAction<boolean>>
+    currentFilters: HrFilteringCriteria | null;
+    setCurrentFilters: Dispatch<SetStateAction<HrFilteringCriteria | null>>;
+    isFiltering: boolean;
+    setIsFiltering: Dispatch<SetStateAction<boolean>>;
 }
 
 export const HrFilteringContext = createContext<FilterContext>({
@@ -14,7 +14,7 @@ export const HrFilteringContext = createContext<FilterContext>({
     },
     isFiltering: false,
     setIsFiltering: () => {
-    }
+    },
 });
 
 export const HrFilteringProvider = (props: PropsWithChildren) => {
@@ -24,4 +24,4 @@ export const HrFilteringProvider = (props: PropsWithChildren) => {
         value={{currentFilters, setCurrentFilters, isFiltering, setIsFiltering}}>
         {props.children}
     </HrFilteringContext.Provider>
-}
+};

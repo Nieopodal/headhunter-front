@@ -90,22 +90,28 @@ export const HrMainDisplay = ({
                                     ref={searchRef}
                                     placeholder={"Imię lub nazwisko"}
                                     defaultValue={searchedName}
-                                    className="relative placeholder:text-neutral-500 max-sm:pr-0 max-sm:w-full input w-min-1/4 pl-10 bg-base-200 h-9"/>
+                                    className="relative placeholder:text-neutral-500 max-sm:pr-0 max-sm:w-full input w-min-1/4 pl-10 bg-base-200 h-9"
+                                />
                                 <BiSearch
-                                    className="absolute fill-neutral-500 left-[15px] top-[10px] scale-[110%]"/>
-                                <button onClick={(e) => clearSearch(e)} className="btn-sm h-8 ml-2 mr-1 btn-primary"
-                                        type="submit">
+                                    className="absolute fill-neutral-500 left-[15px] top-[10px] scale-[110%]"
+                                />
+                                <button
+                                    onClick={(e) => clearSearch(e)}
+                                    className="btn-sm h-8 ml-2 mr-1 btn-primary"
+                                    type="submit">
                                     <ImCancelCircle
-                                        className="scale-[150%]"/>
+                                        className="scale-[150%]"
+                                    />
                                 </button>
+
                                 <button className="btn-sm h-8 ml-1 mr-4 btn-primary"
-                                        onClick={(e) => handleSearching(e)}>
+                                        onClick={(e) => handleSearching(e)}
+                                >
                                     <TbPlayerTrackNext
-                                        className="scale-[150%]"/>
+                                        className="scale-[150%]"
+                                    />
                                 </button>
                             </div>
-
-
                         </div>
 
                         <button
@@ -125,23 +131,33 @@ export const HrMainDisplay = ({
                 </div>
                 <div className="flex flex-col bg-base-200 gap-3">
 
-                    {studentList?.map((student: AvailableStudent | StudentToInterview, index) =>
-                        <SingleStudent
-                            key={index}
-                            viewMode={viewMode}
-                            handleViewMode={handleViewMode}
-                            studentData={student}/>)}
+                    {
+                        studentList?.map((student: AvailableStudent | StudentToInterview, index) =>
+                            <SingleStudent
+                                key={index}
+                                viewMode={viewMode}
+                                handleViewMode={handleViewMode}
+                                studentData={student}
+                            />
+                        )
+                    }
                 </div>
-                {studentList?.[0] === undefined &&
-                    <h2 className="text-2xl mt-3 py-7 text-center font-bold">Brak wyników do wyświetlenia</h2>}
+                {
+                    studentList?.[0] === undefined &&
+                    <h2 className="text-2xl mt-3 py-7 text-center font-bold">Brak wyników do wyświetlenia</h2>
+                }
             </div>
             <div className="flex bg-base-100 w-full h-full justify-end py-7">
-                {(totalPagesNr !== 0) && <HrPagination currentPageNr={currentPageNr}
-                                                       totalPagesNr={totalPagesNr}
-                                                       nextPage={nextPage}
-                                                       prevPage={prevPage}
-                                                       maxStudentsPerPage={maxStudentsPerPage}
-                                                       setMaxPerPage={setMaxPerPage}/>}
+                {
+                    (totalPagesNr !== 0) &&
+                    <HrPagination currentPageNr={currentPageNr}
+                                  totalPagesNr={totalPagesNr}
+                                  nextPage={nextPage}
+                                  prevPage={prevPage}
+                                  maxStudentsPerPage={maxStudentsPerPage}
+                                  setMaxPerPage={setMaxPerPage}
+                    />
+                }
             </div>
         </div>
     </div>
