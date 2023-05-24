@@ -26,7 +26,7 @@ interface Props {
 
 export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [setEmail] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [emailToken, setEmailToken] = useState<string | null>(null);
   const { fetchApi, apiError } = useFetch();
