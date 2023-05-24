@@ -5,8 +5,8 @@ import {useFormContext} from "react-hook-form";
 type Props = {
     registerName: string;
     placeholder: string;
-    min?: string;
-    max?: string;
+    min?: number;
+    max?: number;
 }
 
 export const FilteringNumericalInput = ({registerName, placeholder, min, max}: Props) => {

@@ -16,7 +16,7 @@ export const DegreeField = ({title, registerName, errorMsg}: Props) => (
             </span>
         </div>
         <div className="flex max-sm:flex-row flex-col items-center">
-            <FilteringNumericalInput registerName={registerName} placeholder={`1-5`} min={`1`} max={`5`}/>
+            <FilteringNumericalInput registerName={registerName} placeholder={`1-5`} min={1} max={5}/>
         </div>
     </label>
 );
