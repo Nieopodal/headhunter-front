@@ -24,11 +24,10 @@ export const HrPagination = ({
         <select onChange={(e) => setMaxPerPage(e)}
                 className="select bg-white text-base-100 select-sm w-13">
             <option disabled selected style={{display: "none"}}>{maxStudentsPerPage}</option>
-            <option>10</option>
-            <option>20</option>
-            <option>30</option>
-            <option>40</option>
-            <option>50</option>
+            {new Array(5)
+                .fill(null)
+                .map((array, i) => <option>{(i+1)*10}</option>)
+            }
         </select>
         {currentPageNr} z {totalPagesNr}
         <div className="flex flex-row items-center gap-2">
