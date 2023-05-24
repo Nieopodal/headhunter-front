@@ -24,7 +24,7 @@ export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: P
     const {setModal} = useModal();
 
     const {firstName, lastName, id: studentId} = studentData;
-    const pictureUrl = (("githubUsername" in studentData) && studentData.githubUsername !== "") ? `https://github.com/${studentData.githubUsername}.png` : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png'
+    const pictureUrl = (("githubUsername" in studentData) && studentData.githubUsername !== "") ? `https://github.com/${studentData.githubUsername}.png` : 'https://randomuser.me/api/portraits/lego/2.jpg'
 
     const reservationTime = ("reservationTime" in studentData) ? studentData.reservationTime : new Date();
 
