@@ -29,7 +29,7 @@ export const FilteringModal = () => {
             maxSalary: currentFilters?.maxSalary,
             minSalary: currentFilters?.minSalary,
             monthsOfCommercialExp: currentFilters?.monthsOfCommercialExp,
-            expectedTypeWork: currentFilters?.expectedContractType,
+            expectedTypeWork: currentFilters?.expectedTypeWork,
             projectDegree: currentFilters?.projectDegree,
             teamProjectDegree: currentFilters?.teamProjectDegree,
         }
@@ -43,9 +43,8 @@ export const FilteringModal = () => {
         const res = await fetchApi(user, `${apiUrl}/hr/set-filter/`, "POST", "Wystąpił błąd przy próbie zastosowania filtrów", filters, true, "application/json");
 
         if (res) {
-            setIsFiltering(false);
-            setIsFiltering(true);
             setCurrentFilters(filters);
+            setIsFiltering(true);
             unSetModal();
         }
 
@@ -184,8 +183,7 @@ export const FilteringModal = () => {
                 <div className="flex flex-col items-start gap-2 mt-3">
                     <span>Ilość miesięcy doświadczenia komercyjnego kandydata w programowaniu</span>
                     <div className="flex flex-row gap-3 items-center">
-                        <FilteringNumericalInput registerName={`monthsOfCommercialExp`} placeholder={`Np. 3`}
-                                                 min={"0"}/>
+                        <FilteringNumericalInput registerName={`monthsOfCommercialExp`} placeholder={`Np. 3`} min={0}/>
                         <span
                             className="text-xs text-primary ml-6">
                                 {methods.formState.errors.monthsOfCommercialExp?.message}

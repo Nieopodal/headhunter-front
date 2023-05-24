@@ -17,7 +17,7 @@ type PaginatedResponse = {
 
 export const HrDashboardView = () => {
     const [viewMode, setViewMode] = useState<HrViewMode>(HrViewMode.AvailableStudents);
-    const {isFiltering} = useContext(HrFilteringContext);
+    const {isFiltering, currentFilters} = useContext(HrFilteringContext);
     const {user} = useContext(UserContext);
     const [currentPageNr, setCurrentPageNr] = useState(1);
     const [totalPagesNr, setTotalPagesNr] = useState(0);
@@ -61,7 +61,7 @@ export const HrDashboardView = () => {
 
         })();
 
-    }, [viewMode, currentPageNr, maxStudentsPerPage, nameToSearch, isFiltering]);
+    }, [viewMode, currentPageNr, maxStudentsPerPage, nameToSearch, isFiltering, currentFilters]);
 
     if (apiError) {
         setModal({modal: <Message type={"error"} body={apiError}/>});
