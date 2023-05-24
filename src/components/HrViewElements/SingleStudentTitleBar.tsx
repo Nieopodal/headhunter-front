@@ -6,7 +6,6 @@ import {UserContext} from "../../contexts/user.context";
 import {apiUrl} from "../../config/api";
 import {useModal} from "../../hooks/useModal";
 import {Message} from "../common/Message";
-import {useNavigate} from "react-router-dom";
 import {ModalPosition} from "../../types/ModalPosition";
 import {Avatar} from "../Header/Avatar";
 import {StudentControlButton} from "./StudentControlButton";
@@ -20,7 +19,6 @@ type Props = {
 
 export const SingleStudentTitleBar = ({studentData, viewMode, handleViewMode}: Props) => {
 
-    const navigate = useNavigate();
     const {fetchApi, apiError} = useFetch();
     const {user} = useContext(UserContext);
     const {setModal} = useModal();
