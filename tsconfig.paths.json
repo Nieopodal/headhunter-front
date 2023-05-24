@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@Types": [
-        "../headhunter-back/src/types"
+        "../../headhunter-back/headhunter-back/src/types"
       ]
     }
   }

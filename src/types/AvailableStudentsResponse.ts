@@ -1,4 +1,5 @@
-import {ExpectedContractType, ExpectedTypeWork } from "../../../headhunter-back/src/types/student";
+import {ExpectedContractType, ExpectedTypeWork } from "@Types";
+
 
 export interface AvailableStudentsResponse {
     student_id: number,
