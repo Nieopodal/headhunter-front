@@ -12,19 +12,13 @@ MegaK HeadHunter is a project made by participants of a Polish webdev course cal
 
 MegaK HeadHunter is an IT employment-focused platform, which allows the students, who have completed the abovementioned course, to apply for their first jobs. It allows head hunters from various companies to browse each sudent's CV's and appoint interviews.
 
-# Check out the live demo
+# Check out our video 
 
-**https://mwyso.usermd.net**
+**https://youtu.be/CeIFVlNlzPw**
 
-Test student account credentials:
+# Live demo
 
-**login:** student@hh.com
-**password:** Test123!@#
-
-Test headhunter account credentials:
-
-**login:** hr@hh.com
-**password:** Test123!@#
+**https://www.webdevjs.pl**
 
 # Features 🔧
 
@@ -103,6 +97,13 @@ Check it out at [https://github.com/Nieopodal/headhunter-back](https://github.co
 │   ├── headhunter-front
 ```
 
+# For future:
+
+* Dynamic url forms
+* More Code refactor
+* Finish hosting our app (**in progress**)
+
+
 # About the authors
 
 This version of MegaK HeadHunter app was made by participants of the group #2 from the 2nd edition of [MegaKurs](https://megak.pl) webdev course:
@@ -130,5 +131,6 @@ It was a great co-working experience 🤝
 [React Hook Form-url]: https://react-hook-form.com/
 [DaisyUI]: https://img.shields.io/badge/daisyui-5A0EF8?style=for-the-badge&logo=daisyui&logoColor=white
 [DaisyUI-url]: https://daisyui.com/
-[//]: # "[NestJS]: https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white"
-[//]: # "[NestJS-url]: https://https://nestjs.com/"
+
+[//]: # ([NestJS]: https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)
+[//]: # ([NestJS-url]: https://https://nestjs.com/)
