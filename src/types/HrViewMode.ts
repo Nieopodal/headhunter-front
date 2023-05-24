@@ -1,4 +1,4 @@
 export enum HrViewMode {
-    AvailableStudents = "available",
-    StudentsToInterview = "toInterview",
+  AvailableStudents = "available",
+  StudentsToInterview = "toInterview",
 }
