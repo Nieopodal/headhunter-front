@@ -5,7 +5,7 @@ import {HrViewMode} from "../../types/HrViewMode"
 import {HrTab} from "./HrTab";
 import {HrPagination} from "./HrPagination";
 import {useModal} from '../../hooks/useModal'
-import {FilteringModal} from "./FilteringModal";
+import {FilteringModal} from "./ResultsFiltering/FilteringModal";
 import {AvailableStudent, StudentToInterview} from "@Types";
 import {SingleStudent} from "./SingleStudent";
 import {TbPlayerTrackNext} from "react-icons/tb";
