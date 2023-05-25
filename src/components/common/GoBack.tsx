@@ -6,7 +6,7 @@ export const GoBack = () => {
   const navigate = useNavigate();
   return (
     <button
-      onClick={() => navigate(-1)}
+      onClick={() => navigate("/dashboard")}
       className="cursor-pointer flex items-end text-base font-bold"
     >
       <img src={goBack} alt="go back icon" />
