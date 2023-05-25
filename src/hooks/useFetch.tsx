@@ -20,6 +20,7 @@ export const useFetch = () => {
   ): Promise<unknown> {
     try {
       setApiLoading(true);
+      setApiError(null);
       const res = await fetchHandler(
         innerToken ?? user?.access_token,
         url,
