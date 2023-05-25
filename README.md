@@ -16,9 +16,23 @@ MegaK HeadHunter is an IT employment-focused platform, which allows the students
 
 **https://youtu.be/CeIFVlNlzPw**
 
-# Live demo
+# Live demos
 
 **https://www.webdevjs.pl**
+
+OR
+
+**https://headhunter.mwyso.usermd.net**
+
+Test student account credentials:
+
+**login**: student@hh.com
+**password**: Test123
+
+Test headhunter account credentials:
+
+**login**: hr@hh.com
+**password**: Test123
 
 # Features 🔧
 
