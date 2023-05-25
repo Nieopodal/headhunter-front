@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFetch } from "../../hooks/useFetch";
-import { NavLink, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import { AppLogo } from "../Header/AppLogo";
 import { apiUrl } from "../../config/api";
 import { NewPassword } from "../common/NewPassword";
@@ -31,6 +31,7 @@ export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
   const [emailToken, setEmailToken] = useState<string | null>(null);
   const { fetchApi, apiError } = useFetch();
   const { setModal } = useModal();
+  const navigate = useNavigate();
 
   const { id, token, role } = useParams();
 
@@ -65,12 +66,13 @@ export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
             type={"success"}
             body={
               newHr
-                ? "Hasło zostało zapisane. Zaloguj się."
-                : "Hasło zostało zmienione. Zaloguj się."
+                ? "Hasło zostało zapisane."
+                : "Hasło zostało zmienione."
             }
           />
         ),
       });
+      navigate('/', {replace: true});
     }
   };
 
@@ -102,15 +104,6 @@ export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
 
       {loading && <Loader />}
       {apiError && <ResponseParagraph text={apiError} />}
-
-      {success && (
-        <NavLink
-          to="/"
-          className="w-full btn-sm h-10 btn-primary normal-case font-normal text-base rounded-none"
-        >
-          Zaloguj się
-        </NavLink>
-      )}
 
       {!loading && !apiError && !success && (
         <FormProvider
