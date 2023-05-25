@@ -5,7 +5,7 @@ export const validationSchema = (newUser: boolean) => {
     githubUsername: yup
       .string()
       .max(255)
-      .required()
+      .required("Nick w Github jest wymagany")
       .test("userExists", "Użytkownik nie istnieje w bazie Github", (value) => {
         return new Promise((resolve) => {
           fetch(`https://api.github.com/users/${value}`)
@@ -35,21 +35,21 @@ export const validationSchema = (newUser: boolean) => {
     scrumProjectUrl1: yup
       .string()
       .max(255)
-      .test("url-test", "Link jest wymagany.", (value) => {
+      .test("url-test", "Link jest wymagany", (value) => {
         if (!newUser) return Boolean(value);
         else return true;
       }),
     scrumProjectUrl2: yup
       .string()
       .max(255)
-      .test("url-test", "Link jest wymagany.", (value) => {
+      .test("url-test", "Link jest wymagany", (value) => {
         if (!newUser) return Boolean(value);
         else return true;
       }),
     scrumProjectUrl3: yup
       .string()
       .max(255)
-      .test("url-test", "Link jest wymagany.", (value) => {
+      .test("url-test", "Link jest wymagany", (value) => {
         if (!newUser) return Boolean(value);
         else return true;
       }),
@@ -66,7 +66,7 @@ export const validationSchema = (newUser: boolean) => {
       .notRequired(),
     password: yup
       .string()
-      .test("password-test", "Hasło jest wymagane.", (value) => {
+      .test("password-test", "Hasło jest wymagane", (value) => {
         if (newUser) return Boolean(value);
         else return true;
       }),
