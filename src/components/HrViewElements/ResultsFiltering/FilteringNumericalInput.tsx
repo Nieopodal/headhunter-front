@@ -44,7 +44,8 @@ export const FilteringNumericalInput = ({
           type="button"
           onClick={() => {
             let curr = getValues(registerName);
-            if (min === 0 && curr === min) {
+            if (min === 0 && (curr < min || curr === min)) {
+              setValue(registerName, min);
               return;
             }
             if (!min || (min && curr > min)) setValue(registerName, --curr);
