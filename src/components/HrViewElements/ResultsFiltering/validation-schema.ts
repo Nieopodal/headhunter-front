@@ -6,32 +6,32 @@ export const validationSchema = yup.object().shape({
     .transform((value) => (isNaN(value) ? undefined : value))
     .positive()
     .integer()
-    .min(1)
-    .max(5)
+    .min(1, "Podaj liczbę z zakresu od 1 do 5")
+    .max(5, "Podaj liczbę z zakresu od 1 do 5")
     .required("Pole niewypełnione"),
   courseEngagement: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
     .positive()
     .integer()
-    .min(1)
-    .max(5)
+    .min(1, "Podaj liczbę z zakresu od 1 do 5")
+    .max(5, "Podaj liczbę z zakresu od 1 do 5")
     .required("Pole niewypełnione"),
   projectDegree: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
     .positive()
     .integer()
-    .min(1)
-    .max(5)
+    .min(1, "Podaj liczbę z zakresu od 1 do 5")
+    .max(5, "Podaj liczbę z zakresu od 1 do 5")
     .required("Pole niewypełnione"),
   teamProjectDegree: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
     .positive()
     .integer()
-    .min(1)
-    .max(5)
+    .min(1, "Podaj liczbę z zakresu od 1 do 5")
+    .max(5, "Podaj liczbę z zakresu od 1 do 5")
     .required("Pole niewypełnione"),
   expectedTypeWork: yup
     .array()
