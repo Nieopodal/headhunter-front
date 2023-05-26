@@ -61,6 +61,7 @@ export const validationSchema = yup.object().shape({
   monthsOfCommercialExp: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
+    .min(0, "Liczba musi byc pozytywna")
     .integer()
     .required("Pole niewypełnione"),
 });
