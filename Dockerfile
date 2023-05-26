@@ -9,7 +9,10 @@ FROM nginx
 RUN rm -rf /usr/share/nginx/html/*
 RUN rm -rf /etc/nginx/conf.d/*
 RUN mkdir /usr/share/nginx/logs
-COPY nginx.conf /etc/nginx/conf.d/dafault.conf
+
+COPY /nginx/nginx.conf /etc/nginx/conf.d/dafault.conf
+COPY /nginx/private.key /etc/ssl/private.key
+COPY /nginx/certificate.crt /etc/ssl/certificate.crt
 COPY --from=builder /app/build /usr/share/nginx/html
-EXPOSE 80
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
