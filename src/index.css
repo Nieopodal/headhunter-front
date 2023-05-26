@@ -159,3 +159,11 @@ select:-webkit-autofill:focus {
     transform: rotate(360deg);
   }
 }
+
+/* remove default arrows on numerical inputs */
+@layer utilities {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
+}
