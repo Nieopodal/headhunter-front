@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { AvailableStudent, StudentToInterview } from "@Types";
+import { AvailableStudent, StudentToInterview } from "../../types";
 import { HrViewMode } from "../../types/HrViewMode";
 import { useFetch } from "../../hooks/useFetch";
 import { UserContext } from "../../contexts/user.context";

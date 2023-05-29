@@ -7,7 +7,7 @@ import {
   ExpectedContractType,
   ExpectedTypeWork,
   UserRole,
-} from "@Types";
+} from "../types";
 import { SmallFormContainer } from "../components/common/SmallFormContainer";
 import { StudentCvForm } from "../components/StudentCvForm/StudentCvForm";
 import { PasswordSendNew } from "../components/PasswordSendNew/PasswordSendNew";

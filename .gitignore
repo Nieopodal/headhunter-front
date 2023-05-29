@@ -11,6 +11,9 @@
 # production
 /build
 
+#cert
+/nginx/cert
+
 # misc
 .DS_Store
 .env.local

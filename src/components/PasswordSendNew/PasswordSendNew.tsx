@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useFetch } from "../../hooks/useFetch";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AppLogo } from "../Header/AppLogo";
 import { apiUrl } from "../../config/api";
 import { NewPassword } from "../common/NewPassword";
-import { ConfirmResponse } from "@Types";
+import { ConfirmResponse } from "../../types";
 import { Loader } from "../common/Loader";
 import { useModal } from "../../hooks/useModal";
 import { Message } from "../common/Message";
@@ -65,14 +65,12 @@ export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
           <Message
             type={"success"}
             body={
-              newHr
-                ? "Hasło zostało zapisane."
-                : "Hasło zostało zmienione."
+              newHr ? "Hasło zostało zapisane." : "Hasło zostało zmienione."
             }
           />
         ),
       });
-      navigate('/', {replace: true});
+      navigate("/", { replace: true });
     }
   };
 

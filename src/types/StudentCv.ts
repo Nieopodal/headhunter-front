@@ -1,4 +1,4 @@
-import { ExpectedContractType, ExpectedTypeWork } from "@Types";
+import { ExpectedContractType, ExpectedTypeWork } from "./student";
 
 export interface StudentCv {
   student_courses: string;

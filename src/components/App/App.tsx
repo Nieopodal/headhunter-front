@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { LoginView } from "../../views/LoginView";
 import { useAuth } from "../../hooks/useAuth";
 import { BaseUserEntity, UserContext } from "../../contexts/user.context";
 import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "../PrivateRoute/PrivateRoute";
-import { AdminFileUploadView } from "../../views/AdminFileUploadView";
-import { AdminAddHrView } from "../../views/AdminAddHrView";
 import { PasswordReset } from "../PasswordReset/PasswordReset";
 import { DashboardView } from "../../views/DashboardView";
 import { DashboardContainer } from "../common/DashboardContainer";
 import { UserRole } from "../../types";
 import { ModalProvider } from "../../contexts/modal.context";
-import { StudentDashboardView } from "../../views/StudentDashboardView";
 import { PasswordSendNew } from "../PasswordSendNew/PasswordSendNew";
-import { StudentCvForHr } from "../StudentCvForHr";
 import { Loader } from "../common/Loader";
-import { StudentFoundJobFormView } from "../../views/StudentFoundJobFormView";
 import { HrFilteringProvider } from "../../contexts/hr.filtering.context";
 import { NewUserView } from "../../views/NewUserView";
+import { LoginView } from "../../views/LoginView/LoginView";
+import { AdminFileUploadView } from "../../views/Admin/FileUploadView/AdminFileUploadView";
+import { AdminAddHrView } from "../../views/Admin/AddHrView/AdminAddHrView";
+import { StudentDashboardView } from "../../views/Student/StudentDashboardView";
+import { StudentCvForHr } from "../HrViewElements/StudentCvForHr";
+import { StudentFoundJobFormView } from "../../views/Student/StudentFoundJobFormView";
 
 export const App = () => {
   const { error, apiLoading } = useAuth();

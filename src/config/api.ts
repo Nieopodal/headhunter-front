@@ -1,1 +1,2 @@
-export const apiUrl = process.env.REACT_APP_API_URL ?? `http://webdevjs.pl/api`;
+export const apiUrl =
+  process.env.REACT_APP_API_URL ?? `https://webdevjs.pl/api`;

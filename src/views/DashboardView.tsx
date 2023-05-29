@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { UserContext } from "../contexts/user.context";
 import { StudentDashboardView } from "./Student/StudentDashboardView";
-import { UserRole } from "@Types";
+import { UserRole } from "../types";
 import { HrDashboardView } from "./Hr/HrDashboardView";
 import { AdminDashboardView } from "./Admin/AdminDashboardView";
 

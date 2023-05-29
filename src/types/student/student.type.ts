@@ -1,5 +1,3 @@
-import { FilterStudentDto } from "../student/filter-student.dto";
-
 export type Student = {
   id: string;
   email: string;
@@ -83,7 +81,7 @@ export type AvailableStudentsPaginated = {
 };
 
 export type StudentFilter = {
-  usedFilter: FilterStudentDto;
+  usedFilter: Student;
 };
 
 export type StudentCv = StudentPartialData & SimpleStudentData;
@@ -104,7 +102,7 @@ export enum ExpectedContractType {
 }
 
 export enum StudentStatus {
-  AVAILABLE = "available",
-  INTERVIEW = "interview",
-  EMPLOYED = "employed",
+  AVAILABLE = "Dostępny",
+  INTERVIEW = "Na rozmowie",
+  EMPLOYED = "Zatrudniony",
 }

@@ -9,7 +9,7 @@ import { Message } from "../common/Message";
 import { useNavigate } from "react-router-dom";
 import { Loader } from "../common/Loader";
 import { ResponseParagraph } from "../common/ResponseParagraph";
-import { RecoveryPasswordResponse } from "@Types";
+import { RecoveryPasswordResponse } from "../../types";
 
 export const PasswordReset = () => {
   const { setModal } = useModal();

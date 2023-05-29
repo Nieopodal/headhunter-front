@@ -4,7 +4,7 @@ import { BodyOfSection } from "../../CvSections/BodyOfSection";
 import { CategoryContainer } from "../../CvSections/CategoryContainer";
 import { Input } from "../../common/Form/Input";
 import React from "react";
-import { ExpectedContractType, ExpectedTypeWork } from "@Types";
+import { ExpectedContractType, ExpectedTypeWork } from "../../../types/";
 import { StudentCv } from "../../../types/StudentCv";
 
 interface Props {
