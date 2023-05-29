@@ -1,8 +1,8 @@
-import {Avatar} from "../Header/Avatar";
-import {AiFillGithub} from "react-icons/ai";
+import React from "react";
 import {BsFillTelephoneFill} from "react-icons/bs";
 import {GrMail} from "react-icons/gr";
-import React from "react";
+import {AiFillGithub} from "react-icons/ai";
+import {Avatar} from "../Header/Avatar";
 
 interface Props {
     firstName: string;
@@ -14,7 +14,15 @@ interface Props {
     about: string;
 }
 
-export const StudentSummary = ({email, about, githubName, firstName, lastName, phone, avatarUrl}: Props) => (
+export const StudentSummary = ({
+                                   email,
+                                   about,
+                                   githubName,
+                                   firstName,
+                                   lastName,
+                                   phone,
+                                   avatarUrl,
+                               }: Props) => (
     <div className="flex flex-col p-4 text-sm sm:col-span-3 sm:my-4 xl:my-0">
         <div className="xl:flex xl:flex-col xl:items-center xl:justify-center ">
             <div className="flex items-center mb-4">
@@ -24,28 +32,34 @@ export const StudentSummary = ({email, about, githubName, firstName, lastName, p
                         <div className="text-3xl xl:text-xl font-bold">
                             {`${firstName} ${lastName}`}
                         </div>
-                        <div className="flex sm:justify-start xl:justify-center" style={{color: "#0B8BD4"}}>
-                            <AiFillGithub/> {githubName}
+                        <div
+                            className="flex sm:justify-start xl:justify-center"
+                            style={{color: "#0B8BD4"}}
+                        >
+                            <AiFillGithub/> <a
+                            href={`https://github.com/${githubName}`}
+                            rel="noreferrer"
+                            target="_blank"
+                            className="hover:underline">
+                            {githubName}
+                        </a>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div className="flex flex-col sm:flex-row xl:flex-col">
                 <div className="my-2 flex flex-col justify-center sm:mr-4 xl:mr-0">
                     <div className="flex">
-                        <BsFillTelephoneFill color="grey"/> <span className="ml-2">{phone}</span>
+                        <BsFillTelephoneFill color="grey"/>{" "}
+                        <span className="ml-2">{phone !== "0" ? phone : "-"}</span>
                     </div>
                     <div className="flex min-w-max">
                         <GrMail color="grey"/> <span className="ml-2">{email}</span>
                     </div>
                 </div>
                 <div className="xl:w-[180px] break-words">
-
                     <span style={{color: "#838484"}}>o mnie</span>
-                    <p>
-                        {about}
-                    </p>
+                    <p>{about}</p>
                 </div>
             </div>
         </div>

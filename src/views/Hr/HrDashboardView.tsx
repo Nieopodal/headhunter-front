@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useFetch } from "../hooks/useFetch";
-import { UserContext } from "../contexts/user.context";
-import { Loader } from "../components/common/Loader";
-import { HrMainDisplay } from "../components/HrViewElements/HrMainDisplay";
-import { HrViewMode } from "../types/HrViewMode";
-import { AvailableStudent, StudentToInterview } from "../types";
-import { Message } from "../components/common/Message";
-import { useModal } from "../hooks/useModal";
-import { apiUrl } from "../config/api";
-import { HrFilteringContext } from "../contexts/hr.filtering.context";
+import { useFetch } from "../../hooks/useFetch";
+import { UserContext } from "../../contexts/user.context";
+import { Loader } from "../../components/common/Loader";
+import { HrMainDisplay } from "../../components/HrViewElements/HrMainDisplay";
+import { HrViewMode } from "../../types/HrViewMode";
+import { AvailableStudent, StudentToInterview } from "@Types";
+import { Message } from "../../components/common/Message";
+import { useModal } from "../../hooks/useModal";
+import { apiUrl } from "../../config/api";
+import { HrFilteringContext } from "../../contexts/hr.filtering.context";
 
 type PaginatedResponse = {
   studentData: AvailableStudent[] | StudentToInterview[];
@@ -19,7 +19,7 @@ export const HrDashboardView = () => {
   const [viewMode, setViewMode] = useState<HrViewMode>(
     HrViewMode.AvailableStudents
   );
-  const { isFiltering } = useContext(HrFilteringContext);
+  const { isFiltering, currentFilters } = useContext(HrFilteringContext);
   const { user } = useContext(UserContext);
   const [currentPageNr, setCurrentPageNr] = useState(1);
   const [totalPagesNr, setTotalPagesNr] = useState(0);
@@ -66,7 +66,14 @@ export const HrDashboardView = () => {
       );
       setTotalPagesNr((res as PaginatedResponse).totalPages);
     })();
-  }, [viewMode, currentPageNr, maxStudentsPerPage, nameToSearch, isFiltering]);
+  }, [
+    viewMode,
+    currentPageNr,
+    maxStudentsPerPage,
+    nameToSearch,
+    isFiltering,
+    currentFilters,
+  ]);
 
   if (apiError) {
     setModal({ modal: <Message type={"error"} body={apiError} /> });
@@ -92,5 +99,6 @@ export const HrDashboardView = () => {
       />
     );
   }
+
   return null;
 };

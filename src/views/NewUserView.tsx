@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { apiUrl } from "../config/api";
 import {
@@ -7,11 +7,12 @@ import {
   ExpectedContractType,
   ExpectedTypeWork,
   UserRole,
-} from "../types";
+} from "@Types";
 import { SmallFormContainer } from "../components/common/SmallFormContainer";
 import { StudentCvForm } from "../components/StudentCvForm/StudentCvForm";
 import { PasswordSendNew } from "../components/PasswordSendNew/PasswordSendNew";
 import { Loader } from "../components/common/Loader";
+import { ResponseParagraph } from "../components/common/ResponseParagraph";
 
 export const NewUserView = () => {
   const { role, id, token } = useParams();
@@ -48,13 +49,13 @@ export const NewUserView = () => {
       hideGoBack
     >
       {loading && <Loader />}
-      {/*{apiError && <ResponseParagraph text={apiError}/>}*/}
+
+      {apiError && <ResponseParagraph text={apiError} />}
 
       {!loading && !apiError && (
         <>
           {role === UserRole.STUDENT && (
             <div className="lg:w-[100vw] xl:w-full">
-              {" "}
               <StudentCvForm
                 innerToken={emailToken!}
                 newUser

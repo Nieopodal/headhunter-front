@@ -5,8 +5,8 @@ import { HrViewMode } from "../../types/HrViewMode";
 import { HrTab } from "./HrTab";
 import { HrPagination } from "./HrPagination";
 import { useModal } from "../../hooks/useModal";
-import { FilteringModal } from "./FilteringModal";
-import { AvailableStudent, StudentToInterview } from "../../types";
+import { FilteringModal } from "./ResultsFiltering/FilteringModal";
+import { AvailableStudent, StudentToInterview } from "@Types";
 import { SingleStudent } from "./SingleStudent";
 import { TbPlayerTrackNext } from "react-icons/tb";
 import { HrFilteringContext } from "../../contexts/hr.filtering.context";
@@ -100,6 +100,7 @@ export const HrMainDisplay = ({
                   >
                     <ImCancelCircle className="scale-[150%]" />
                   </button>
+
                   <button
                     className="btn-sm h-8 ml-1 mr-4 btn-primary"
                     onClick={(e) => handleSearching(e)}
@@ -113,6 +114,7 @@ export const HrMainDisplay = ({
                 onClick={() => {
                   setModal({
                     modal: <FilteringModal />,
+                    fitHeight: true,
                   });
                 }}
                 className={`cursor-pointer w-min-fit px-4 flex items-center justify-center ${

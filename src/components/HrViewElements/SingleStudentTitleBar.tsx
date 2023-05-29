@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-import { AvailableStudent, StudentToInterview } from "../../types";
+import React, { useContext, useEffect } from "react";
+import { AvailableStudent, StudentToInterview } from "@Types";
 import { HrViewMode } from "../../types/HrViewMode";
 import { useFetch } from "../../hooks/useFetch";
 import { UserContext } from "../../contexts/user.context";
 import { apiUrl } from "../../config/api";
 import { useModal } from "../../hooks/useModal";
 import { Message } from "../common/Message";
-import { useNavigate } from "react-router-dom";
 import { ModalPosition } from "../../types/ModalPosition";
+import { Avatar } from "../Header/Avatar";
+import { StudentControlButton } from "./StudentControlButton";
 
 type Props = {
   viewMode: HrViewMode;
@@ -20,7 +21,6 @@ export const SingleStudentTitleBar = ({
   viewMode,
   handleViewMode,
 }: Props) => {
-  const navigate = useNavigate();
   const { fetchApi, apiError } = useFetch();
   const { user } = useContext(UserContext);
   const { setModal } = useModal();
@@ -29,13 +29,17 @@ export const SingleStudentTitleBar = ({
   const pictureUrl =
     "githubUsername" in studentData && studentData.githubUsername !== ""
       ? `https://github.com/${studentData.githubUsername}.png`
-      : "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png";
-
+      : "https://randomuser.me/api/portraits/lego/2.jpg";
   const reservationTime =
     "reservationTime" in studentData ? studentData.reservationTime : new Date();
-
   const userFullName = `${firstName} ${lastName}`;
   const userShortName = `${firstName} ${lastName.slice(0, 1).concat(".")}`;
+
+  useEffect(() => {
+    if (apiError) {
+      setModal({ modal: <Message type={"error"} body={apiError} /> });
+    }
+  }, [apiError, setModal]);
 
   const handleStudent = async (
     viewMode: HrViewMode,
@@ -50,11 +54,6 @@ export const SingleStudentTitleBar = ({
       "PATCH",
       "Błąd przy ładowaniu wybranego kursanta"
     );
-
-    if (apiError) {
-      setModal({ modal: <Message type={"error"} body={apiError} /> });
-      return;
-    }
 
     setModal({
       modal: (
@@ -84,11 +83,7 @@ export const SingleStudentTitleBar = ({
 
         <div className="flex flex-row items-center gap-3">
           {viewMode === HrViewMode.StudentsToInterview ? (
-            <label className="btn-circle cursor-pointer avatar items-center">
-              <div className="w-20 rounded-full">
-                <img src={`${pictureUrl}`} alt="user profile" />
-              </div>
-            </label>
+            <Avatar imgUrl={pictureUrl} />
           ) : null}
           {viewMode === HrViewMode.AvailableStudents
             ? userShortName
@@ -99,62 +94,48 @@ export const SingleStudentTitleBar = ({
       <div className="flex flex-row items-center gap-3 mr-14">
         {viewMode === HrViewMode.StudentsToInterview ? (
           <>
-            <button
-              className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
-              onClick={() =>
-                navigate(`/student-cv/${studentId}`, { replace: true })
-              }
-            >
-              Pokaż CV
-            </button>
+            <StudentControlButton
+              text={"Pokaż CV"}
+              firstName={firstName}
+              lastName={lastName}
+              studentId={studentId}
+            />
 
-            <button
-              onClick={async () =>
-                handleStudent(
-                  HrViewMode.AvailableStudents,
-                  `${firstName}`,
-                  `${lastName}`,
-                  `withdraw`,
-                  `został przeniesiony do listy dostępnych`
-                )
-              }
-              className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
-            >
-              Brak zainteresowania
-            </button>
+            <StudentControlButton
+              text={"Brak zainteresowania"}
+              handleStudent={handleStudent}
+              firstName={firstName}
+              lastName={lastName}
+              studentId={studentId}
+              path={"withdraw"}
+              viewMode={HrViewMode.AvailableStudents}
+              message={"został przeniesiony do listy dostępnych"}
+            />
 
-            <button
-              onClick={async () =>
-                handleStudent(
-                  HrViewMode.AvailableStudents,
-                  `${firstName}`,
-                  `${lastName}`,
-                  `employed`,
-                  `został oznaczony jako zatrudniony`
-                )
-              }
-              className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
-            >
-              Zatrudniony
-            </button>
+            <StudentControlButton
+              text={"Zatrudniony"}
+              handleStudent={handleStudent}
+              firstName={firstName}
+              lastName={lastName}
+              studentId={studentId}
+              path={"employed"}
+              viewMode={HrViewMode.AvailableStudents}
+              message={"został oznaczony jako zatrudniony"}
+            />
           </>
         ) : null}
 
         {viewMode === HrViewMode.AvailableStudents ? (
-          <button
-            onClick={async () =>
-              handleStudent(
-                HrViewMode.StudentsToInterview,
-                `${firstName}`,
-                `${lastName}`,
-                `interview`,
-                `został dodany do Twojej listy "Do rozmowy"`
-              )
-            }
-            className="z-10 w-1/8 btn-sm max-lg:leading-none max-lg:text-sm h-9 btn-primary normal-case font-normal text-base rounded-none"
-          >
-            Zarezerwuj rozmowę
-          </button>
+          <StudentControlButton
+            text={"Zarezerwuj rozmowę"}
+            handleStudent={handleStudent}
+            firstName={firstName}
+            lastName={lastName}
+            studentId={studentId}
+            path={"interview"}
+            viewMode={HrViewMode.StudentsToInterview}
+            message={'dodany do Twojej listy "Do rozmowy"'}
+          />
         ) : null}
       </div>
     </>

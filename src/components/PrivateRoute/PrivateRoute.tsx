@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../../contexts/user.context";
-import { UserRole } from "../../types";
+import { UserRole } from "@Types";
 import { Loader } from "../common/Loader";
 
 export type ProtectedRouteProps = {
