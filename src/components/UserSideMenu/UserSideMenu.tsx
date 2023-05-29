@@ -10,13 +10,14 @@ import { SideMenu } from "../common/SideMenu";
 import { MenuOption } from "../common/MenuOption";
 import { UserContext } from "../../contexts/user.context";
 import { StudentSummaryFetched } from "../StudentSummary/StudentSummaryFetched";
+import { UserRole } from "@Types";
 
 export const UserSideMenu = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <SideMenu roleException="hr">
-      {user?.role === "admin" && (
+    <SideMenu roleException={UserRole.HR}>
+      {user?.role === UserRole.ADMIN && (
         <>
           <MenuOption text="Dodaj kursantów" url="/add-students">
             <AiOutlineUsergroupAdd className="h-6 w-6" />
@@ -28,7 +29,7 @@ export const UserSideMenu = () => {
         </>
       )}
 
-      {user?.role === "student" && (
+      {user?.role === UserRole.STUDENT && (
         <>
           <StudentSummaryFetched />
 
