@@ -1,9 +1,11 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import { fetchHandler } from "../handlers/fetch-handler";
-import { BaseUserEntity } from "../contexts/user.context";
+import {BaseUserEntity, UserContext} from "../contexts/user.context";
 import { apiUrl } from "../config/api";
+import {ApiResponse, Tokens } from "@Types";
 
 export const useFetch = () => {
+  const { setUser } = useContext(UserContext);
   const [data, setData] = useState<unknown | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [apiLoading, setApiLoading] = useState<boolean>(false);
@@ -39,10 +41,16 @@ export const useFetch = () => {
           `${apiUrl}/auth/refresh`,
           "POST"
         );
-        const refreshData: any = await refreshRes.json();
-        if (refreshData.statusCode !== 403) {
+        const refreshData: ApiResponse<Tokens> = await refreshRes.json();
+
+        if (refreshData.isSuccess) {
+          setUser({
+            ...user as BaseUserEntity,
+            access_token: refreshData.payload.access_token,
+          });
+
           const res = await fetchHandler(
-            refreshData.access_token,
+            refreshData.payload.access_token,
             url,
             method,
             body,
