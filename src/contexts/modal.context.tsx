@@ -45,8 +45,8 @@ const Modal = ({
   return (
     <div
       onClick={unSetModal}
-      className={`flex absolute z-20 top-0 left-0 w-full ${
-        fitHeight ? `h-fit` : `h-full`
+      className={`flex z-20 top-0 left-0 w-full ${
+        fitHeight ? `h-fit absolute` : `h-full fixed`
       } overflow-y-auto bg-neutral-900/30 items-${
         position ?? "center"
       } justify-center`}
