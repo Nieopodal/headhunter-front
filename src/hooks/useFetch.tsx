@@ -24,7 +24,7 @@ export const useFetch = () => {
       setApiLoading(true);
       setApiError(null);
       const res = await fetchHandler(
-        innerToken ?? user?.access_token,
+        innerToken ?? user?.accessToken,
         url,
         method,
         body,
@@ -37,7 +37,7 @@ export const useFetch = () => {
         return data.payload;
       } else if (res.status === 401 || res.status === 403) {
         const refreshRes = await fetchHandler(
-          user?.access_token,
+          user?.accessToken,
           `${apiUrl}/auth/refresh`,
           "POST"
         );
@@ -46,11 +46,11 @@ export const useFetch = () => {
         if (refreshData.isSuccess) {
           setUser({
             ...user as BaseUserEntity,
-            access_token: refreshData.payload.access_token,
+            accessToken: refreshData.payload.accessToken,
           });
 
           const res = await fetchHandler(
-            refreshData.payload.access_token,
+            refreshData.payload.accessToken,
             url,
             method,
             body,

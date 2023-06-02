@@ -11,8 +11,7 @@ interface Props {
 export const DescriptiveFormSection = ({ studentData }: Props) => {
   const { register } = useFormContext();
 
-  return (
-    <>
+  return <>
       <TitleOfSection title="Biografia" />
       <BodyOfSection additionalClasses="my-4">
         <textarea
@@ -57,5 +56,4 @@ export const DescriptiveFormSection = ({ studentData }: Props) => {
         />
       </BodyOfSection>
     </>
-  );
 };

@@ -4,8 +4,7 @@ import { useLogout } from "../../hooks/useLogout";
 
 export const Dropdown = () => {
   const { logoutUser } = useLogout();
-  return (
-    <ul
+  return <ul
       tabIndex={0}
       className="absolute top-[50px] mt-3 menu dropdown-content bg-base-200 w-full font-normal text-lg"
     >
@@ -16,5 +15,4 @@ export const Dropdown = () => {
         <button onClick={logoutUser}>Wyloguj</button>
       </li>
     </ul>
-  );
 };

@@ -8,11 +8,9 @@ import { AdminDashboardView } from "./Admin/AdminDashboardView";
 export const DashboardView = () => {
   const { user } = useContext(UserContext);
 
-  return (
-    <div>
+  return <div>
       {user!.role === UserRole.STUDENT && <StudentDashboardView />}
       {user!.role === UserRole.HR && <HrDashboardView />}
       {user!.role === UserRole.ADMIN && <AdminDashboardView />}
     </div>
-  );
 };

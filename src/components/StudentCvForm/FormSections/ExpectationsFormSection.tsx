@@ -17,8 +17,7 @@ export const ExpectationsFormSection = ({ studentData }: Props) => {
     formState: { errors },
   } = useFormContext();
 
-  return (
-    <>
+  return <>
       <TitleOfSection title="Oczekiwanie w stosunku do zatrudnienia" />
       <BodyOfSection additionalClasses="my-4 my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
         <CategoryContainer
@@ -122,5 +121,4 @@ export const ExpectationsFormSection = ({ studentData }: Props) => {
         </CategoryContainer>
       </BodyOfSection>
     </>
-  );
 };

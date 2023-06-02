@@ -26,8 +26,7 @@ export const App = () => {
 
   if (apiLoading) return <Loader />;
   else
-    return (
-      <UserContext.Provider
+    return <UserContext.Provider
         value={{
           user: user,
           setUser,
@@ -121,5 +120,4 @@ export const App = () => {
           </ModalProvider>
         </HrFilteringProvider>
       </UserContext.Provider>
-    );
 };

@@ -125,8 +125,7 @@ export const StudentCvForm = ({ studentData, newUser, innerToken }: Props) => {
     setRerender();
   };
 
-  return (
-    <form onSubmit={handleSubmit(formSubmitHandler)}>
+  return <form onSubmit={handleSubmit(formSubmitHandler)}>
       <h2 className="mx-auto w-fit text-2xl font-bold my-6">
         {newUser ? "Dane kursanta" : "Edycja danych"}
       </h2>
@@ -143,5 +142,4 @@ export const StudentCvForm = ({ studentData, newUser, innerToken }: Props) => {
         </button>
       </FormProvider>
     </form>
-  );
 };

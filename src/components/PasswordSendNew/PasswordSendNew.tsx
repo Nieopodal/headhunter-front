@@ -94,8 +94,7 @@ export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
     })();
   }, []);
 
-  return (
-    <div className="flex flex-col items-center justify-start w-full mt-10">
+  return <div className="flex flex-col items-center justify-start w-full mt-10">
       {!newHr && (
         <div className="flex justify-center">
           <AppLogo classes="w-32 mb-12" />
@@ -117,5 +116,4 @@ export const PasswordSendNew = ({ newHrMail, innerToken, newHr }: Props) => {
         </FormProvider>
       )}
     </div>
-  );
 };

@@ -9,8 +9,7 @@ type Props = {
 export const FilteringSalaryField = ({ placeholder, registerName }: Props) => {
   const { register } = useFormContext();
 
-  return (
-    <div className="input-group  flex items-center relative w-32">
+  return <div className="input-group  flex items-center relative w-32">
       <input
         type="number"
         {...register(registerName)}
@@ -21,5 +20,4 @@ export const FilteringSalaryField = ({ placeholder, registerName }: Props) => {
         zł
       </span>
     </div>
-  );
 };

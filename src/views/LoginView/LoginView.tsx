@@ -42,8 +42,7 @@ export const LoginView = () => {
     }
   }, []);
 
-  return (
-    <form onSubmit={methods.handleSubmit((data) => loginUser(data))}>
+  return <form onSubmit={methods.handleSubmit((data) => loginUser(data))}>
       <FormProvider {...methods}>
         <div className="flex flex-col justify-center items-center w-screen h-screen">
           {checkingUser && <Loader />}
@@ -105,5 +104,4 @@ export const LoginView = () => {
         </div>
       </FormProvider>
     </form>
-  );
 };

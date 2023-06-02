@@ -14,8 +14,7 @@ export const BasicFormSection = ({ newUser }: Props) => {
     formState: { errors },
   } = useFormContext();
 
-  return (
-    <>
+  return <>
       <TitleOfSection
         title="Podstawowe dane"
         errorMsg={
@@ -79,5 +78,4 @@ export const BasicFormSection = ({ newUser }: Props) => {
         </CategoryContainer>
       </BodyOfSection>
     </>
-  );
 };

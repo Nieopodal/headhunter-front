@@ -78,8 +78,7 @@ export const FilteringModal = () => {
     unSetModal();
   };
 
-  return (
-    <div className="flex flex-col items-start justify-between gap-10 max-w-[550px] h-fit h-fit">
+  return <div className="flex flex-col items-start justify-between gap-10 max-w-[550px] h-fit h-fit">
       <FilteringOff handleFilterOff={handleFilterOff} />
       <FormProvider {...methods}>
         <form
@@ -178,5 +177,4 @@ export const FilteringModal = () => {
         </form>
       </FormProvider>
     </div>
-  );
 };
