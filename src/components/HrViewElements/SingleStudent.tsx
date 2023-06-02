@@ -30,8 +30,7 @@ export const SingleStudent = ({
     projectDegree,
   } = studentData;
 
-  return (
-    <div tabIndex={0} className="collapse collapse-arrow rounded-box ">
+  return <div tabIndex={0} className="collapse collapse-arrow rounded-box ">
       <input type="checkbox" />
 
       <div className="max-sm:flex-col max-sm:items-start max-sm:gap-3 flex flex-row place-content-between items-center collapse-title text-lg font-normal pl-5 pr-0 bg-base-300 after:text-neutral-500 after:scale-150">
@@ -101,5 +100,4 @@ export const SingleStudent = ({
         />
       </div>
     </div>
-  );
 };

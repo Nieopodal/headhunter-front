@@ -51,8 +51,7 @@ export const AdminFileUploadView = () => {
       </div>
     );
 
-  return (
-    <SmallFormContainer
+  return <SmallFormContainer
       title="Dodawanie kursantów do bazy danych"
       description="Skorzystaj z poniższego pola, aby wysłać plik .csv"
     >
@@ -84,5 +83,4 @@ export const AdminFileUploadView = () => {
         </FormProvider>
       </form>
     </SmallFormContainer>
-  );
 };

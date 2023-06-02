@@ -10,8 +10,7 @@ export const NewPassword = ({ newHrMail }: Props) => {
   const {
     formState: { errors },
   } = useFormContext();
-  return (
-    <div className="flex flex-col">
+  return <div className="flex flex-col">
       <div className="flex flex-col justify-start">
         <h1 className="text-2xl font-bold">
           Wprowadź nowe hasło {newHrMail ? ` dla ${newHrMail}` : ""}
@@ -43,5 +42,4 @@ export const NewPassword = ({ newHrMail }: Props) => {
         </button>
       </div>
     </div>
-  );
 };

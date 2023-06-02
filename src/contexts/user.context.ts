@@ -8,7 +8,7 @@ export interface BaseUserEntity {
   fullName?: string;
   githubUsername?: string;
   email: string;
-  access_token: string;
+  accessToken: string;
   role: UserRole;
 }
 

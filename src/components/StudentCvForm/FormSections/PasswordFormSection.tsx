@@ -10,8 +10,7 @@ export const PasswordFormSection = () => {
     formState: { errors },
   } = useFormContext();
 
-  return (
-    <>
+  return <>
       <TitleOfSection title="Ustaw hasło" />
       <BodyOfSection additionalClasses="my-4">
         <CategoryContainer title="Hasło" error={!!errors?.password}>
@@ -46,5 +45,4 @@ export const PasswordFormSection = () => {
         )}
       </BodyOfSection>
     </>
-  );
 };

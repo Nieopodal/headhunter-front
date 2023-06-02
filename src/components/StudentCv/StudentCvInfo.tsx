@@ -12,8 +12,7 @@ interface Props {
 }
 
 export const StudentCvInfo = ({ studentData }: Props) => {
-  return (
-    <>
+  return <>
       <TitleOfSection title="Oceny" />
       <BodyOfSection>
         <StarsSection
@@ -125,5 +124,4 @@ export const StudentCvInfo = ({ studentData }: Props) => {
         </div>
       </BodyOfSection>
     </>
-  );
 };

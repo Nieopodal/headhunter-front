@@ -34,10 +34,8 @@ export const Message = ({ type, body, customTitle }: Props) => {
   const color = setColor();
   const title = setTitle();
 
-  return (
-    <>
+  return <>
       <h1 className="text-4xl text-center font-bold p-5">{title}</h1>
       <p className={`p-5 text-center ${color}`}>{body}</p>
     </>
-  );
 };

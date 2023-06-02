@@ -57,8 +57,7 @@ export const HrMainDisplay = ({
     handleNameSearch("");
   };
 
-  return (
-    <div className="flex justify-center items-center w-full mt-4">
+  return <div className="flex justify-center items-center w-full mt-4">
       <div className="flex flex-col place-content-between bg-base-300 items-center sm:min-w-[600px] lg:min-w-[800px] max-w-[1430px]">
         <div className="flex flex-row w-full items-start pt-2 border-b-[3px] border-base-200">
           <HrTab
@@ -169,5 +168,4 @@ export const HrMainDisplay = ({
         </div>
       </div>
     </div>
-  );
 };

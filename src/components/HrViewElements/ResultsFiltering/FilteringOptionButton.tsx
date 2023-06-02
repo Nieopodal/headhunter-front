@@ -14,8 +14,7 @@ export const FilteringOptionButton = ({
 }: Props) => {
   const { register } = useFormContext();
 
-  return (
-    <label className="swap">
+  return <label className="swap">
       <input {...register(`${registerName}`)} value={value} type="checkbox" />
       <div className="swap-on bg-red-700 flex items-center px-6 py-2">
         {title}
@@ -24,5 +23,4 @@ export const FilteringOptionButton = ({
         {title}
       </div>
     </label>
-  );
 };

@@ -11,12 +11,10 @@ export const AppLogo = ({ classes }: Props) => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  return (
-    <img
+  return <img
       onClick={() => navigate(user ? `/dashboard` : `/`)}
       className={classes}
       src={logo}
       alt="logo"
     />
-  );
 };

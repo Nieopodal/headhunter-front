@@ -5,8 +5,7 @@ import { ReactNode } from "react";
 export const HowMuchCommercialExp = () => {
   const { formState } = useFormContext();
 
-  return (
-    <label className="flex flex-col items-start gap-2 mt-3">
+  return <label className="flex flex-col items-start gap-2 mt-3">
       <span>
         Ilość miesięcy doświadczenia komercyjnego kandydata w programowaniu
       </span>
@@ -21,5 +20,4 @@ export const HowMuchCommercialExp = () => {
         </span>
       </div>
     </label>
-  );
 };
