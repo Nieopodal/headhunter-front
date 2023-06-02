@@ -68,8 +68,7 @@ export const SingleStudentTitleBar = ({
     handleViewMode(viewMode);
   };
 
-  return (
-    <>
+  return <>
       <div className="flex flex-row items-center gap-10">
         {viewMode === HrViewMode.StudentsToInterview ? (
           <div className="flex flex-col">
@@ -139,5 +138,4 @@ export const SingleStudentTitleBar = ({
         ) : null}
       </div>
     </>
-  );
 };

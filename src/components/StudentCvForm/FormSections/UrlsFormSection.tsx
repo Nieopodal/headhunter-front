@@ -14,8 +14,7 @@ export const UrlsFormSection = ({ newUser }: Props) => {
     formState: { errors },
   } = useFormContext();
 
-  return (
-    <>
+  return <>
       <TitleOfSection title="Portfolio" />
       <BodyOfSection additionalClasses="my-4 grid grid-cols-2 md:grid-cols-3 lg:flex">
         <CategoryContainer title="Link główny:" error={!!errors?.portfolioUrl1}>
@@ -109,5 +108,4 @@ export const UrlsFormSection = ({ newUser }: Props) => {
         </CategoryContainer>
       </BodyOfSection>
     </>
-  );
 };

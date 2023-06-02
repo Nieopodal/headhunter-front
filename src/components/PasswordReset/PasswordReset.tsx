@@ -50,8 +50,7 @@ export const PasswordReset = () => {
     setLoading(false);
   };
 
-  return (
-    <div className="flex flex-col items-center justify-start w-full mt-10">
+  return <div className="flex flex-col items-center justify-start w-full mt-10">
       <div className="">
         <div className="mb-7">
           <GoBack />
@@ -89,5 +88,4 @@ export const PasswordReset = () => {
         </div>
       </div>
     </div>
-  );
 };

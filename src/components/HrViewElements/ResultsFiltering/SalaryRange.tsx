@@ -4,8 +4,7 @@ import { ReactNode } from "react";
 
 export const SalaryRange = () => {
   const { formState } = useFormContext();
-  return (
-    <div className="flex flex-col items-start gap-2 mt-5">
+  return <div className="flex flex-col items-start gap-2 mt-5">
       <span>Oczekiwane wynagrodzenie miesięczne netto </span>
       <div className="flex max-sm:flex-col flex-row gap-3 items-center">
         <span className="flex flex-row items-center">
@@ -30,5 +29,4 @@ export const SalaryRange = () => {
         )}
       </div>
     </div>
-  );
 };

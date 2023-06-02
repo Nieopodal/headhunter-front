@@ -31,8 +31,7 @@ export const StudentControlButton = ({
 }: Props) => {
   const navigate = useNavigate();
 
-  return (
-    <button
+  return <button
       onClick={
         handleStudent
           ? () =>
@@ -49,5 +48,4 @@ export const StudentControlButton = ({
     >
       {text}
     </button>
-  );
 };

@@ -17,8 +17,7 @@ export const FilteringNumericalInput = ({
 }: Props) => {
   const { register, setValue, getValues } = useFormContext();
 
-  return (
-    <div className="input-group flex items-center relative w-36">
+  return <div className="input-group flex items-center relative w-36">
       <input
         type="number"
         {...register(`${registerName}`)}
@@ -58,5 +57,4 @@ export const FilteringNumericalInput = ({
         </button>
       </div>
     </div>
-  );
 };

@@ -26,8 +26,7 @@ export const HeaderMenu = () => {
       })();
   }, [rerender]);
 
-  return (
-    <div
+  return <div
       tabIndex={0}
       className="relative cursor-pointer flex items-center gap-7 bg-base-200 dropdown dropdown-end px-3"
     >
@@ -48,5 +47,4 @@ export const HeaderMenu = () => {
       <span>🞃</span>
       <Dropdown />
     </div>
-  );
 };

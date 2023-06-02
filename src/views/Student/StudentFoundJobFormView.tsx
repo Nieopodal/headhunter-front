@@ -11,8 +11,7 @@ export const StudentFoundJobFormView = () => {
   const { fetchApi, apiError } = useFetch();
   const { logoutUser } = useLogout();
 
-  return (
-    <SmallFormContainer
+  return <SmallFormContainer
       title="Potwierdź znalezienie pracy."
       description="Opcja ta dezaktywuje konto."
     >
@@ -39,5 +38,4 @@ export const StudentFoundJobFormView = () => {
         {apiError && <ResponseParagraph text={apiError} />}
       </form>
     </SmallFormContainer>
-  );
 };

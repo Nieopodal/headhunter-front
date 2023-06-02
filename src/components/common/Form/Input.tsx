@@ -30,8 +30,7 @@ export const Input = ({
 }: Props) => {
   const { register } = useFormContext();
 
-  return (
-    <input
+  return <input
       type={type}
       disabled={disabled}
       placeholder={placeholder}
@@ -46,5 +45,4 @@ export const Input = ({
         "h-10 bg-neutral input placeholder:text-neutral-content"
       }`}
     />
-  );
 };

@@ -50,8 +50,7 @@ export const AdminAddHrView = () => {
 
   if (apiLoading) return <Loader />;
 
-  return (
-    <SmallFormContainer
+  return <SmallFormContainer
       title="Dodawanie pojedynczej osoby HR"
       description="Wypełnij poniższe pola, aby dodać headhunterów lub osoby z działu HR"
     >
@@ -108,5 +107,4 @@ export const AdminAddHrView = () => {
         </FormProvider>
       </form>
     </SmallFormContainer>
-  );
 };
